@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1>Circle Pack in D3</h1>
+    <h1>Circl ePack in D3</h1>
     <h2>{{ msg }}</h2>
     <svg
       :height='height'
@@ -31,8 +31,8 @@ export default {
   data() {
     return {
       msg: "👋 from the Chart Component",
-      height: 600,
-      width: 600
+      height: 300,
+      width: 300
     };
   },
   created() {
@@ -43,7 +43,7 @@ export default {
   methods: {
     packChart() {
       const packChart = d3.pack();
-      packChart.size([500, 500]);
+      packChart.size([200, 200]);
       packChart.padding(10);
       const output = packChart(this.packData).descendants();
       return output.map((d, i) => {
@@ -65,7 +65,7 @@ export default {
         .nest()
         .key(d => d.user)
         .entries(this.tweetData);
-
+      console.log(this.tweetData);
       const packableTweets = { id: "All Tweets", values: nestedTweets };
       return d3
         .hierarchy(packableTweets, d => d.values)

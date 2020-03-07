@@ -1,25 +1,31 @@
 <template>
   <div id="app">
-    <!-- <HelloWorld msg="Welcome to Your Vue.js App" /> -->
-    <PackChart :tweetData=loadData />
+    <!-- <MultiLine/> -->
+    <!-- <Loader :expressionData=exprData :fcData=fcdata /> -->
+    <router-view></router-view>
   </div>
 </template>
 
 <script>
 import * as d3 from "d3";
 
-import HelloWorld from "./components/HelloWorld.vue";
-import PackChart from "./components/Chart.vue";
+import MultiLine from "./components/MultiLine.vue";
+import Loader from "./components/Loader.vue";
+import Home from "./components/Home.vue"
+import * as _ from "lodash";
 
 export default {
   name: "app",
   components: {
-    HelloWorld,
-    PackChart
+  //  Home,
+   // Loader
   },
   data: function() {
     return {
-      loadData: []
+      loadData: [],
+      exprData: [],
+      fcdata:[],
+      labels:[]
     };
   },
   mounted() {
@@ -28,8 +34,11 @@ export default {
   },
   methods: {
     async fetchData() {
-      let data = await d3.json("./tweets.json");
-      this.loadData = data;
+      let data = await d3.tsv("./dev_fpkm.tsv");
+      let data2 = await d3.tsv("./FCvalues.tsv");
+      this.exprData = data;
+      this.fcdata = data2;
+      console.log(this.exprData)
     }
   }
 };
