@@ -8,7 +8,7 @@
         <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
 
         <!-- <h3>Plot Expression values</h3> -->
-        <LineChart v-if="flag" :labeldata=exprlabels :expressData=exprData :genename=genename :key="componentKey" />
+        <LineChart v-if="flag" :labeldata=sampleLabels :expressData=exprData :genename=genename :key="componentKey" />
         <br>
 
         <!-- <h3>Plot feature count values</h3> -->
@@ -20,7 +20,7 @@
 
     import * as _ from "lodash";
     import * as d3 from "d3";
-    import LineChart from "./RandomChart.vue";
+    import LineChart from "./charts/devExpression.vue";
     export default {
        name: "Loader" ,
        components:{
@@ -30,29 +30,18 @@
        data: function() {
             return {
                 genename:"",
-                loadData: [],
-                exprData: [],
-                exprlabels:[],
-                fclabels:[],
-                fcValues:[],
+                sampleLabels:[],
                 geneObj:{},
-                geneObj2: {},
                 flag:false,
                 componentKey:0,
-                exprData2: []
+                geneData: []
             };
         },
         methods: {
             getLabels() {
-                //this.exprlabels= _.keys(this.expressionData[0]).slice(1,);
-                console.log(this.exprData2)
-                this.exprlabels= _.keys(this.exprData2[0]).slice(1,);
-                //this.fclabels= _.keys(this.fcData[0]).slice(1,);
-                //this.geneObj = _.omit(_.find(this.expressionData,{ 'external_gene_name': this.genename}),"external_gene_name" );
-                this.geneObj = _.omit(_.find(this.exprData2,{ 'external_gene_name': this.genename}),"external_gene_name" );
-                //this.geneObj2 = _.omit(_.find(this.fcData,{ 'external_gene_name': this.genename}),"external_gene_name" );
+                this.sampleLabels= _.keys(this.geneData[0]).slice(1,);
+                this.geneObj = _.omit(_.find(this.geneData,{ 'external_gene_name': this.genename}),"external_gene_name" );
                 this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
-                //this.fcValues = _.map(_.values(this.geneObj2), _.ary(parseInt, 1));
             },
             getChart() {
                 this.getLabels();
@@ -60,20 +49,18 @@
                 this.flag = true;
             },
             async fetchData() {
-            let data = await d3.tsv("./dev_fpkm.tsv");
-            let data2 = await d3.tsv("./FCvalues.tsv");
-            this.exprData2 = data;
-            this.fcdata = data2;
-            console.log(this.exprData2)
+            //fetch data based on URL
+                let mypage = false
+                if (mypage) {
+                    this.geneData= await d3.tsv("./dev_fpkm.tsv"); 
+                }
+                else {
+                    this.geneData = await d3.tsv("./FCvalues.tsv");
+                }
             }
         },
         created() {
-            console.log("i was called?")
             this.fetchData();
-
-        },
-        mounted() {
-            //this.fetchData();
         },
     }
 </script>
