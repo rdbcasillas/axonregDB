@@ -30,16 +30,8 @@ export default {
   },
   mounted() {
     console.log("App loaded");
-    //this.fetchData();
   },
   methods: {
-    // async fetchData() {
-    //   let data = await d3.tsv("./dev_fpkm.tsv");
-    //   let data2 = await d3.tsv("./FCvalues.tsv");
-    //   this.exprData = data;
-    //   this.fcdata = data2;
-    //   console.log(this.exprData)
-    // }
   }
 };
 </script>

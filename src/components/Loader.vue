@@ -10,7 +10,6 @@
         <!-- <h3>Plot Expression values</h3> -->
         <LineChart v-if="flag" :labeldata=sampleLabels :expressData=exprData :genename=genename :key="componentKey" />
         <br>
-
         <!-- <h3>Plot feature count values</h3> -->
         <!-- <LineChart v-if="flag" :labeldata=fclabels :expressData=fcValues :genename=genename :key="componentKey" /> -->
     </div>
@@ -26,7 +25,7 @@
        components:{
            LineChart
        },
-       //props: ["expressionData","fcData"],
+       props: ["plotType"],
        data: function() {
             return {
                 genename:"",
@@ -51,7 +50,7 @@
             async fetchData() {
             //fetch data based on URL
                 let mypage = false
-                if (mypage) {
+                if (this.plotType=="hi") {
                     this.geneData= await d3.tsv("./dev_fpkm.tsv"); 
                 }
                 else {
@@ -61,6 +60,7 @@
         },
         created() {
             this.fetchData();
+            console.log(this.plotType)
         },
     }
 </script>
