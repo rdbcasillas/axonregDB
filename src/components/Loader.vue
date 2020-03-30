@@ -51,10 +51,10 @@
             //fetch data based on URL
                 let mypage = false
                 if (this.plotType=="expression") {
-                    this.geneData= await d3.tsv("./dev_fpkm.tsv"); 
+                    this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/9ab51177d1260ec9507281c1312fe3ad6c636065/dev_fpkm.tsv"); 
                 }
                 else {
-                    this.geneData = await d3.tsv("./E11toAdult-fc-homer-proms.tsv");
+                    this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/ca45b61323b7bbd3f33548e5a26f5dd5bcf635c5/E11toAdult-fc-homer-proms.tsv");
                 }
             }
         },
