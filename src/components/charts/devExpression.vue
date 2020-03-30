@@ -5,7 +5,7 @@
   //Exporting this so it can be used in other components
   export default {
     extends: Line,
-    props: ["labeldata","expressData","genename"],
+    props: ["labeldata","expressData","genename","ylabel","title"],
     data () {
       return {
         datacollection: {
@@ -25,6 +25,11 @@
         },
         //Chart.js options that controls the appearance of the chart
         options: {
+          title: {
+            display: true,
+            text:  this.title,
+            fontSize: 20
+          },
           scales: {
             yAxes: [{
               ticks: {
@@ -32,11 +37,21 @@
               },
               gridLines: {
                 display: true
+              },
+              scaleLabel: {
+                display: true,
+                labelString: this.ylabel,
+                fontSize: 16
               }
             }],
             xAxes: [ {
               gridLines: {
                 display: false
+              },
+              scaleLabel: {
+                display: true,
+                labelString: 'Age',
+                fontSize: 16
               }
             }]
           },

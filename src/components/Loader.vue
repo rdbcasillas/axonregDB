@@ -8,7 +8,7 @@
         <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
 
         <!-- <h3>Plot Expression values</h3> -->
-        <LineChart v-if="flag" :labeldata=sampleLabels :expressData=exprData :genename=genename :key="componentKey" />
+        <LineChart v-if="flag" :labeldata=sampleLabels :expressData=exprData :genename=genename :ylabel=ylabel :title=title :key="componentKey" />
         <br>
         <!-- <h3>Plot feature count values</h3> -->
         <!-- <LineChart v-if="flag" :labeldata=fclabels :expressData=fcValues :genename=genename :key="componentKey" /> -->
@@ -33,7 +33,9 @@
                 geneObj:{},
                 flag:false,
                 componentKey:0,
-                geneData: []
+                geneData: [],
+                ylabel: '',
+                title: ''
             };
         },
         methods: {
@@ -52,9 +54,13 @@
                 let mypage = false
                 if (this.plotType=="expression") {
                     this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/9ab51177d1260ec9507281c1312fe3ad6c636065/dev_fpkm.tsv"); 
+                    this.ylabel = 'FPKM'
+                    this.title = 'Expression Across Development'
                 }
                 else {
                     this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/ca45b61323b7bbd3f33548e5a26f5dd5bcf635c5/E11toAdult-fc-homer-proms.tsv");
+                    this.ylabel = 'Feature Count'
+                    this.title = 'Accessibility Across Development'
                 }
             }
         },
