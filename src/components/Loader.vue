@@ -50,11 +50,11 @@
             async fetchData() {
             //fetch data based on URL
                 let mypage = false
-                if (this.plotType=="hi") {
+                if (this.plotType=="expression") {
                     this.geneData= await d3.tsv("./dev_fpkm.tsv"); 
                 }
                 else {
-                    this.geneData = await d3.tsv("./FCvalues.tsv");
+                    this.geneData = await d3.tsv("./E11toAdult-fc-homer-proms.tsv");
                 }
             }
         },

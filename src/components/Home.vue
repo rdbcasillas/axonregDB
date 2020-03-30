@@ -2,9 +2,9 @@
     <div>
         <b-navbar style="margin-top:-45px">
             <b-navbar-brand tag="h1">AxonRegDb</b-navbar-brand>
-            <b-navbar-nav>
-                <b-nav-item href="#">Venkatesh Lab</b-nav-item>
-                <b-nav-item href="#" >Blackmore Lab</b-nav-item>
+            <b-navbar-nav class="ml-auto mx-auto" align="center">
+                <b-nav-item href="http://ishvenkatesh.com/">Venkatesh Lab</b-nav-item>
+                <b-nav-item href="https://www.blackmorelab.com/">Blackmore Lab</b-nav-item>
             </b-navbar-nav>
         </b-navbar>
         <b-container class="bv-example-row">
