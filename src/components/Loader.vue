@@ -1,9 +1,15 @@
 <template>
     <div>
-        <!-- <b-container fluid="md">
-            <b-form-input v-if="chartExists" type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="updateChart" />
-            <b-form-input v-else type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="drawLineChart" />
-        </b-container> -->
+        <b-container>
+            <b-row v-if="plotType=='expression'">
+                <b>Analyze temporal gene expression patterns across murine development in forebrain datasets from <a href="https://www.encodeproject.org/search/?type=Experiment&status=released&assay_slims=Transcription&assay_title=polyA+plus+RNA-seq&award.project=ENCODE&assembly=mm10&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=forebrain"> ENCODE consortia</a></b>
+            </b-row>
+            <b-row v-else>
+                <b>Analyze temporal chromatin accessibility patterns across murine development in forebrain datasets from <a href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&biosample_ontology.term_name=forebrain">ENCODE consortia</a> 
+                . FASTQ files from ENCODE were analyzed, bam files were merged and reads in promoter regions (1000 upstream, 500 downstream of TSS) were quantified using the tool - FeatureCounts to quantify chromatin accessibility in promoter regions.</b> 
+
+            </b-row>
+        </b-container>
         <br>
         <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
 
@@ -53,12 +59,12 @@
             //fetch data based on URL
                 let mypage = false
                 if (this.plotType=="expression") {
-                    this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/9ab51177d1260ec9507281c1312fe3ad6c636065/dev_fpkm.tsv"); 
+                    this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/00c31608c6cff9ead3093f4e5dffb2f040f85c1d/dev_fpkm.tsv"); 
                     this.ylabel = 'FPKM'
                     this.title = 'Expression Across Development'
                 }
                 else {
-                    this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/ca45b61323b7bbd3f33548e5a26f5dd5bcf635c5/E11toAdult-fc-homer-proms.tsv");
+                    this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/d811ff14b82a63f5bbfb1de039cb85bdad6891e1/E11toAdult-fc-homer-proms.tsv");
                     this.ylabel = 'Feature Count'
                     this.title = 'Accessibility Across Development'
                 }

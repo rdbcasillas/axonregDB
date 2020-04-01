@@ -50,7 +50,7 @@
               },
               scaleLabel: {
                 display: true,
-                labelString: 'Age',
+                labelString: 'Developmental time-point',
                 fontSize: 16
               }
             }]
