@@ -17,8 +17,8 @@
         </b-row>
         <b-row>
             <b-col> <b-link :to="{name: 'expression',params: {plotType:'expression'} }"><b-img thumbnail src="./devexpr.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
-            <b-col> <b-link :to="{name: 'expression',params: {plotType:'featureCount'} }"><b-img thumbnail src="./devfc.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
-            <b-col> <b-link :to="{name: 'expression',params: {plotType:'expression'} }"><b-img thumbnail src="./enhancers.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
+            <b-col> <b-link :to="{name: 'featurecount',params: {plotType:'featureCount'} }"><b-img thumbnail src="./devfc.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
+            <b-col> <b-link :to="{name: 'enhancer'}"><b-img thumbnail src="./enhancers.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
         </b-row>
         </b-container>
     </div>
