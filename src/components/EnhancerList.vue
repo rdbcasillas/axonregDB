@@ -17,16 +17,16 @@
                 </b-col>
             </b-row>
             <br>
-            <!-- <b-row>
-                <b-table striped hover :items="filteredData"></b-table>
-            </b-row> -->
             <b-row>
-                <b-col v-for="item in itemsHead">
+                <b-table striped hover :items="filteredData"></b-table>
+            </b-row>
+            <b-row>
+                <b-col v-for="(item,index) in itemsHead" :key="index">
                     <LineChart v-if="flag" :labeldata=sampleLabels :expressData=item :genename=genename :ylabel=ylabel :title=title :key="compKey" />
                 </b-col>
             </b-row>
             <b-row>
-                <b-col v-for="item in itemsTail">
+                <b-col v-for="(item,index) in itemsTail" :key="index">
                     <LineChart v-if="flag" :labeldata=sampleLabels :expressData=item :genename=genename :ylabel=ylabel :title=title :key="compKey" />
                 </b-col>
             </b-row>
