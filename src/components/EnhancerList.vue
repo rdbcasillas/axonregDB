@@ -10,15 +10,29 @@
             <br>
             <b-row>
                 <b-col>
-                    <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
+                    <b-form-select v-model="selected" :options="options"></b-form-select>
                 </b-col>
                 <b-col>
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                    <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
                 </b-col>
             </b-row>
             <br>
-            <b-row>
+            <!-- <b-row>
                 <b-table striped hover :items="filteredData"></b-table>
+            </b-row> -->
+            <b-row>
+                <b-col v-for="item in itemsHead">
+                    <LineChart v-if="flag" :labeldata=sampleLabels :expressData=item :genename=genename :ylabel=ylabel :title=title :key="compKey" />
+                </b-col>
+            </b-row>
+            <b-row>
+                <b-col v-for="item in itemsTail">
+                    <LineChart v-if="flag" :labeldata=sampleLabels :expressData=item :genename=genename :ylabel=ylabel :title=title :key="compKey" />
+                </b-col>
+            </b-row>
+            <b-row>
+                <!-- <b-col v-if="flag"><b-img thumbnail src="./devexpr.png" fluid alt="Responsive image"></b-img></b-col> -->
+                <b-col></b-col>
             </b-row>
         </b-container>
     </div>
@@ -28,8 +42,12 @@
 
     import * as _ from "lodash";
     import * as d3 from "d3";
+    import LineChart from "./charts/devExpression.vue";
     export default {
        name: 'Enhancer',
+       components:{
+           LineChart
+       },
        data: function(){
            return {
                selected: null,
@@ -41,24 +59,55 @@
                    {value:'E14', text: 'E14'},
                ],
                genename: "",
-               geneData: [],
-               filteredData: []
+               enhancerData: {
+                   'E13': [],
+                   'E14': []
+               },
+               filteredData: [],
+               devArray:[],
+               sampleLabels: [],
+               title: 'Accessibility across enhancer region',
+               ylabel: 'ylabel',
+               flag: false,
+               compKey: 0
            }
        },
+       computed:{
+            itemsHead() {
+                return this.devArray ? this.devArray.slice(0, 3) : [];
+            },
+            itemsTail() {
+                return this.devArray ? this.devArray.slice(3) : [];
+            }
+       },   
        methods:  {
             getChart()  {
+                this.flag = true;
+                this.compKey+=1;
+                let temparr = []
                 let currName = this.genename;
-                this.filteredData = _.filter(this.geneData, function(o) { 
+                this.filteredData = _.filter(this.enhancerData[this.selected], function(o) { 
                     return o['TargetGene'] == currName; 
                 });
+                //console.log(this.enhancerData);
                 console.log(this.filteredData);
+                this.sampleLabels= _.keys(this.filteredData[0]).slice(4,);
+                this.filteredData.forEach(function(item){
+                    let tmpval = _.values(item).slice(4,) 
+                    temparr.push(_.map(tmpval, _.ary(parseInt, 1)))
+                    })
+                console.log(temparr);
+                this.devArray = temparr;
+                console.log(this.devArray);
+                console.log(this.sampleLabels);
+
             },
             async fetchData() {
             //fetch data based on URL
-                this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/bb18b50f98d302f58c7676d01c3e9114/raw/d2c3677f0702dff703d2f9fed18ebb67d2128410/E14_enhancers_genes.tsv"); 
+                this.enhancerData.E14 = await d3.tsv("http://129.114.16.59/Enhancer-files/E14_enhancers_genes_devFC2.tsv"); 
+                this.enhancerData.E13 = await d3.tsv("http://129.114.16.59/Enhancer-files/E13_enhancers_genes.tsv"); 
                 this.ylabel = 'FPKM'
                 this.title = 'Expression Across Development'            
-                console.log(this.geneData);
            }
        },
        created() {

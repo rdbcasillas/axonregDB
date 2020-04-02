@@ -14,7 +14,7 @@
         <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
 
         <!-- <h3>Plot Expression values</h3> -->
-        <LineChart v-if="flag" :labeldata=sampleLabels :expressData=exprData :genename=genename :ylabel=ylabel :title=title :key="componentKey" />
+        <LineChart v-if="flag" :labeldata=sampleLabels :expressData=exprData :genename=genename :ylabel=ylabel :mytitle=title :key="componentKey" />
         <br>
         <!-- <h3>Plot feature count values</h3> -->
         <!-- <LineChart v-if="flag" :labeldata=fclabels :expressData=fcValues :genename=genename :key="componentKey" /> -->
@@ -41,14 +41,16 @@
                 componentKey:0,
                 geneData: [],
                 ylabel: '',
-                title: ''
+                mytitle: ''
             };
         },
         methods: {
             getLabels() {
                 this.sampleLabels= _.keys(this.geneData[0]).slice(1,);
                 this.geneObj = _.omit(_.find(this.geneData,{ 'external_gene_name': this.genename}),"external_gene_name" );
+                console.log(this.geneObj)
                 this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
+                console.log(this.exprData)
             },
             getChart() {
                 this.getLabels();
