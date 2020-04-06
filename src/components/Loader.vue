@@ -73,8 +73,10 @@
                 if (this.plotType=="expression") {
                     let targetUrl = "http://localhost:8080/dev_fpkm.tsv"
                     this.geneData = await d3.tsv(targetUrl,{
-                        mode: "no-cors"
+                        mode: "no-cors",
+                        crossOrigin: "anyonymous"
                     })
+                    .catch((e)=>console.log(e))
                     // this.geneData = fetch(targetUrl, {mode: "no-cors"})
                     //     .then(blob => blob.text())
                     //     .then(data => {
