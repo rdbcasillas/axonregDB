@@ -104,8 +104,8 @@
             },
             async fetchData() {
             //fetch data based on URL
-                this.enhancerData.E14 = await d3.tsv("http://129.114.16.59/Enhancer-files/E14_enhancers_genes_devFC2.tsv"); 
-                this.enhancerData.E13 = await d3.tsv("http://129.114.16.59/Enhancer-files/E13_enhancers_genes.tsv"); 
+                this.enhancerData.E14 = await d3.tsv("https://129.114.16.59/Enhancer-files/E14_enhancers_genes_devFC2.tsv"); 
+                this.enhancerData.E13 = await d3.tsv("https://129.114.16.59/Enhancer-files/E13_enhancers_genes.tsv"); 
                 this.ylabel = 'Accessibility'
                 this.title = 'Accessibility across Enhancer Region'        
            }
