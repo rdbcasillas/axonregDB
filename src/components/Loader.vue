@@ -69,14 +69,29 @@
             async fetchData() {
             //fetch data based on URL
                 let mypage = false
+                let proxyUrl = 'https://cors-anywhere.herokuapp.com/'
                 if (this.plotType=="expression") {
-                    this.geneData = await d3.tsv("http://localhost:8080/dev_fpkm.tsv")
+                    let targetUrl = "http://localhost:8080/dev_fpkm.tsv"
+                    this.geneData = await d3.tsv(targetUrl,{
+                        mode: "no-cors"
+                    })
+                    // this.geneData = fetch(targetUrl, {mode: "no-cors"})
+                    //     .then(blob => blob.text())
+                    //     .then(data => {
+                    //         console.table(data);
+                    //         return data;
+                    //     })
+                    //     .catch(e => {
+                    //         console.log(e);
+                    //         return e;
+                    //     });
+                    console.log(this.geneData)
                     //this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/00c31608c6cff9ead3093f4e5dffb2f040f85c1d/dev_fpkm.tsv"); 
                     this.ylabel = 'FPKM'
                     this.title = 'Expression Across Development'
                 }
                 else {
-                    this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/d811ff14b82a63f5bbfb1de039cb85bdad6891e1/E11toAdult-fc-homer-proms.tsv");
+                    //this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/d811ff14b82a63f5bbfb1de039cb85bdad6891e1/E11toAdult-fc-homer-proms.tsv");
                     this.ylabel = 'Feature Count'
                     this.title = 'Accessibility Across Development'
                 }
