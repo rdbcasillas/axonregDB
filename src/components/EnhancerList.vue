@@ -42,7 +42,11 @@
 
     import * as _ from "lodash";
     import * as d3 from "d3";
+    import * as https from "https";
     import LineChart from "./charts/devExpression.vue";
+    const agent = new https.Agent({
+        rejectUnauthorized: false
+    })
     export default {
        name: 'Enhancer',
        components:{
@@ -104,7 +108,9 @@
             },
             async fetchData() {
             //fetch data based on URL
-                this.enhancerData.E14 = await d3.tsv("https://129.114.16.59/Enhancer-files/E14_enhancers_genes_devFC2.tsv"); 
+                //this.enhancerData.E14 = await d3.tsv("https://129.114.16.59/Enhancer-files/E14_enhancers_genes_devFC2.tsv"); 
+                let response = await fetch("https://129.114.16.59/Enhancer-files/E14_enhancers_genes_devFC2.tsv",{agent}); 
+                this.enhancerData.E14 = await response.json();
                 this.enhancerData.E13 = await d3.tsv("https://129.114.16.59/Enhancer-files/E13_enhancers_genes.tsv"); 
                 this.ylabel = 'Accessibility'
                 this.title = 'Accessibility across Enhancer Region'        

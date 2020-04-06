@@ -25,6 +25,7 @@
 
     import * as _ from "lodash";
     import * as d3 from "d3";
+    import axios from 'axios'
     import LineChart from "./charts/devExpression.vue";
     export default {
        name: "Loader" ,
@@ -34,6 +35,7 @@
        props: ["plotType"],
        data: function() {
             return {
+                baseUrl: process.env.VUE_APP_BASE_URL,
                 genename:"",
                 sampleLabels:[],
                 geneObj:{},
@@ -57,11 +59,19 @@
                 this.componentKey+=1;
                 this.flag = true;
             },
+            newFetch() {
+                let currURL = this.baseUrl;
+                console.log(this.baseUrl)
+                axios.get(currURL + 'dev_fpkm.tsv').then(res=>{
+                    console.log(res);
+                })
+            },
             async fetchData() {
             //fetch data based on URL
                 let mypage = false
                 if (this.plotType=="expression") {
-                    this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/00c31608c6cff9ead3093f4e5dffb2f040f85c1d/dev_fpkm.tsv"); 
+                    this.geneData = await d3.tsv("localhost:8080/dev_fpkm.tsv")
+                    //this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/00c31608c6cff9ead3093f4e5dffb2f040f85c1d/dev_fpkm.tsv"); 
                     this.ylabel = 'FPKM'
                     this.title = 'Expression Across Development'
                 }
@@ -73,7 +83,9 @@
             }
         },
         created() {
+            console.log(this.baseUrl)
             this.fetchData();
+            //this.newFetch();
             console.log(this.plotType)
         },
     }
