@@ -63,12 +63,12 @@
                 let mypage = false
                 if (this.plotType=="expression") {
                     //this.geneData= await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/4bccacd715a88b3100783e8303666429/raw/00c31608c6cff9ead3093f4e5dffb2f040f85c1d/dev_fpkm.tsv"); 
-                    this.geneData= await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/dev_fpkm.tsv"); 
+                    this.geneData= await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"); 
                     this.ylabel = 'FPKM'
                     this.title = 'Expression Across Development'
                 }
                 else {
-                    this.geneData = await d3.tsv("https://gist.githubusercontent.com/rdbcasillas/dfee731e3815e2827a6aa1ff5a75fac2/raw/d811ff14b82a63f5bbfb1de039cb85bdad6891e1/E11toAdult-fc-homer-proms.tsv");
+                    this.geneData = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv");
                     this.ylabel = 'Feature Count'
                     this.title = 'Accessibility Across Development'
                 }

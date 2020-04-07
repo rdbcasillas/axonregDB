@@ -91,28 +91,27 @@
                     return o['TargetGene'] == currName; 
                 });
                 //console.log(this.enhancerData);
-                console.log(this.filteredData);
+                //console.log(this.filteredData);
                 this.sampleLabels= _.keys(this.filteredData[0]).slice(4,);
                 this.filteredData.forEach(function(item){
                     let tmpval = _.values(item).slice(4,) 
                     temparr.push(_.map(tmpval, _.ary(parseInt, 1)))
                     })
-                console.log(temparr);
+                //console.log(temparr);
                 this.devArray = temparr;
-                console.log(this.devArray);
-                console.log(this.sampleLabels);
+                //console.log(this.devArray);
+                //console.log(this.sampleLabels);
 
             },
             async fetchData() {
             //fetch data based on URL
-                this.enhancerData.E14 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/E14_enhancers_genes_devFC2.tsv"); 
-                this.enhancerData.E13 = await d3.tsv("https://129.114.16.59/Enhancer-files/E13_enhancers_genes.tsv"); 
+                this.enhancerData.E14 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"); 
+                this.enhancerData.E13 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E13_enhancers_genes_devFC.tsv"); 
                 this.ylabel = 'Accessibility'
                 this.title = 'Accessibility across Enhancer Region'        
            },
        },
        created() {
-           console.log("hello")
            this.fetchData();
        }
     }
