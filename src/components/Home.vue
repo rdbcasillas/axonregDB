@@ -6,13 +6,14 @@
             <b-col> <b-link to="/choose"><b-img thumbnail src="./mousedev.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
         </b-row>
 
+
         </b-container>
     </div>
 </template>
 
 <script>
     export default {
-       name: "Home" 
+       name: "Home" ,
     }
 </script>
 

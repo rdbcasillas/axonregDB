@@ -10,10 +10,11 @@
             <br>
             <b-row>
                 <b-col>
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                    <b-form-select v-model="selected" :options="options" @change="loadGenes(selected)"></b-form-select>
                 </b-col>
                 <b-col>
-                    <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" />
+                    <autocomplete :items="this.allgenes" @finished="finished" />
+                    <!-- <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" /> -->
                 </b-col>
             </b-row>
             <br>
@@ -42,15 +43,18 @@
 
     import * as _ from "lodash";
     import * as d3 from "d3";
+    import Autocomplete from "./Autocomplete.vue"
     import LineChart from "./charts/devExpression.vue";
     export default {
        name: 'Enhancer',
        components:{
-           LineChart
+           LineChart,
+           Autocomplete
        },
        data: function(){
            return {
                selected: null,
+               allgenes:[],
                options: [
                    {value: null, text: 'Please select an age'},
                    {value:'E11', text: 'E11'},
@@ -83,6 +87,13 @@
             }
        },   
        methods:  {
+            finished(value){
+                this.genename = value;
+                this.getChart();
+            },
+            loadGenes(){
+                this.allgenes  = _.uniq(_.map(this.enhancerData[this.selected],'TargetGene'));
+            },
             getChart()  {
                 console.log(this.enhancerData.E14)
                 this.flag = true;

@@ -1,8 +1,11 @@
 <template>
     <div>
-        <b-navbar variant="dark" type="dark" style="margin-top:-45px">
+        <b-navbar class="mynavbar" variant="light" type="light" style="margin-top:-45px">
+            <b-navbar-brand href="#"> 
+                <b-img src="./logo.png" alt="axon image"></b-img>
+            </b-navbar-brand>
             <b-navbar-brand tag="h1"> <b-link href="/">AxonRegDb</b-link> </b-navbar-brand>
-            <b-navbar-nav class="ml-auto mx-auto" align="center">
+            <b-navbar-nav class="mx-auto ml-auto">
                 <b-nav-item href="http://ishvenkatesh.com/">Venkatesh Lab</b-nav-item>
                 <b-nav-item href="https://www.blackmorelab.com/">Blackmore Lab</b-nav-item>
             </b-navbar-nav>
@@ -20,13 +23,16 @@
 
 <style lang="css" scoped>
 a {
-    color:snow;
+    color:grey;
     text-decoration: none;
 }
 a:hover {
     color:grey
 }
+.b-navbar-nav {
+    margin-right: 55px;
+}
 li.nav-item {
-    margin-left: 55px;
+    margin-right:84px
 }
 </style>
