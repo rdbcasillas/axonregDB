@@ -60,8 +60,10 @@
                ],
                genename: "",
                enhancerData: {
+                   'E11': [],
+                   'E12': [],
                    'E13': [],
-                   'E14': []
+                   'E14': [],
                },
                filteredData: [],
                devArray:[],
@@ -105,8 +107,10 @@
             },
             async fetchData() {
             //fetch data based on URL
-                this.enhancerData.E14 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"); 
+                this.enhancerData.E11 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E11_enhancers_genes_devFC.tsv"); 
+                this.enhancerData.E12 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E12_enhancers_genes_devFC.tsv"); 
                 this.enhancerData.E13 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E13_enhancers_genes_devFC.tsv"); 
+                this.enhancerData.E14 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"); 
                 this.ylabel = 'Accessibility'
                 this.title = 'Accessibility across Enhancer Region'        
            },

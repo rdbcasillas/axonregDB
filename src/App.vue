@@ -2,6 +2,7 @@
   <div id="app">
     <!-- <MultiLine/> -->
     <!-- <Loader :expressionData=exprData :fcData=fcdata /> -->
+    <Header></Header>
     <router-view></router-view>
   </div>
 </template>
@@ -10,14 +11,14 @@
 import * as d3 from "d3";
 
 import MultiLine from "./components/MultiLine.vue";
-import Loader from "./components/Loader.vue";
+import Header from "./components/Header.vue";
 import Home from "./components/Home.vue"
 import * as _ from "lodash";
 
 export default {
   name: "app",
   components: {
-  //  Home,
+    Header,
    // Loader
   },
   data: function() {
