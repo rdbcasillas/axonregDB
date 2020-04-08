@@ -4,10 +4,10 @@
             <b-navbar-brand href="#"> 
                 <b-img src="./logo.png" alt="axon image"></b-img>
             </b-navbar-brand>
-            <b-navbar-brand tag="h1"> <b-link href="/">AxonRegDb</b-link> </b-navbar-brand>
+            <b-navbar-brand tag="h1"> <b-link href="/"><b>AxonRegDb</b></b-link> </b-navbar-brand>
             <b-navbar-nav class="mx-auto ml-auto">
-                <b-nav-item href="http://ishvenkatesh.com/">Venkatesh Lab</b-nav-item>
-                <b-nav-item href="https://www.blackmorelab.com/">Blackmore Lab</b-nav-item>
+                <b-nav-item href="http://ishvenkatesh.com/"><b>Venkatesh Lab</b></b-nav-item>
+                <b-nav-item href="https://www.blackmorelab.com/"><b>Blackmore Lab</b></b-nav-item>
             </b-navbar-nav>
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://axonregdb.netlify.com/" data-hashtags="#axonregdb #spinalcordinjury" data-show-count="false">Tweet</a>
         </b-navbar>

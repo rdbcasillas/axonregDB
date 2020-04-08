@@ -25,10 +25,16 @@
         },
         //Chart.js options that controls the appearance of the chart
         options: {
+          layout: {
+            padding: {
+              top: 20,
+              bottom: 30
+            }
+          },
           title: {
             display: true,
             text:  this.title,
-            fontSize: 20
+            fontSize: 14
           },
           scales: {
             yAxes: [{
@@ -41,7 +47,7 @@
               scaleLabel: {
                 display: true,
                 labelString: this.ylabel,
-                fontSize: 16
+                fontSize: 12
               }
             }],
             xAxes: [ {
@@ -51,7 +57,7 @@
               scaleLabel: {
                 display: true,
                 labelString: 'Developmental time-point',
-                fontSize: 16
+                fontSize: 12
               }
             }]
           },

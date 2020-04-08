@@ -18,17 +18,26 @@
                 </b-col>
             </b-row>
             <br>
-            <b-row>
+            <!-- <b-row>
                 <b-table striped hover :items="filteredData"></b-table>
-            </b-row>
+            </b-row> -->
             <b-row>
-                <b-col v-for="(item,index) in itemsHead" :key="index">
-                    <LineChart v-if="flag" :labeldata=sampleLabels :expressData=item :genename=genename :ylabel=ylabel :title=title :key="compKey" />
+                <b-col>
+                    <h5 v-if="flag" align="center">
+                        Accessibility across {{  count }} Enhancer regions for {{genename}} at {{ selected }}: 
+                    </h5>
                 </b-col>
             </b-row>
             <b-row>
-                <b-col v-for="(item,index) in itemsTail" :key="index">
-                    <LineChart v-if="flag" :labeldata=sampleLabels :expressData=item :genename=genename :ylabel=ylabel :title=title :key="compKey" />
+                <b-col cols="4" v-for="(item,index) in devArray" :key="index">
+                    <LineChart 
+                    v-if="flag" 
+                    :labeldata=sampleLabels 
+                    :expressData=item 
+                    :genename=genename 
+                    :ylabel=ylabel 
+                    :title=titleArray[index] 
+                    :key="compKey" />
                 </b-col>
             </b-row>
             <b-row>
@@ -72,10 +81,11 @@
                filteredData: [],
                devArray:[],
                sampleLabels: [],
-               title: 'Accessibility across enhancer region',
                ylabel: 'ylabel',
                flag: false,
-               compKey: 0
+               compKey: 0,
+               titleArray: [],
+               count: 0
            }
        },
        computed:{
@@ -95,25 +105,29 @@
                 this.allgenes  = _.uniq(_.map(this.enhancerData[this.selected],'TargetGene'));
             },
             getChart()  {
-                console.log(this.enhancerData.E14)
                 this.flag = true;
                 this.compKey+=1;
                 let temparr = []
+                let titlearr = []
                 let currName = this.genename;
                 this.filteredData = _.filter(this.enhancerData[this.selected], function(o) { 
                     return o['TargetGene'] == currName; 
                 });
                 //console.log(this.enhancerData);
-                //console.log(this.filteredData);
+                console.log(this.filteredData);
                 this.sampleLabels= _.keys(this.filteredData[0]).slice(4,);
+                this.filteredData.forEach(obj=>{
+                    titlearr.push(obj.chr + ":  " + obj.start + "-" + obj.stop)
+                })
+                this.count = titlearr.length;
+
                 this.filteredData.forEach(function(item){
                     let tmpval = _.values(item).slice(4,) 
                     temparr.push(_.map(tmpval, _.ary(parseInt, 1)))
                     })
-                //console.log(temparr);
+                this.titleArray = titlearr;
                 this.devArray = temparr;
-                //console.log(this.devArray);
-                //console.log(this.sampleLabels);
+                console.log(this.titleArray)
 
             },
             async fetchData() {
@@ -123,7 +137,6 @@
                 this.enhancerData.E13 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E13_enhancers_genes_devFC.tsv"); 
                 this.enhancerData.E14 = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"); 
                 this.ylabel = 'Accessibility'
-                this.title = 'Accessibility across Enhancer Region'        
            },
        },
        created() {
