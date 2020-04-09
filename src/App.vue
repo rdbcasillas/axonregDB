@@ -4,6 +4,7 @@
     <!-- <Loader :expressionData=exprData :fcData=fcdata /> -->
     <Header></Header>
     <router-view></router-view>
+    <Footer></Footer>
   </div>
 </template>
 
@@ -12,6 +13,7 @@ import * as d3 from "d3";
 
 import MultiLine from "./components/MultiLine.vue";
 import Header from "./components/Header.vue";
+import Footer from "./components/Footer.vue";
 import Home from "./components/Home.vue"
 import * as _ from "lodash";
 
@@ -19,7 +21,7 @@ export default {
   name: "app",
   components: {
     Header,
-   // Loader
+    Footer
   },
   data: function() {
     return {
@@ -46,4 +48,6 @@ export default {
   color: #2c3e50;
   margin-top: 60px;
 }
+
+
 </style>

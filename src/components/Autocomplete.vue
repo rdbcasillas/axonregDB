@@ -3,7 +3,7 @@
         <b-form-input type="text" 
             v-model="search"
             @input="onChange"
-            v-on:keyup.enter="bringIt()"
+            v-on:keyup.enter="callParentForChart()"
         />
         <ul v-show="isOpen" class="autocomplete-results">
             <li v-for="(result,i) in results" :key="i"
@@ -45,13 +45,15 @@
                 else {
                     this.isOpen = true;
                 }
-                this.results = this.items.filter(item => item.toLowerCase().indexOf(this.search.toLowerCase()) > -1);
+                this.results = this.items
+                .filter(item => item.toLowerCase()
+                .indexOf(this.search.toLowerCase()) > -1);
             },
             setResult(result) {
                 this.search = result;
                 this.isOpen = false;
             },
-            bringIt(){
+            callParentForChart(){
                 let currGene = this.search;
                 this.$emit("finished", currGene);
             }
