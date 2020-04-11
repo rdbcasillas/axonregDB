@@ -22,6 +22,7 @@
                 :genename=genename 
                 :ylabel=ylabel 
                 :title=title 
+                :datasets=datasets
                 :key="componentKey" />
         </b-container>
         <br>
@@ -52,18 +53,41 @@
                 geneData: [],
                 ylabel: '',
                 title: '',
-                allgenes: [] 
+                allgenes: [],
+                geneArray: [],
+                dataobject:{},
+                datasets: []
             };
         },
         methods: {
             finished(value) {
+                this.geneArray = _.uniq(value.split(","));
                 this.genename = value
                 this.getChart();
             },
             getLabels() {
                 this.sampleLabels= _.keys(this.geneData[0]).slice(1,);
-                this.geneObj = _.omit(_.find(this.geneData,{ 'external_gene_name': this.genename}),"external_gene_name" );
-                this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
+                let colors  = d3.scaleOrdinal(d3.schemeCategory10);
+                this.geneArray = _.uniq(this.geneArray)
+                for (let item in this.geneArray) {
+                    this.geneObj = _.omit(_.find(this.geneData,{ 'external_gene_name': this.geneArray[item]}),"external_gene_name" );
+                    this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
+                    this.dataobject = 
+                                {
+                                    label: this.geneArray[item],
+                                    pointBackgroundColor: 'white',
+                                    borderWidth: 2,
+                                    fill:false,
+                                    pointBorderColor: colors(item),
+                                    borderColor: colors(item),
+                                    data: this.exprData
+                                }
+                    console.log(this.datasets)
+                    this.datasets.push(this.dataobject)
+                    this.datasets = _.uniqBy(this.datasets,(o)=>{
+                        return o.label;
+                    }) 
+                }
             },
             getChart() {
                 this.getLabels();

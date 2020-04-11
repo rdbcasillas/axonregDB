@@ -5,13 +5,23 @@
   //Exporting this so it can be used in other components
   export default {
     extends: Line,
-    props: ["labeldata","expressData", "genename","ylabel","title","datasets"],
+    props: ["labeldata","expressData", "genename","ylabel","title"],
     data () {
       return {
         datacollection: {
           //Data to be represented on x-axis
           labels: this.labeldata,
-          datasets: this.datasets 
+          datasets: [
+            {
+                label: this.genename,
+                pointBackgroundColor: 'white',
+                borderWidth: 2,
+                fill:false,
+                pointBorderColor: "steelblue",
+                borderColor: "steelblue",
+                data: this.expressData
+            }
+          ] 
         },
         //Chart.js options that controls the appearance of the chart
         options: {

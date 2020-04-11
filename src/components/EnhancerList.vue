@@ -53,7 +53,7 @@
     import * as _ from "lodash";
     import * as d3 from "d3";
     import Autocomplete from "./Autocomplete.vue"
-    import LineChart from "./charts/devExpression.vue";
+    import LineChart from "./charts/enhancerChart.vue";
     export default {
        name: 'Enhancer',
        components:{
