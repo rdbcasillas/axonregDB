@@ -25,11 +25,7 @@
                 :key="componentKey" />
         </b-container>
         <br>
-        <!-- <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" /> -->
-        <!-- <h3>Plot Expression values</h3> -->
         <br>
-        <!-- <h3>Plot feature count values</h3> -->
-        <!-- <LineChart v-if="flag" :labeldata=fclabels :expressData=fcValues :genename=genename :key="componentKey" /> -->
     </div>
 </template>
 

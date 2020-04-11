@@ -39,18 +39,43 @@
                 this.filterResults();
             },
             filterResults() {
-                if (this.search == ""){
+                if (this.search == "" || this.search == ","){
                     this.isOpen = false;
                 }
                 else {
                     this.isOpen = true;
                 }
-                this.results = this.items
-                .filter(item => item.toLowerCase()
-                .indexOf(this.search.toLowerCase()) > -1);
+
+                let currSearch = this.extractGene();
+                if (currSearch != '') {
+                    this.results = this.items
+                    .filter(item => item.toLowerCase()
+                    .indexOf(currSearch.toLowerCase()) > -1);
+                }
+            },
+            extractGene(){
+                //if (this.search.includes(",")){
+                // if (/^([a-za-z0-9]{3,},[a-za-z0-9]{1,})$/.test(this.search)){
+                //    let currvalue = this.search.slice(this.search.indexof(",")+1,);
+                //    return currvalue;
+                // }
+                if (this.search.includes(",")){
+                   let commaloc = this.search.lastIndexOf(",")
+                   let currValue = this.search.slice(commaloc+1,);
+                   return currValue;
+                }
+                else {
+                   return this.search;
+                }
             },
             setResult(result) {
-                this.search = result;
+                if (this.search.includes(",")){
+                    let commaloc = this.search.lastIndexOf(",")
+                    this.search = this.search.slice(0,commaloc+1) + result
+                }
+                else {
+                    this.search = result;
+                }
                 this.isOpen = false;
             },
             callParentForChart(){

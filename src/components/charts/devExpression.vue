@@ -5,7 +5,7 @@
   //Exporting this so it can be used in other components
   export default {
     extends: Line,
-    props: ["labeldata","expressData","genename","ylabel","title"],
+    props: ["labeldata","expressData", "genename","ylabel","title"],
     data () {
       return {
         datacollection: {
@@ -20,7 +20,7 @@
               pointBorderColor: '#249EBF',
               //Data to be represented on y-axis
               data: this.expressData
-            }
+            },
           ]
         },
         //Chart.js options that controls the appearance of the chart
