@@ -52,13 +52,13 @@
       <br />
       <b-row>
         <b-col>
-          <h5>Functional Enhancers</h5>
+          <h5>Transcription Factor Binding</h5>
           <b-link :to="{ name: 'enhancer', params: { plotType: 'enhancer' } }">
             <b-img thumbnail src="./images/enhancers.png" fluid alt="Responsive image"></b-img>
           </b-link>
         </b-col>
         <b-col>
-          <h5>Transcription Factor Binding</h5>
+          <h5>Functional Enhancers</h5>
           <b-link :to="{ name: 'tfbind', params: { plotType: 'tfbind' } }">
             <b-img thumbnail src="./images/tfbind.png" fluid alt="Responsive image"></b-img>
           </b-link>
