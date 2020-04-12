@@ -16,12 +16,25 @@
             </p>
         </b-row>
         <b-row>
-            <b-col> <b-link :to="{name: 'expression',params: {plotType:'expression'} }"><b-img thumbnail src="./geneExpr-2.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
-            <b-col> <b-link :to="{name: 'featurecount',params: {plotType:'featureCount'} }"><b-img thumbnail src="./chrom_access-2.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
+            <b-col>
+                <h5>Gene Expression</h5> 
+                <b-link :to="{name: 'expression',params: {plotType:'expression'} }"><b-img thumbnail src="./images/devexp.png" fluid alt="Responsive image"></b-img></b-link> 
+            </b-col>
+            <b-col> 
+                <h5>Chromatin Accessibility</h5> 
+                <b-link :to="{name: 'featurecount',params: {plotType:'featureCount'} }"><b-img thumbnail src="./images/chromaccess.png" fluid alt="Responsive image"></b-img></b-link> 
+            </b-col>
         </b-row>
+        <br>
         <b-row>
-            <b-col> <b-link :to="{name: 'enhancer', params: {plotType:'enhancer'} }"><b-img thumbnail src="./funenhanc.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
-            <b-col> <b-link :to="{name: 'enhancer', params: {plotType:'enhancer'} }"><b-img thumbnail src="./transbind-2.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
+            <b-col> 
+                <h5>Functional Enhancers</h5> 
+                <b-link :to="{name: 'enhancer', params: {plotType:'enhancer'} }"><b-img thumbnail src="./images/enhancers.png" fluid alt="Responsive image"></b-img></b-link> 
+            </b-col>
+            <b-col> 
+                <h5>Transcription Factor Binding</h5> 
+                <b-link :to="{name: 'enhancer', params: {plotType:'enhancer'} }"><b-img thumbnail src="./images/tfbind.png" fluid alt="Responsive image"></b-img></b-link> 
+            </b-col>
         </b-row>
         </b-container>
     </div>
@@ -40,9 +53,8 @@
 
 <style scoped>
 img {
-    width: 400px; /* You can set the dimensions to whatever you want */
-    height: 180px;
-    object-fit: cover;
+    width: 350px; /* You can set the dimensions to whatever you want */
+    height: 150px;
 }
 .guide {
     margin-left: -5px;
