@@ -70,14 +70,18 @@ export default {
         { value: "E11", text: "E11" },
         { value: "E12", text: "E12" },
         { value: "E13", text: "E13" },
-        { value: "E14", text: "E14" }
+        { value: "E14", text: "E14" },
+        { value: "E16", text: "E16" },
+        { value: "P0", text: "P0" }
       ],
       genename: "",
       enhancerData: {
         E11: [],
         E12: [],
         E13: [],
-        E14: []
+        E14: [],
+        E16: [],
+        P0: []
       },
       filteredData: [],
       devArray: [],
@@ -103,6 +107,8 @@ export default {
       this.getChart();
     },
     loadGenes() {
+
+      
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected], "TargetGene")
       );
@@ -147,6 +153,12 @@ export default {
       );
       this.enhancerData.E14 = await d3.tsv(
         "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"
+      );
+      this.enhancerData.E16 = await d3.tsv(
+        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E16_enhancers_genes_devFC.tsv"
+      );
+      this.enhancerData.P0 = await d3.tsv(
+        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/P0_enhancers_genes_devFC.tsv"
       );
       this.ylabel = "Accessibility";
     }
