@@ -30,7 +30,8 @@
 
 <style scoped>
 .footer {
-    position: fixed;
+    margin-top:20px;
+    position:fixed;
     bottom: 0;
     width: 100%;
     height: 40px;
@@ -38,7 +39,8 @@
     background-color: #f5f5f5;
 }
 p {
-    font-size: 10px;
+    font-size: 12px;
+    margin-bottom: 0px;
 }
 
 

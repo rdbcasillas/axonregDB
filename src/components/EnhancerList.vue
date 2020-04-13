@@ -22,13 +22,20 @@
                 <b-table striped hover :items="filteredData"></b-table>
       </b-row>-->
       <b-row>
+        <b-col v-if="flag">
+            <b-button variant="outline-info" @click="isChip=true;getChart()" > Show Chip data
+                <b-img src="./images/histone.png" fluid alt="Responsive image"></b-img>
+            </b-button> 
+        </b-col>
+      </b-row>
+      <!-- <b-row>
         <b-col>
           <h5
             v-if="flag"
             align="center"
           >Accessibility across {{ count }} Enhancer regions for {{genename}} at {{ selected }}:</h5>
         </b-col>
-      </b-row>
+      </b-row> -->
       <b-row>
         <b-col cols="4" v-for="(item,index) in devArray" :key="index">
           <LineChart
@@ -41,10 +48,6 @@
             :key="compKey"
           />
         </b-col>
-      </b-row>
-      <b-row>
-        <!-- <b-col v-if="flag"><b-img thumbnail src="./devexpr.png" fluid alt="Responsive image"></b-img></b-col> -->
-        <b-col></b-col>
       </b-row>
     </b-container>
   </div>
@@ -76,12 +79,30 @@ export default {
       ],
       genename: "",
       enhancerData: {
-        E11: [],
-        E12: [],
-        E13: [],
-        E14: [],
-        E16: [],
-        P0: []
+        E11: {
+            atac: [],
+            chip: []
+            },
+        E12: {
+            atac: [],
+            chip: []
+            },
+        E13: {
+            atac: [],
+            chip: []
+            },
+        E14: {
+            atac: [],
+            chip: []
+            },
+        E16: {
+            atac: [],
+            chip: []
+            },
+        P0: {
+            atac: [],
+            chip: []
+            },
       },
       filteredData: [],
       devArray: [],
@@ -90,7 +111,8 @@ export default {
       flag: false,
       compKey: 0,
       titleArray: [],
-      count: 0
+      count: 0,
+      isChip:false
     };
   },
   computed: {
@@ -106,20 +128,30 @@ export default {
       this.genename = value;
       this.getChart();
     },
-    loadGenes() {
-
+    async loadGenes() {
+      let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`
+      let url2= `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`
       
+      this.enhancerData[this.selected]['atac'] = await d3.tsv(url);
+      this.enhancerData[this.selected]['chip'] = await d3.tsv(url2);
       this.allgenes = _.uniq(
-        _.map(this.enhancerData[this.selected], "TargetGene")
+        _.map(this.enhancerData[this.selected]['atac'], "TargetGene")
       );
     },
     getChart() {
+      console.log(this.isChip)
       this.flag = true;
       this.compKey += 1;
       let temparr = [];
       let titlearr = [];
       let currName = this.genename;
-      this.filteredData = _.filter(this.enhancerData[this.selected], function(
+      if (this.isChip){
+        let currData = this.enhancerData[this.selected]['chip']
+      }
+      else {
+        let currData = this.enhancerData[this.selected]['atac']
+      }
+      this.filteredData = _.filter(currData, function(
         o
       ) {
         return o["TargetGene"] == currName;
@@ -139,35 +171,40 @@ export default {
       this.titleArray = titlearr;
       this.devArray = temparr;
       console.log(this.titleArray);
-    },
-    async fetchData() {
-      //fetch data based on URL
-      this.enhancerData.E11 = await d3.tsv(
-        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E11_enhancers_genes_devFC.tsv"
-      );
-      this.enhancerData.E12 = await d3.tsv(
-        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E12_enhancers_genes_devFC.tsv"
-      );
-      this.enhancerData.E13 = await d3.tsv(
-        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E13_enhancers_genes_devFC.tsv"
-      );
-      this.enhancerData.E14 = await d3.tsv(
-        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"
-      );
-      this.enhancerData.E16 = await d3.tsv(
-        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E16_enhancers_genes_devFC.tsv"
-      );
-      this.enhancerData.P0 = await d3.tsv(
-        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/P0_enhancers_genes_devFC.tsv"
-      );
       this.ylabel = "Accessibility";
-    }
+    },
+    // async fetchData() {
+    //   //fetch data based on URL
+    //   this.enhancerData.E11 = await d3.tsv(
+    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E11_enhancers_genes_devFC.tsv"
+    //   );
+    //   this.enhancerData.E12 = await d3.tsv(
+    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E12_enhancers_genes_devFC.tsv"
+    //   );
+    //   this.enhancerData.E13 = await d3.tsv(
+    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E13_enhancers_genes_devFC.tsv"
+    //   );
+    //   this.enhancerData.E14 = await d3.tsv(
+    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"
+    //   );
+    //   this.enhancerData.E16 = await d3.tsv(
+    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E16_enhancers_genes_devFC.tsv"
+    //   );
+    //   this.enhancerData.P0 = await d3.tsv(
+    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/P0_enhancers_genes_devFC.tsv"
+    //   );
+    //   this.ylabel = "Accessibility";
+    // }
   },
   created() {
-    this.fetchData();
+    //this.fetchData();
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="css" scoped>
+img {
+    width: 25px;
+    height: 25px;
+}
 </style>

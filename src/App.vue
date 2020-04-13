@@ -2,9 +2,9 @@
   <div id="app">
     <!-- <MultiLine/> -->
     <!-- <Loader :expressionData=exprData :fcData=fcdata /> -->
-    <Header></Header>
-    <router-view></router-view>
-    <Footer></Footer>
+      <Header></Header>
+      <router-view></router-view>
+      <Footer></Footer>
   </div>
 </template>
 
