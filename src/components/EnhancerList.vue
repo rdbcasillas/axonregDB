@@ -130,7 +130,7 @@ export default {
     },
     async loadGenes() {
       let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`
-      let url2= `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`
+      let url2= "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E11_enhancers_chip_genes_devFC.tsv"
       
       this.enhancerData[this.selected]['atac'] = await d3.tsv(url);
       this.enhancerData[this.selected]['chip'] = await d3.tsv(url2);
@@ -145,19 +145,20 @@ export default {
       let temparr = [];
       let titlearr = [];
       let currName = this.genename;
+      let currData = []
       if (this.isChip){
-        let currData = this.enhancerData[this.selected]['chip']
+        currData = this.enhancerData[this.selected]['chip']
       }
       else {
-        let currData = this.enhancerData[this.selected]['atac']
+        currData = this.enhancerData[this.selected]['atac']
       }
+      console.log(currData,currName)
       this.filteredData = _.filter(currData, function(
         o
       ) {
         return o["TargetGene"] == currName;
       });
       //console.log(this.enhancerData);
-      console.log(this.filteredData);
       this.sampleLabels = _.keys(this.filteredData[0]).slice(4);
       this.filteredData.forEach(obj => {
         titlearr.push(obj.chr + ":  " + obj.start + "-" + obj.stop);
