@@ -47,6 +47,7 @@
             :title="titleArray[index]"
             :key="compKey"
             :color="chartColor"
+            :state="stateLabel"
           />
         </b-col>
       </b-row>
@@ -115,6 +116,7 @@ export default {
       count: 0,
       isChip:false,
       state: 'Chip',
+      stateLabel: 'ATAC',
       chartColor: 'steelblue'
     };
   },
@@ -149,11 +151,13 @@ export default {
       let currName = this.genename;
       let currData = []
       if (this.isChip){
+        this.stateLabel = "Chip"
         this.state = 'ATAC'
         currData = this.enhancerData[this.selected]['chip']
         this.chartColor = "#FF6600"
       }
       else {
+        this.stateLabel = "ATAC"
         this.state = 'Chip'
         currData = this.enhancerData[this.selected]['atac']
         this.chartColor = "steelblue"
