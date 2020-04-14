@@ -46,6 +46,7 @@
             :ylabel="ylabel"
             :title="titleArray[index]"
             :key="compKey"
+            :color="chartColor"
           />
         </b-col>
       </b-row>
@@ -113,7 +114,8 @@ export default {
       titleArray: [],
       count: 0,
       isChip:false,
-      state: 'Chip'
+      state: 'Chip',
+      chartColor: 'steelblue'
     };
   },
   computed: {
@@ -149,10 +151,12 @@ export default {
       if (this.isChip){
         this.state = 'ATAC'
         currData = this.enhancerData[this.selected]['chip']
+        this.chartColor = "#FF6600"
       }
       else {
         this.state = 'Chip'
         currData = this.enhancerData[this.selected]['atac']
+        this.chartColor = "steelblue"
       }
       this.filteredData = _.filter(currData, function(
         o
@@ -175,28 +179,6 @@ export default {
       console.log(this.titleArray);
       this.ylabel = "Accessibility";
     },
-    // async fetchData() {
-    //   //fetch data based on URL
-    //   this.enhancerData.E11 = await d3.tsv(
-    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E11_enhancers_genes_devFC.tsv"
-    //   );
-    //   this.enhancerData.E12 = await d3.tsv(
-    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E12_enhancers_genes_devFC.tsv"
-    //   );
-    //   this.enhancerData.E13 = await d3.tsv(
-    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E13_enhancers_genes_devFC.tsv"
-    //   );
-    //   this.enhancerData.E14 = await d3.tsv(
-    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E14_enhancers_genes_devFC.tsv"
-    //   );
-    //   this.enhancerData.E16 = await d3.tsv(
-    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E16_enhancers_genes_devFC.tsv"
-    //   );
-    //   this.enhancerData.P0 = await d3.tsv(
-    //     "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/P0_enhancers_genes_devFC.tsv"
-    //   );
-    //   this.ylabel = "Accessibility";
-    // }
   },
   created() {
     //this.fetchData();

@@ -5,7 +5,7 @@
   //Exporting this so it can be used in other components
   export default {
     extends: Line,
-    props: ["labeldata","expressData", "genename","ylabel","title"],
+    props: ["labeldata","expressData", "genename","ylabel","title","color","state"],
     data () {
       return {
         datacollection: {
@@ -13,12 +13,12 @@
           labels: this.labeldata,
           datasets: [
             {
-                label: this.genename,
+                label: this.genename + " (" + this.state + ")",
                 pointBackgroundColor: 'white',
                 borderWidth: 2,
                 fill:false,
-                pointBorderColor: "steelblue",
-                borderColor: "steelblue",
+                pointBorderColor: this.color,
+                borderColor: this.color,
                 data: this.expressData
             }
           ] 
