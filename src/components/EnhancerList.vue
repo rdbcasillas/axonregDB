@@ -23,7 +23,7 @@
       </b-row>-->
       <b-row>
         <b-col v-if="flag">
-            <b-button variant="outline-info" @click="isChip=true;getChart()" > Show Chip data
+            <b-button variant="outline-info" @click="isChip=!isChip;getChart()" > Show {{ state }} data
                 <b-img src="./images/histone.png" fluid alt="Responsive image"></b-img>
             </b-button> 
         </b-col>
@@ -112,7 +112,8 @@ export default {
       compKey: 0,
       titleArray: [],
       count: 0,
-      isChip:false
+      isChip:false,
+      state: 'Chip'
     };
   },
   computed: {
@@ -130,7 +131,7 @@ export default {
     },
     async loadGenes() {
       let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`
-      let url2= "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/E11_enhancers_chip_genes_devFC.tsv"
+      let url2= `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`
       
       this.enhancerData[this.selected]['atac'] = await d3.tsv(url);
       this.enhancerData[this.selected]['chip'] = await d3.tsv(url2);
@@ -139,7 +140,6 @@ export default {
       );
     },
     getChart() {
-      console.log(this.isChip)
       this.flag = true;
       this.compKey += 1;
       let temparr = [];
@@ -147,19 +147,20 @@ export default {
       let currName = this.genename;
       let currData = []
       if (this.isChip){
+        this.state = 'ATAC'
         currData = this.enhancerData[this.selected]['chip']
       }
       else {
+        this.state = 'Chip'
         currData = this.enhancerData[this.selected]['atac']
       }
-      console.log(currData,currName)
       this.filteredData = _.filter(currData, function(
         o
       ) {
         return o["TargetGene"] == currName;
       });
-      //console.log(this.enhancerData);
       this.sampleLabels = _.keys(this.filteredData[0]).slice(4);
+      console.log(currData,currName)
       this.filteredData.forEach(obj => {
         titlearr.push(obj.chr + ":  " + obj.start + "-" + obj.stop);
       });
