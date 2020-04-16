@@ -2,10 +2,9 @@
   <div>
     <b-container>
       <b-row>
-        <b>
-          To define functional enhancers in forebrain across murine development, we ran the package Activity by contact model (ABC) developed by the Broad Institute on forebrain RNA-Seq and ATAC-Seq datasets from ENCODE consortia.
-          For annotated functional enhancers, chromatin accessibility was quantified by counting reads present in enhancer regions using the tool - FeatureCounts
-        </b>
+        <b>To define functional enhancers in forebrain across murine development, we ran the package Activity by contact model (ABC) developed 
+            by the Broad Institute on forebrain RNA-Seq, ATAC-Seq and ChIP-Seq datasets from ENCODE consortia. For annotated functional enhancers, 
+            chromatin accessibility and histone mark enrichment was quantified by counting reads present in enhancer regions using the tool - FeatureCounts</b>
       </b-row>
       <br />
       <b-row>
@@ -23,9 +22,10 @@
       </b-row>-->
       <b-row>
         <b-col v-if="flag">
-            <b-button variant="outline-info" @click="isChip=!isChip;getChart()" > Show {{ state }} data
-                <b-img src="./images/histone.png" fluid alt="Responsive image"></b-img>
-            </b-button> 
+          <b-button variant="outline-info" @click="isChip=!isChip;getChart()">
+            Show {{ state }} data
+            <b-img src="./images/histone.png" fluid alt="Responsive image"></b-img>
+          </b-button>
         </b-col>
       </b-row>
       <!-- <b-row>
@@ -35,7 +35,7 @@
             align="center"
           >Accessibility across {{ count }} Enhancer regions for {{genename}} at {{ selected }}:</h5>
         </b-col>
-      </b-row> -->
+      </b-row>-->
       <b-row>
         <b-col cols="4" v-for="(item,index) in devArray" :key="index">
           <LineChart
@@ -82,29 +82,29 @@ export default {
       genename: "",
       enhancerData: {
         E11: {
-            atac: [],
-            chip: []
-            },
+          atac: [],
+          chip: []
+        },
         E12: {
-            atac: [],
-            chip: []
-            },
+          atac: [],
+          chip: []
+        },
         E13: {
-            atac: [],
-            chip: []
-            },
+          atac: [],
+          chip: []
+        },
         E14: {
-            atac: [],
-            chip: []
-            },
+          atac: [],
+          chip: []
+        },
         E16: {
-            atac: [],
-            chip: []
-            },
+          atac: [],
+          chip: []
+        },
         P0: {
-            atac: [],
-            chip: []
-            },
+          atac: [],
+          chip: []
+        }
       },
       filteredData: [],
       devArray: [],
@@ -114,10 +114,10 @@ export default {
       compKey: 0,
       titleArray: [],
       count: 0,
-      isChip:false,
-      state: 'Chip',
-      stateLabel: 'ATAC',
-      chartColor: 'steelblue'
+      isChip: false,
+      state: "Chip",
+      stateLabel: "ATAC",
+      chartColor: "steelblue"
     };
   },
   computed: {
@@ -134,13 +134,13 @@ export default {
       this.getChart();
     },
     async loadGenes() {
-      let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`
-      let url2= `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`
-      
-      this.enhancerData[this.selected]['atac'] = await d3.tsv(url);
-      this.enhancerData[this.selected]['chip'] = await d3.tsv(url2);
+      let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`;
+      let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+
+      this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
+      this.enhancerData[this.selected]["chip"] = await d3.tsv(url2);
       this.allgenes = _.uniq(
-        _.map(this.enhancerData[this.selected]['atac'], "TargetGene")
+        _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
     },
     getChart() {
@@ -149,26 +149,23 @@ export default {
       let temparr = [];
       let titlearr = [];
       let currName = this.genename;
-      let currData = []
-      if (this.isChip){
-        this.stateLabel = "Chip"
-        this.state = 'ATAC'
-        currData = this.enhancerData[this.selected]['chip']
-        this.chartColor = "#FF6600"
+      let currData = [];
+      if (this.isChip) {
+        this.stateLabel = "Chip";
+        this.state = "ATAC";
+        currData = this.enhancerData[this.selected]["chip"];
+        this.chartColor = "#FF6600";
+      } else {
+        this.stateLabel = "ATAC";
+        this.state = "Chip";
+        currData = this.enhancerData[this.selected]["atac"];
+        this.chartColor = "steelblue";
       }
-      else {
-        this.stateLabel = "ATAC"
-        this.state = 'Chip'
-        currData = this.enhancerData[this.selected]['atac']
-        this.chartColor = "steelblue"
-      }
-      this.filteredData = _.filter(currData, function(
-        o
-      ) {
+      this.filteredData = _.filter(currData, function(o) {
         return o["TargetGene"] == currName;
       });
       this.sampleLabels = _.keys(this.filteredData[0]).slice(4);
-      console.log(currData,currName)
+      console.log(currData, currName);
       this.filteredData.forEach(obj => {
         titlearr.push(obj.chr + ":  " + obj.start + "-" + obj.stop);
       });
@@ -182,7 +179,7 @@ export default {
       this.devArray = temparr;
       console.log(this.titleArray);
       this.ylabel = "Accessibility";
-    },
+    }
   },
   created() {
     //this.fetchData();
@@ -192,7 +189,7 @@ export default {
 
 <style lang="css" scoped>
 img {
-    width: 25px;
-    height: 25px;
+  width: 25px;
+  height: 25px;
 }
 </style>

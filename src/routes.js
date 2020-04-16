@@ -1,6 +1,7 @@
 import Loader from './components/Loader.vue'
 import Enhancer from './components/EnhancerList.vue'
 import TFBind from './components/tfBind.vue'
+import findGeneTargets from './components/findGeneTargets.vue'
 import Home from './components/Home.vue'
 import Choose from './components/Choose.vue'
 export const routes = [
@@ -8,6 +9,7 @@ export const routes = [
     {path: '/featurecount', name: 'featurecount',component:  Loader, props:true},
     {path: '/enhancer', name: 'enhancer',component:  Enhancer, props:true},
     {path: '/tfbind', name: 'tfbind',component:  TFBind, props:true},
+    {path: '/genetarget', name: 'genetarget',component:  findGeneTargets, props:true},
     {path: '/choose', component:  Choose},
     {path: '/', component:  Home}
 ]

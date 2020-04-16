@@ -7,20 +7,21 @@
                     algorithm to capture binding dynamics across nervous system development. 
                 </p>
             </b-row>
+            <br>
             <b-row>
-                <b-col> <b-img thumbnail src="./images/tfbind.png" fluid alt="Responsive image"></b-img></b-col>
+                <b-col> <b-img thumbnail src="./images/enhancers.png" fluid alt="Responsive image"></b-img></b-col>
             </b-row>
             <br>
             <b-row>
-                <b-col>
-                    <b-button variant="outline-primary">
-                        Identify Gene Targets of TFs
-                    </b-button>
+                <b-col class="colclass">
+                        <b-link :to="{ name: 'genetarget'}">
+                            Identify Gene Targets of TFs
+                        </b-link>
                 </b-col>
-                <b-col>
-                    <b-button variant="outline-primary">
-                        Identify TFs bound to target genes
-                    </b-button>
+                <b-col class="colclass">
+                        <b-link :to="{ name: 'genetarget'}">
+                            Identify TFs bound to target genes
+                        </b-link>
                 </b-col>
             </b-row>
         </b-container>
@@ -34,6 +35,14 @@
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+.colclass {
+    border: 1px solid;
+    max-width: 30%;
+    margin: 30px 40px 0px 140px;
+    background-color: snow;
+}
+.colclass:hover {
+    background-color: lightblue;
+}
 </style>
