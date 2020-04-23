@@ -6,14 +6,14 @@
                     <b-form-select v-model="selected" :options="options"></b-form-select>
                 </b-col>
                 <b-col>
-                    <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="loadGenes()" />
+                    <autocomplete :items="this.tfset" @finished="finished" />
                 </b-col>
             </b-row>
             <br>
             <b-row v-if="flag">
                 <b-card-group deck>
-                    <b-card :header="cardHeader +  ' targets'" >
-                        <b-list-group>
+                    <b-card :header="cardHeader +  ' targets (' + geneSet1.length + ' )'" >
+                        <b-list-group flush>
                             <b-list-group-item  class="genebox"  v-for="(item,index) in geneSet1" :key="index">
                                 {{ item }} 
                             </b-list-group-item>
@@ -30,12 +30,17 @@
 <script>
     import * as d3 from "d3";
     import * as _ from "lodash";
+    import Autocomplete from "./Autocomplete.vue";
     export default {
        name: "findGeneTargets",
+       components: {
+           Autocomplete
+       },
        data: function(){
            return {
                genename: "",
                cardHeader: "",
+               tfset:  [],
                geneSet1 : [],
                geneSet2 : [],
                selected: null,
@@ -52,15 +57,24 @@
            }
        },
        methods: {
+           finished(value) {
+                this.genename = value;
+                this.loadGenes();
+            },
            async getGenes() {
-               let gene1 = await d3.tsv("https://github.com/rdbcasillas/axonregDB/blob/master/public/datasets/targetGenes/E16/FOXA1_E16bound_prom_genes.txt")
-               let gene2 = await d3.tsv("https://github.com/rdbcasillas/axonregDB/blob/master/public/datasets/targetGenes/E16/STAT3_E16bound_prom_genes.txt")
-               let genearr1 = _.map(gene1, '');
-               let genearr2 = _.map(gene2, '');
-               this.geneSet1 = genearr1;
-               this.geneSet2 = genearr1;
+               let tflist = await d3.tsv("./datasets/targetGenes/TFlist.txt")
+               this.tfset =  _.map(tflist, 'tfname');
            },
            loadGenes(){
+               let url = `./datasets/targetGenes/E16/E16_${this.genename}_boundsites_prom_genes.txt`
+               let myvar = this;
+               d3.tsv(url).then((data)=>{
+                   myvar.geneSet1 =  _.remove(_.map(data,'genelist'),
+                    function(item){
+                       return item !=  '';
+                   });
+                   console.log(myvar.geneSet1)
+               })
                this.cardHeader = this.genename
                this.flag = true;
            }

@@ -42,6 +42,4 @@ p {
     font-size: 12px;
     margin-bottom: 0px;
 }
-
-
 </style>

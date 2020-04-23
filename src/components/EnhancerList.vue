@@ -23,7 +23,7 @@
       <b-row>
         <b-col v-if="flag">
           <b-button variant="outline-info" @click="isChip=!isChip;getChart()">
-            Show {{ state }} data
+            Show {{ state }} 
             <b-img src="./images/histone.png" fluid alt="Responsive image"></b-img>
           </b-button>
         </b-col>
@@ -115,7 +115,7 @@ export default {
       titleArray: [],
       count: 0,
       isChip: false,
-      state: "Chip",
+      state: "Histone Enrichment",
       stateLabel: "ATAC",
       chartColor: "steelblue"
     };
@@ -152,15 +152,24 @@ export default {
       let currData = [];
       if (this.isChip) {
         this.stateLabel = "Chip";
-        this.state = "ATAC";
+        this.state = "Accessibility";
         currData = this.enhancerData[this.selected]["chip"];
         this.chartColor = "#FF6600";
       } else {
         this.stateLabel = "ATAC";
-        this.state = "Chip";
+        this.state = "Histone Enrichment";
         currData = this.enhancerData[this.selected]["atac"];
         this.chartColor = "steelblue";
       }
+    //   this.dataobject = {
+    //       label: this.geneArray[item],
+    //       pointBackgroundColor: "white",
+    //       borderWidth: 2,
+    //       fill: false,
+    //       pointBorderColor: colors(item),
+    //       borderColor: colors(item),
+    //       data: this.exprData
+    //   };
       this.filteredData = _.filter(currData, function(o) {
         return o["TargetGene"] == currName;
       });
