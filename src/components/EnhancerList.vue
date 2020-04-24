@@ -12,15 +12,22 @@
           <b-form-select v-model="selected" :options="options" @change="loadGenes(selected)"></b-form-select>
         </b-col>
         <b-col>
+      <b-form-checkbox-group
+        id="checkbox-group-1"
+        v-model="selections"
+        :options="chartoptions"
+        name="flavour-1"
+      ></b-form-checkbox-group>
+        </b-col>
+        <b-col>
           <autocomplete :items="this.allgenes" @finished="finished" />
-          <!-- <b-form-input type="text" placeholder="Enter a gene name" v-model="genename" v-on:keyup.enter="getChart()" /> -->
         </b-col>
       </b-row>
       <br />
       <!-- <b-row>
                 <b-table striped hover :items="filteredData"></b-table>
       </b-row>-->
-      <b-row>
+      <!-- <b-row>
         <b-col v-if="flag">
           <b-button variant="outline-info" @click="isChip=!isChip;getChart()">
             Show {{ state }} 
@@ -28,16 +35,8 @@
           </b-button>
         </b-col>
       </b-row>
-      <!-- <b-row>
-        <b-col>
-          <h5
-            v-if="flag"
-            align="center"
-          >Accessibility across {{ count }} Enhancer regions for {{genename}} at {{ selected }}:</h5>
-        </b-col>
-      </b-row>-->
-      <b-row>
-        <b-col cols="4" v-for="(item,index) in devArray" :key="index">
+      <b-row> -->
+        <!-- <b-col cols="4" v-for="(item,index) in devArray" :key="index">
           <LineChart
             v-if="flag"
             :labeldata="sampleLabels"
@@ -45,6 +44,21 @@
             :genename="genename"
             :ylabel="ylabel"
             :title="titleArray[index]"
+            :key="compKey"
+            :color="chartColor"
+            :state="stateLabel"
+          />
+        </b-col> -->
+        <b-row>
+        <b-col cols="4" v-for="(item,index) in this.chartSets" :key="index">
+          <LineChart
+            v-if="flag"
+            :labeldata="sampleLabels"
+            :expressData="item"
+            :genename="genename"
+            :ylabel="ylabel"
+            :title="titleArray[index]"
+            :datasets="item"
             :key="compKey"
             :color="chartColor"
             :state="stateLabel"
@@ -68,6 +82,12 @@ export default {
   },
   data: function() {
     return {
+        selections: [], // Must be an array reference!
+        chartoptions: [
+          { text: 'ATAC', value: 'atac' },
+          { text: 'H3K27ac', value: 'h3k27ac' },
+          { text: 'H3K4me1', value: 'h3k4me1' }
+        ],
       selected: null,
       allgenes: [],
       options: [
@@ -83,27 +103,33 @@ export default {
       enhancerData: {
         E11: {
           atac: [],
-          chip: []
+          h3k27ac: [],
+          h3k4me1: []
         },
         E12: {
           atac: [],
-          chip: []
+          h3k27ac: [],
+          h3k4me1: []
         },
         E13: {
           atac: [],
-          chip: []
+          h3k27ac: [],
+          h3k4me1: []
         },
         E14: {
           atac: [],
-          chip: []
+          h3k27ac: [],
+          h3k4me1: []
         },
         E16: {
           atac: [],
-          chip: []
+          h3k27ac: [],
+          h3k4me1: []
         },
         P0: {
           atac: [],
-          chip: []
+          h3k27ac: [],
+          h3k4me1: []
         }
       },
       filteredData: [],
@@ -117,7 +143,10 @@ export default {
       isChip: false,
       state: "Histone Enrichment",
       stateLabel: "ATAC",
-      chartColor: "steelblue"
+      chartColor: "steelblue",
+      chartGroup: [],
+      filteredChartGroup: [],
+      chartSets : []
     };
   },
   computed: {
@@ -136,14 +165,17 @@ export default {
     async loadGenes() {
       let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`;
       let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+      let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
 
       this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
-      this.enhancerData[this.selected]["chip"] = await d3.tsv(url2);
+      this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
+      this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
     },
     getChart() {
+      this.cleanSlate();
       this.flag = true;
       this.compKey += 1;
       let temparr = [];
@@ -153,7 +185,7 @@ export default {
       if (this.isChip) {
         this.stateLabel = "Chip";
         this.state = "Accessibility";
-        currData = this.enhancerData[this.selected]["chip"];
+        currData = this.enhancerData[this.selected]["h3k27ac"];
         this.chartColor = "#FF6600";
       } else {
         this.stateLabel = "ATAC";
@@ -161,20 +193,59 @@ export default {
         currData = this.enhancerData[this.selected]["atac"];
         this.chartColor = "steelblue";
       }
-    //   this.dataobject = {
-    //       label: this.geneArray[item],
-    //       pointBackgroundColor: "white",
-    //       borderWidth: 2,
-    //       fill: false,
-    //       pointBorderColor: colors(item),
-    //       borderColor: colors(item),
-    //       data: this.exprData
-    //   };
+      this.selections.forEach(obj=>{
+          this.chartGroup.push(this.enhancerData[this.selected][obj])
+      })
+
+      this.chartGroup.forEach(obj=>{
+          let filtdata = _.filter(obj,function(o){
+              return o["TargetGene"] == currName;
+          })
+          this.filteredChartGroup.push(filtdata);
+      })
+      //console.log(this.filteredChartGroup);
+    let myobj = {};
+    let encount = [];  
+    this.filteredChartGroup.forEach((item,index)=>{
+        let currarray = []
+        item.forEach(o=>{
+            let tmpval = _.values(o).slice(4);
+            currarray.push(_.map(tmpval, _.ary(parseInt, 1)));
+        })
+        myobj[this.selections[index]]  = currarray;
+        encount = currarray.length
+    })
+    let colorObj = {
+        'atac':'steelblue',
+        'h3k27ac':'orange',
+        'h3k4me1': 'green'
+    }
+    console.log(myobj)
+    let tmpselections = this.selections;
+    console.log(tmpselections);
+    for (let index=0; index < encount; index++) {
+        let datasets = []
+        for (let i in tmpselections) {
+            let dataobject = {
+                label: tmpselections[i],
+                pointBackgroundColor: "white",
+                borderWidth: 2,
+                fill: false,
+                pointBorderColor: colorObj[tmpselections[i]],
+                borderColor: colorObj[tmpselections[i]],
+                data: myobj[tmpselections[i]][index]
+            }; 
+            datasets.push(dataobject)
+        }
+        this.chartSets.push(datasets); 
+    }
+    console.log(this.chartSets);
+
       this.filteredData = _.filter(currData, function(o) {
         return o["TargetGene"] == currName;
       });
       this.sampleLabels = _.keys(this.filteredData[0]).slice(4);
-      console.log(currData, currName);
+      //console.log(currData, currName);
       this.filteredData.forEach(obj => {
         titlearr.push(obj.chr + ":  " + obj.start + "-" + obj.stop);
       });
@@ -186,12 +257,25 @@ export default {
       });
       this.titleArray = titlearr;
       this.devArray = temparr;
-      console.log(this.titleArray);
-      this.ylabel = "Accessibility";
+      //console.log(this.titleArray);
+      this.ylabel = "Normalized Feature Count";
+    },
+    cleanSlate() {
+        this.chartSets = [];
+        this.chartGroup = [];
+        this.filteredChartGroup = [];
     }
   },
   created() {
     //this.fetchData();
+  },
+  watch: {
+      'selections': function(){
+          console.log(this.selections);
+          if (this.genename != ''){
+              this.getChart();
+          }
+      }
   }
 };
 </script>

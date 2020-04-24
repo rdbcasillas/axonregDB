@@ -2,6 +2,7 @@
     <div>
         <b-form-input type="text" 
             v-model="search"
+            placeholder="Type a gene name and press Enter"
             @input="onChange"
             v-on:keyup.enter="callParentForChart()"
         />
