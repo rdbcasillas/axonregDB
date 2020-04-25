@@ -1,23 +1,34 @@
 <template>
     <div>
-        <b-form-input type="text" 
-            v-model="search"
-            placeholder="Type a gene name and press Enter"
-            @input="onChange"
-            @keydown.down="onArrowDown"
-            @keydown.up="onArrowUp"
-            @keydown.enter="onEnter"
-            v-on:keyup.enter="callParentForChart()"
-        />
-        <ul v-show="isOpen" class="autocomplete-results">
-            <li v-for="(result,i) in results" :key="i"
-                @click="setResult(result)"
-                v-on:keyup.enter="setResult(result)"
-                class="autocomplete-result"
-                :class="{'is-active': i===arrowCounter}">
-                {{ result }}
-            </li>
-        </ul>
+        <b-row>
+            <b-col cols="10">
+                <b-form-input type="text" 
+                    v-model="search"
+                    placeholder="Type a gene name and press Enter"
+                    @input="onChange"
+                    @keydown.down="onArrowDown"
+                    @keydown.up="onArrowUp"
+                    @keydown.enter="onEnter"
+                    
+                />
+                <ul v-show="isOpen" class="autocomplete-results">
+                    <li v-for="(result,i) in results" :key="i"
+                        @click="setResult(result)"
+                        v-on:keyup.enter="setResult(result)"
+                        class="autocomplete-result"
+                        :class="{'is-active': i===arrowCounter}">
+                        {{ result }}
+                    </li>
+                </ul>
+            </b-col>
+            <b-col>
+                <b-button @click="callParentForChart" variant="outline-primary">
+                    Plot
+                </b-button>
+            </b-col>
+        </b-row>
+
+        <br>
         </div>
 </template>
 
@@ -51,7 +62,14 @@
                 }
             },
             onEnter(){
-                this.search = this.results[this.arrowCounter];
+                if (this.search.includes(",")){
+                        let commaloc = this.search.lastIndexOf(",")
+                        this.search = this.search.slice(0,commaloc+1) 
+                                     + this.results[this.arrowCounter]
+                }
+                else {
+                    this.search = this.results[this.arrowCounter];
+                }
                 this.isOpen = false;
                 this.arrowCounter = -1;
             }, 

@@ -12,17 +12,6 @@
           //Data to be represented on x-axis
           labels: this.labeldata,
           datasets: this.datasets
-        //   [
-        //     {
-        //         label: this.genename + " (" + this.state + ")",
-        //         pointBackgroundColor: 'white',
-        //         borderWidth: 2,
-        //         fill:false,
-        //         pointBorderColor: this.color,
-        //         borderColor: this.color,
-        //         data: this.expressData
-        //     }
-        //   ] 
         },
         //Chart.js options that controls the appearance of the chart
         options: {
