@@ -4,13 +4,17 @@
             v-model="search"
             placeholder="Type a gene name and press Enter"
             @input="onChange"
+            @keydown.down="onArrowDown"
+            @keydown.up="onArrowUp"
+            @keydown.enter="onEnter"
             v-on:keyup.enter="callParentForChart()"
         />
         <ul v-show="isOpen" class="autocomplete-results">
             <li v-for="(result,i) in results" :key="i"
                 @click="setResult(result)"
                 v-on:keyup.enter="setResult(result)"
-                class="autocomplete-result">
+                class="autocomplete-result"
+                :class="{'is-active': i===arrowCounter}">
                 {{ result }}
             </li>
         </ul>
@@ -31,10 +35,26 @@
             return {
                 search: '',
                 results: [],
+                arrowCounter: -1,
                 isOpen: false,
             };
         },
         methods: {
+            onArrowDown(){
+                if (this.arrowCounter < this.results.length) {
+                    this.arrowCounter += 1
+                }
+            },
+            onArrowUp(){
+                if (this.arrowCounter > 0) {
+                    this.arrowCounter -= 1
+                }
+            },
+            onEnter(){
+                this.search = this.results[this.arrowCounter];
+                this.isOpen = false;
+                this.arrowCounter = -1;
+            }, 
             onChange() {
                 this.isOpen = true;
                 this.filterResults();
@@ -108,7 +128,7 @@
     cursor: pointer;
   }
 
-  .autocomplete-result:hover {
+  .autocomplete-result:hover, .is-active{
     background-color: #4AAE9B;
     color: white;
   }
