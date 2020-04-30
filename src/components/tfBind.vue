@@ -19,7 +19,7 @@
                         </b-link>
                 </b-col>
                 <b-col class="colclass">
-                        <b-link :to="{ name: 'genetarget'}">
+                        <b-link :to="{ name: 'boundtf'}">
                             Identify TFs bound to target genes
                         </b-link>
                 </b-col>

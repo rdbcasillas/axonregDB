@@ -1,0 +1,35 @@
+const fs = require('fs');
+const myobj = {}
+let myarr = [];
+function buildTree(startPath) {
+  fs.readdir(startPath, (err, entries) => {
+    let genelistpath = `${startPath}/allgenes`;
+    const genelist  = fs.readFileSync(genelistpath, 'utf8');
+    genelist.split(/\r?\n/).forEach((gene) => {
+	myarr = [];
+//	console.log(gene);
+	entries.forEach((file)=>{
+	    const path = `${startPath}/${file}`;
+	    processFile(path, file,gene);
+	    })
+	myobj[gene] = myarr;
+	});
+//    console.log(myarr);
+  });
+}
+
+function processFile(path,file,gene) {
+  const text = fs.readFileSync(path, 'utf8');
+  tftargets = text.split(/\r?\n/);
+  if (tftargets.includes(gene)) {
+	console.log('found');
+	myarr.push(file);
+  }
+//  text.split(/\r?\n/).forEach((line) => {
+//    if (line.match(gene)) {
+//	myarr.push(file);
+//    }
+//  });
+}
+
+buildTree('.');

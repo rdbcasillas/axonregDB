@@ -4,12 +4,11 @@
             <b-col cols="10">
                 <b-form-input type="text" 
                     v-model="search"
-                    placeholder="Type a gene name and press Enter"
+                    :placeholder="getPlaceholder(type)" 
                     @input="onChange"
                     @keydown.down="onArrowDown"
                     @keydown.up="onArrowUp"
                     @keydown.enter="onEnter"
-                    
                 />
                 <ul v-show="isOpen" class="autocomplete-results">
                     <li v-for="(result,i) in results" :key="i"
@@ -41,6 +40,10 @@
                 required: false,
                 default: () => [],
             },
+            type: {
+                type: String,
+                default: () => ''
+            } 
         },
         data() {
             return {
@@ -51,6 +54,17 @@
             };
         },
         methods: {
+            getPlaceholder(type){
+                if (type=='multiple') {
+                    return "Search for a gene or paste a comma separated list of genes"
+                }
+                else if (type=='TF') {
+                    return "Search for a TF"
+                }
+                else {
+                    return "Search for a gene"
+                }
+            },
             onArrowDown(){
                 if (this.arrowCounter < this.results.length) {
                     this.arrowCounter += 1
@@ -93,11 +107,6 @@
                 }
             },
             extractGene(){
-                //if (this.search.includes(",")){
-                // if (/^([a-za-z0-9]{3,},[a-za-z0-9]{1,})$/.test(this.search)){
-                //    let currvalue = this.search.slice(this.search.indexof(",")+1,);
-                //    return currvalue;
-                // }
                 if (this.search.includes(",")){
                    let commaloc = this.search.lastIndexOf(",")
                    let currValue = this.search.slice(commaloc+1,);
@@ -120,8 +129,17 @@
             callParentForChart(){
                 let currGene = this.search;
                 this.$emit("finished", currGene);
+            },
+            checkClickOutside(evt){
+                if (!this.$el.contains(evt.target)) {
+                    this.isOpen = false;
+                    this.arrowCounter = -1;
+                }
             }
         },
+        mounted(){
+            document.addEventListener('click', this.checkClickOutside)
+        }
   }
 </script>
 

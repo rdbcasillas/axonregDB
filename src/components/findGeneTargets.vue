@@ -6,7 +6,7 @@
                     <b-form-select v-model="selected" :options="options"></b-form-select>
                 </b-col>
                 <b-col>
-                    <autocomplete :items="this.tfset" @finished="finished" />
+                    <autocomplete :items="this.tfset" @finished="finished" type="TF" />
                 </b-col>
             </b-row>
             <br>
@@ -20,10 +20,8 @@
                         </b-list-group>
                     </b-card>
                 </b-card-group>
-
             </b-row>
         </b-container>
-
     </div>
 </template>
 
@@ -38,7 +36,7 @@
        },
        data: function(){
            return {
-               genename: "",
+               tfname: "",
                cardHeader: "",
                tfset:  [],
                geneSet1 : [],
@@ -58,7 +56,7 @@
        },
        methods: {
            finished(value) {
-                this.genename = value;
+                this.tfname = value;
                 this.loadGenes();
             },
            async getGenes() {
@@ -66,7 +64,7 @@
                this.tfset =  _.map(tflist, 'tfname');
            },
            loadGenes(){
-               let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/E16/E16_${this.genename}_boundsites_prom_genes.txt`
+               let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/E16/E16_${this.tfname}_boundsites_prom_genes.txt`
                let myvar = this;
                d3.tsv(url).then((data)=>{
                    myvar.geneSet1 =  _.remove(_.map(data,'genelist'),
@@ -75,7 +73,7 @@
                    });
                    console.log(myvar.geneSet1)
                })
-               this.cardHeader = this.genename
+               this.cardHeader = this.tfname
                this.flag = true;
            }
        },

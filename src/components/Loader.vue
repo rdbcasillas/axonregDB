@@ -26,7 +26,7 @@
       <br />
       <b-row>
         <b-col>
-          <autocomplete :items="this.allgenes" @finished="finished"></autocomplete>
+          <autocomplete :items="this.allgenes" @finished="finished" type="multiple"></autocomplete>
         </b-col>
       </b-row>
       <br />

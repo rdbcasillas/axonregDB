@@ -2,6 +2,7 @@ import Loader from './components/Loader.vue'
 import Enhancer from './components/EnhancerList.vue'
 import TFBind from './components/tfBind.vue'
 import findGeneTargets from './components/findGeneTargets.vue'
+import findBoundTF from './components/findBoundTF.vue'
 import Home from './components/Home.vue'
 import Choose from './components/Choose.vue'
 export const routes = [
@@ -10,6 +11,7 @@ export const routes = [
     {path: '/enhancer', name: 'enhancer',component:  Enhancer, props:true},
     {path: '/tfbind', name: 'tfbind',component:  TFBind, props:true},
     {path: '/genetarget', name: 'genetarget',component:  findGeneTargets, props:true},
+    {path: '/boundtf', name: 'boundtf',component:  findBoundTF, props:true},
     {path: '/choose', component:  Choose},
     {path: '/', component:  Home}
 ]
