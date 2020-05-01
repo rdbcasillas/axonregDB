@@ -24,31 +24,6 @@
         </b-col>
       </b-row>
       <br />
-      <!-- <b-row>
-                <b-table striped hover :items="filteredData"></b-table>
-      </b-row>-->
-      <!-- <b-row>
-        <b-col v-if="flag">
-          <b-button variant="outline-info" @click="isChip=!isChip;getChart()">
-            Show {{ state }} 
-            <b-img src="./images/histone.png" fluid alt="Responsive image"></b-img>
-          </b-button>
-        </b-col>
-      </b-row>
-      <b-row> -->
-        <!-- <b-col cols="4" v-for="(item,index) in devArray" :key="index">
-          <LineChart
-            v-if="flag"
-            :labeldata="sampleLabels"
-            :expressData="item"
-            :genename="genename"
-            :ylabel="ylabel"
-            :title="titleArray[index]"
-            :key="compKey"
-            :color="chartColor"
-            :state="stateLabel"
-          />
-        </b-col> -->
         <b-row>
         <b-col cols="4" v-for="(item,index) in this.chartSets" :key="index">
           <LineChart
@@ -65,6 +40,45 @@
           />
         </b-col>
       </b-row>
+      <hr v-if="flag">
+      <b-row>
+        <b-col>
+          <b-form-group 
+          v-if="flag"
+          > <b>Compare with Promoter regions:</b>
+          <b-form-checkbox
+            v-for="option in chartoptions2"
+            v-model="selections2"
+            :value="option.value"
+            :key=option.value
+            name="flavour-2"
+          >{{ option.text }} </b-form-checkbox>
+          </b-form-group>
+        </b-col>
+        <b-col>
+          <LineChart2
+            v-if="rnaflag"
+            :labeldata="altsampleLabels"
+            :expressData="exprData"
+            :genename="genename"
+            :ylabel="rnaylabel"
+            :title="rnatitle"
+            :datasets="rnadataset"
+          />
+        </b-col>
+        <b-col>
+          <LineChart2
+            v-if="atacflag"
+            :labeldata="altsampleLabels"
+            :expressData="atacData"
+            :genename="genename"
+            :ylabel="atacylabel"
+            :title="atactitle"
+            :datasets="atacdataset"
+          />
+        </b-col>       
+      </b-row>
+      <hr>
     </b-container>
   </div>
 </template>
@@ -74,15 +88,22 @@ import * as _ from "lodash";
 import * as d3 from "d3";
 import Autocomplete from "./Autocomplete.vue";
 import LineChart from "./charts/enhancerChart.vue";
+import LineChart2 from "./charts/devExpression.vue";
 export default {
   name: "Enhancer",
   components: {
     LineChart,
+    LineChart2,
     Autocomplete
   },
   data: function() {
     return {
         selections: [], // Must be an array reference!
+        selections2: [],
+        chartoptions2: [
+          { text: 'Expression', value: 'expr' },
+          { text: 'Accessibility', value: 'access' },
+        ],
         chartoptions: [
           { text: 'ATAC', value: 'atac' },
           { text: 'H3K27ac', value: 'h3k27ac' },
@@ -135,8 +156,15 @@ export default {
       filteredData: [],
       devArray: [],
       sampleLabels: [],
+      altsampleLabels: [],
+      geneObj: {},
+      geneObj2: {},
+      exprData: [],
+      atacData: [],
       ylabel: "ylabel",
       flag: false,
+      rnaflag: false,
+      atacflag: false,
       compKey: 0,
       titleArray: [],
       count: 0,
@@ -146,7 +174,13 @@ export default {
       chartColor: "steelblue",
       chartGroup: [],
       filteredChartGroup: [],
-      chartSets : []
+      chartSets : [],
+      rnadataset: [],
+      atacdataset: [],
+      rnatitle: 'Expression Across Age',
+      rnaylabel: 'FPKM value',
+      atactitle: 'Chromatin Accessibility Across Age',
+      atacylabel: 'Accessibility at Promoter'
     };
   },
   computed: {
@@ -193,6 +227,45 @@ export default {
         currData = this.enhancerData[this.selected]["atac"];
         this.chartColor = "steelblue";
       }
+
+
+      this.geneObj = _.omit(
+          _.find(this.rnaData, { external_gene_name: this.genename }),
+          "external_gene_name"
+        );
+      this.geneObj2 = _.omit(
+          _.find(this.accessData, { external_gene_name: this.genename }),
+          "external_gene_name"
+        );
+      this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
+      this.atacData = _.map(_.values(this.geneObj2), _.ary(parseInt, 1));
+
+      console.log(this.exprData)
+
+
+      let rnaobject = {
+          label: this.genename,
+          pointBackgroundColor: "white",
+          borderWidth: 2,
+          fill: false,
+          pointBorderColor: 'maroon',
+          borderColor: 'maroon',
+          data: this.exprData
+        };
+
+      let atacobject = {
+          label: this.genename,
+          pointBackgroundColor: "white",
+          borderWidth: 2,
+          fill: false,
+          pointBorderColor: 'turquoise',
+          borderColor: 'turquoise',
+          data: this.atacData
+        };
+      
+      this.rnadataset.push(rnaobject);
+      this.atacdataset.push(atacobject);
+
       this.selections.forEach(obj=>{
           this.chartGroup.push(this.enhancerData[this.selected][obj])
       })
@@ -264,10 +337,22 @@ export default {
         this.chartSets = [];
         this.chartGroup = [];
         this.filteredChartGroup = [];
+    },
+    async fetchData() {
+        this.rnaData = await d3.tsv(
+          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
+        );
+
+        this.accessData = await d3.tsv(
+          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv"
+        );
+
+        this.altsampleLabels = _.keys(this.rnaData[0]).slice(1);
     }
+
   },
   created() {
-    //this.fetchData();
+    this.fetchData();
   },
   watch: {
       'selections': function(){
@@ -275,6 +360,21 @@ export default {
           if (this.genename != ''){
               this.getChart();
           }
+      },
+      'selections2': function(){
+          if (_.includes(this.selections2, 'expr')) {
+            this.rnaflag = true;
+          }
+          else {
+            this.rnaflag = false;
+          }
+          if (_.includes(this.selections2, 'access')) {
+            this.atacflag = true;
+          }
+          else {
+            this.atacflag = false;
+          }
+          console.log(this.selections2);
       }
   }
 };
@@ -284,5 +384,8 @@ export default {
 img {
   width: 25px;
   height: 25px;
+}
+b-form-group {
+  font-weight: bold;
 }
 </style>

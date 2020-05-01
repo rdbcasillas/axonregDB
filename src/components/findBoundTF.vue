@@ -1,25 +1,45 @@
 <template>
     <div>
-        <b-container>
+        <b-container >
+            <b-row>
+            <b-col cols="10">
             <b-row>
                 <b-col>
-                    <b-form-select v-model="selected" :options="options" @change="loadGenes(selected)"></b-form-select>
+                    <b-form-select v-model="selected" :options="options" @change="loadData(selected)"></b-form-select>
                 </b-col>
                 <b-col>
-                    <autocomplete :items="this.geneset" @finished="finished" type="TF" />
+                    <autocomplete :items="this.geneset" @finished="finished" type="multiple"/>
                 </b-col>
             </b-row>
             <br>
             <b-row v-if="flag">
-                <b-card-group deck>
-                    <b-card :header="cardHeader +  ' bound TF (' + geneSet1.length + ' )'" >
-                        <b-list-group flush>
-                            <b-list-group-item  class="genebox"  v-for="(item,index) in geneSet1" :key="index">
+                <b-card-group deck
+                v-for="(obj,index) in geneTFarr" :key="index">
+                    <b-card class="mainpanelheader" :header="cardHeader + obj.genename +  ' bound TF (' + obj.boundTF.length + ' )'" >
+                        <b-list-group class="mainpanel" flush>
+                            <b-list-group-item  class="genebox"  v-for="(item,index2) in obj.boundTF" :key="index2">
                                 {{ item }} 
                             </b-list-group-item>
                         </b-list-group>
                     </b-card>
                 </b-card-group>
+            </b-row>
+            </b-col>
+            <b-col >
+                <b-card-group deck v-if="showcommon">
+                <b-card class="sidepanelheader" header="Top common TFs">
+               <b-list-group class="sidepanel" v-for="(tf,index) in impTF" :key="index">
+                   <b-list-group-item :variant="tf.count == geneArray.length ? 'success' : 'warning'"
+                   class="d-flex justify-content-between align-items-center">
+                            {{ tf.tf }}
+                            <b-badge variant="primary" pill>
+                                {{ tf.count }}
+                            </b-badge>
+                   </b-list-group-item>
+               </b-list-group>
+                </b-card>
+                </b-card-group>
+            </b-col>
             </b-row>
         </b-container>
     </div>
@@ -51,31 +71,74 @@
                     { value: "P0", text: "P0" }
                 ],
                 geneTFobj: {},
-                flag: false
+                flag: false,
+                showcommon: false,
+                geneArray: [],
+                geneTFarr: [],
+                impTF: [],
            }
        },   
        methods: {
            finished(value) {
+               this.geneArray = _.uniq(value.split(","));
                this.genename = value;
+               //console.log(value)
                this.loadTF();
             },
-           async getGenes() {
-               let genelist = await d3.tsv("./datasets/targetGenes/P0/gene_target_files_allTF/allgenes")
-               let boundtfobj = await d3.json("./datasets/targetGenes/P0/data.json")
+           async loadData(selected){
+               let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${selected}/gene_target_files_allTF/allgenes`
+               let genelist = await d3.tsv(url)
                this.geneset =  _.map(genelist, 'genename');
+
+               let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${selected}/data.json`
+               let boundtfobj = await d3.json(url2)
                this.geneTFobj = boundtfobj;
            },
            loadTF() {
+               this.geneTFarr = []
                this.flag = true;
-               this.geneSet1 = this.geneTFobj[this.genename]
-           }
+               this.impTF = []
+               //this.geneSet1 = this.geneTFobj[this.genename]
+               for (let item in this.geneArray) {
+                    let tmpobj = {}
+                    let gene = this.geneArray[item];
+                    console.log(gene)
+                    tmpobj['genename'] = gene
+                    tmpobj['boundTF'] = this.geneTFobj[gene];
+                    this.geneTFarr.push(tmpobj);
+               }
+               this.geneTFarr = _.uniq(this.geneTFarr, 'genename');
+               let allTFarr = []
+               this.geneTFarr.forEach(obj => {
+                   allTFarr.push(obj['boundTF']);
+               });
+               let tmpobj = _.countBy(_.flatten(allTFarr));
+               let sorted = new Map(Object.entries(tmpobj).sort((a, b) => b[1] - a[1]));
+               for (let [key,val] of sorted) {
+                    if (val >= (this.geneTFarr.length-1) && this.geneTFarr.length>1) {
+                        this.showcommon = true;
+                        this.impTF.push({tf: key, count: val})
+                    }
+                }
+           }    
        },
        created() {
-           this.getGenes();
        }
     }
 </script>
 
-<style lang="scss" scoped>
-
+<style lang="css" scoped>
+.sidepanel {
+    font-size: 12px;
+}
+.sidepanelheader {
+    font-size: 14px;
+    font-weight: bold;
+}
+.mainpanel {
+    font-size: 12px;
+}
+.mainpanelheader {
+    font-size: 14px;
+}
 </style>
