@@ -118,7 +118,8 @@ export default {
         { value: "E13", text: "E13" },
         { value: "E14", text: "E14" },
         { value: "E16", text: "E16" },
-        { value: "P0", text: "P0" }
+        { value: "P0", text: "P0" },
+        { value: "Adult", text: "Adult" }
       ],
       genename: "",
       enhancerData: {

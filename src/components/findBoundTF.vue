@@ -68,7 +68,8 @@
                     { value: "E13", text: "E13" },
                     { value: "E14", text: "E14" },
                     { value: "E16", text: "E16" },
-                    { value: "P0", text: "P0" }
+                    { value: "P0", text: "P0" },
+                    { value: "Adult", text: "Adult" }
                 ],
                 geneTFobj: {},
                 flag: false,
@@ -86,11 +87,11 @@
                this.loadTF();
             },
            async loadData(selected){
-               let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${selected}/gene_target_files_allTF/allgenes`
+               let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${this.selected}/gene_target_files_allTF/allgenes`
                let genelist = await d3.tsv(url)
                this.geneset =  _.map(genelist, 'genename');
 
-               let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${selected}/data.json`
+               let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${this.selected}/data.json`
                let boundtfobj = await d3.json(url2)
                this.geneTFobj = boundtfobj;
            },
