@@ -205,6 +205,7 @@ export default {
       this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
       this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
+      console.log(this.enhancerData[this.selected]);
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
@@ -313,7 +314,6 @@ export default {
         }
         this.chartSets.push(datasets); 
     }
-    console.log(this.chartSets);
 
       this.filteredData = _.filter(currData, function(o) {
         return o["TargetGene"] == currName;
