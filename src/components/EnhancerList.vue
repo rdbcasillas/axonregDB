@@ -152,6 +152,11 @@ export default {
           atac: [],
           h3k27ac: [],
           h3k4me1: []
+        },
+        Adult: {
+          atac: [],
+          h3k27ac: [],
+          h3k4me1: []
         }
       },
       filteredData: [],
