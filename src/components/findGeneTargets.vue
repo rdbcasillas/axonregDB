@@ -66,6 +66,7 @@
            },
            loadGenes(){
                let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${this.selected}/gene_target_files_allTF/${this.selected}_${this.tfname}_boundsites_prom_genes.txt`
+               console.log(url)
                let myvar = this;
                d3.tsv(url).then((data)=>{
                    myvar.geneSet1 =  _.remove(_.map(data,'genelist'),
