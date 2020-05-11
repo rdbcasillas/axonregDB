@@ -10,6 +10,7 @@
                 <b-nav-item href="https://www.blackmorelab.com/"><b>Blackmore Lab</b></b-nav-item>
             </b-navbar-nav>
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://axonregdb.netlify.com/" data-hashtags="#axonregdb #spinalcordinjury" data-show-count="false">Tweet</a>
+                <a href="https://github.com/rdbcasillas/axonregDB"> <b-img class="githublogo" src="./Github-Mark.png"></b-img> </a>
         </b-navbar>
         <br>
     </div>
@@ -34,5 +35,8 @@ a:hover {
 }
 li.nav-item {
     margin-right:84px
+}
+.githublogo {
+    margin-left: 10px;
 }
 </style>

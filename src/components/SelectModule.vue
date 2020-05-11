@@ -70,7 +70,7 @@
 
 <script>
 export default {
-  name: "Choose",
+  name: "SelectModule",
   data: function() {
     return {};
   }

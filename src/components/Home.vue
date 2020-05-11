@@ -3,7 +3,7 @@
         <b-container class="bv-example-row">
         <br>
         <b-row>
-            <b-col> <b-link to="/choose"><b-img thumbnail src="./mousedev.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
+            <b-col> <b-link to="/select"><b-img thumbnail src="./mousedev.png" fluid alt="Responsive image"></b-img></b-link> </b-col>
         </b-row>
 
 

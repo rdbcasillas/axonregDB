@@ -52,7 +52,7 @@ import * as d3 from "d3";
 import LineChart from "./charts/devExpression.vue";
 import Autocomplete from "./Autocomplete.vue";
 export default {
-  name: "Loader",
+  name: "SinglePlot",
   components: {
     LineChart,
     Autocomplete
@@ -71,7 +71,7 @@ export default {
       allgenes: [],
       geneArray: [],
       dataobject: {},
-      datasets: []
+      datasets: [] 
     };
   },
   methods: {
