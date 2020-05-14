@@ -217,7 +217,7 @@ export default {
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k4me3_prom.fc.tsv"
         );
         this.geneData3  = await d3.tsv(
-          "./datasets/histone/E11toAdult_h3k27ac_prom.fc.tsv"
+          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k27ac_prom.fc.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "Feature Count";
