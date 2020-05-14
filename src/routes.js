@@ -8,6 +8,7 @@ import SelectModule from './components/SelectModule.vue'
 export const routes = [
     {path: '/expression', name: 'expression',component:  SinglePlot, props:true},
     {path: '/featurecount', name: 'featurecount',component:  SinglePlot, props:true},
+    {path: '/histone', name: 'histone',component:  SinglePlot, props:true},
     {path: '/enhancer', name: 'enhancer',component:  Enhancer, props:true},
     {path: '/tfbind', name: 'tfbind',component:  TfBinding, props:true},
     {path: '/genetarget', name: 'genetarget',component:  findGeneTargets, props:true},

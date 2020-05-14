@@ -6,7 +6,6 @@ import VueRouter from 'vue-router'
 import VueSlider from 'vue-slider-component'
 import 'vue-slider-component/theme/default.css'
 import { routes } from './routes.js'
-
 import 'bootstrap/dist/css/bootstrap.css'
 import 'bootstrap-vue/dist/bootstrap-vue.css'
 

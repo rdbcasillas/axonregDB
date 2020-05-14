@@ -2,13 +2,19 @@
     <div>
         <b-container>
             <b-row>
-                <b-col>
+                <b-col cols="2">
                     <b-form-select v-model="selected" :options="options"></b-form-select>
                 </b-col>
+                <!-- <b-col cols="2">
+                    FPKM threshold
+                    <vue-slider v-model="slidervalue" :max="maxrna"></vue-slider>
+                </b-col> -->
                 <b-col>
                     <autocomplete :items="this.tfset" @finished="finished" type="TF" />
                 </b-col>
             </b-row>
+            <!-- <b-spinner v-if="progressflag" variant="primary" label="Spinning"></b-spinner> -->
+            <b-img v-if="progressflag" class="dnagif" src="./dnagif.gif"></b-img>
             <br>
             <b-row v-if="flag">
                 <b-card-group deck>
@@ -43,7 +49,7 @@
                geneSet2 : [],
                selected: null,
                options: [
-                    { value: null, text: "Please select an age" },
+                    { value: null, text: "Age" },
                     { value: "E11", text: "E11" },
                     { value: "E12", text: "E12" },
                     { value: "E13", text: "E13" },
@@ -52,7 +58,10 @@
                     { value: "P0", text: "P0" },
                     { value: "Adult", text: "Adult" }
                 ],
-                flag: false
+                flag: false,
+                slidervalue: [0,100],
+                maxrna: 100,
+                progressflag: false
            }
        },
        methods: {
@@ -60,27 +69,25 @@
                 this.tfname = value;
                 this.loadGenes();
             },
-           async getGenes() {
+           async getTFs() {
                let tflist = await d3.tsv("https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/TFlist.txt")
                this.tfset =  _.map(tflist, 'tfname');
            },
-           loadGenes(){
+           async loadGenes() {
                let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/targetGenes/${this.selected}/gene_target_files_allTF/${this.selected}_${this.tfname}_boundsites_prom_genes.txt`
-               console.log(url)
-               let myvar = this;
-               d3.tsv(url).then((data)=>{
-                   myvar.geneSet1 =  _.remove(_.map(data,'genelist'),
-                    function(item){
-                       return item !=  '';
-                   });
-                   console.log(myvar.geneSet1)
-               })
-               this.cardHeader = this.tfname
-               this.flag = true;
+               this.progressflag = true;
+               let genelist = await  d3.tsv(url)
+               this.geneSet1 =  _.remove(_.map(genelist,'genelist'),
+                 function(item){
+                    return item !=  '';
+                });
+                this.cardHeader = this.tfname;
+                this.progressflag  = false;
+                this.flag = true
            }
        },
        created() {
-           this.getGenes();
+           this.getTFs();
        }
        
     }
@@ -90,5 +97,10 @@
 .genebox {
     font-size: 11px;
 } 
+
+.dnagif {
+    height: 60px;
+    width: 140px
+}
 
 </style>

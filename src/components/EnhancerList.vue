@@ -1,61 +1,74 @@
 <template>
   <div>
     <b-container>
+
       <b-row>
         <b>To define functional enhancers in forebrain across murine development, we ran the package Activity by contact model (ABC) developed 
             by the Broad Institute on forebrain RNA-Seq, ATAC-Seq and ChIP-Seq datasets from ENCODE consortia. For annotated functional enhancers, 
             chromatin accessibility and histone mark enrichment was quantified by counting reads present in enhancer regions using the tool - FeatureCounts</b>
       </b-row>
       <br />
+      <b-col cols="12">
       <b-row>
-        <b-col>
+        <b-col cols="2">
           <b-form-select v-model="selected" :options="options" @change="loadGenes(selected)"></b-form-select>
         </b-col>
+        <b-col cols="3">
+          <b-form-group 
+            id="checkbox-group-1"
+           >
+           <b-form-checkbox v-model="selections" v-for="option in chartoptions" :value="option.value" :key="option.value" :class="option.value" switch>
+             {{ option.text }}
+           </b-form-checkbox>
+           </b-form-group>
+
+          </b-col>
+          <b-col cols="6">
+            <autocomplete :items="this.allgenes" @finished="finished" />
+          </b-col>
         <b-col>
-      <b-form-checkbox-group
-        id="checkbox-group-1"
-        v-model="selections"
-        :options="chartoptions"
-        name="flavour-1"
-      ></b-form-checkbox-group>
-        </b-col>
-        <b-col>
-          <autocomplete :items="this.allgenes" @finished="finished" />
+         <b-button v-if="flag" v-b-toggle.sidebar-1>Plot gene-expression/promoter-accessibility</b-button>
         </b-col>
       </b-row>
+      </b-col>
       <br />
         <b-row>
-        <b-col cols="4" v-for="(item,index) in this.chartSets" :key="index">
-          <LineChart
-            v-if="flag"
-            :labeldata="sampleLabels"
-            :expressData="item"
-            :genename="genename"
-            :ylabel="ylabel"
-            :title="titleArray[index]"
-            :datasets="item"
-            :key="compKey"
-            :color="chartColor"
-            :state="stateLabel"
-          />
+
+          <b-col cols="4" v-for="(item,index) in this.chartSets" :key="index">
+            <LineChart
+              v-if="flag"
+              :labeldata="sampleLabels"
+              :expressData="item"
+              :genename="genename"
+              :ylabel="ylabel"
+              :title="titleArray[index]"
+              :datasets="item"
+              :key="compKey"
+              :color="chartColor"
+              :state="stateLabel"
+            />
+          </b-col>
+          <b-col>
         </b-col>
-      </b-row>
-      <hr v-if="flag">
-      <b-row>
-        <b-col>
-          <b-form-group 
+        </b-row>
+          <b-sidebar v-if="flag" 
+          id="sidebar-1" 
+          title="" right shadow>
+           <b-form-group 
           v-if="flag"
-          > <b>Compare with Promoter regions:</b>
-          <b-form-checkbox
-            v-for="option in chartoptions2"
-            v-model="selections2"
-            :value="option.value"
-            :key=option.value
-            name="flavour-2"
-          >{{ option.text }} </b-form-checkbox>
-          </b-form-group>
-        </b-col>
-        <b-col>
+          > 
+            <b>Plot:</b>
+            <b-form-checkbox
+              v-for="option in chartoptions2"
+              v-model="selections2"
+              :value="option.value"
+              :key=option.value
+              :class=option.value
+              switch
+            >
+            {{ option.text }} 
+            </b-form-checkbox>
+          </b-form-group>      
           <LineChart2
             v-if="rnaflag"
             :labeldata="altsampleLabels"
@@ -65,8 +78,6 @@
             :title="rnatitle"
             :datasets="rnadataset"
           />
-        </b-col>
-        <b-col>
           <LineChart2
             v-if="atacflag"
             :labeldata="altsampleLabels"
@@ -76,7 +87,9 @@
             :title="atactitle"
             :datasets="atacdataset"
           />
-        </b-col>       
+          </b-sidebar> 
+      <b-row>
+            
       </b-row>
       <hr>
     </b-container>
@@ -94,25 +107,25 @@ export default {
   components: {
     LineChart,
     LineChart2,
-    Autocomplete
+    Autocomplete,
   },
   data: function() {
     return {
         selections: [], // Must be an array reference!
         selections2: [],
         chartoptions2: [
-          { text: 'Expression', value: 'expr' },
-          { text: 'Accessibility', value: 'access' },
+          { text: 'Gene Expression', value: 'expr' },
+          { text: 'Promoter Accessibility', value: 'access' },
         ],
         chartoptions: [
-          { text: 'ATAC', value: 'atac' },
-          { text: 'H3K27ac', value: 'h3k27ac' },
-          { text: 'H3K4me1', value: 'h3k4me1' }
+          { text: 'Enhancer Accessibility', value: 'atac' },
+          { text: 'H3K27ac Enrichment', value: 'h3k27ac' },
+          { text: 'H3K4me1 Enrichment', value: 'h3k4me1' }
         ],
       selected: null,
       allgenes: [],
       options: [
-        { value: null, text: "Please select an age" },
+        { value: null, text: "Age" },
         { value: "E11", text: "E11" },
         { value: "E12", text: "E12" },
         { value: "E13", text: "E13" },
@@ -393,5 +406,11 @@ img {
 }
 b-form-group {
   font-weight: bold;
+}
+.h3k27ac {
+  margin-left: -7px;
+}
+.access {
+  margin-left: 38px;
 }
 </style>
