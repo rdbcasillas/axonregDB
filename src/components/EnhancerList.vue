@@ -92,6 +92,14 @@
             
       </b-row>
       <hr>
+      <b-row v-if="flag">
+        <b-col>
+          <h3>  Visualize the Enhancers in IGV </h3>
+          <iframe src="https://igv.org/web/release/2.2.0/embed.html?sessionURL=blob:tVX_b9o.EP1XKv_UScGJE6BNftw0VZU.UyW6zzppqionORKriZ3ZTqFF_O89h9BSwrov3RCg4Dvf8717fqyIhjlokBmQZEVEThJS1ywgHpG8xjXySbUGjo7PZh_q6NR3sXcYnHNj.f.z_zChtLYxie.biOYtr3A9u6WtGQGmjBjlNX9Qki8MzVTti.KOplrxXEhjhW0tUKULvwCpajC.ge8dRPdF5xyRhMxh.e.R8C0QLbu3KuUy_3uAXEpluRVKmg2gg3iPEOc5KGqXlhYPCKx0DpokLOhea49UKmsNSb6RrNRREo29aRR50XQ8co_T2AtiRq49UlhYXkIFWYfgZvhKPkaxfzfVy4uvIaIa2ZBEtlW1RkSrsT0HuSL2vnFZSFLbSePpfKM4CE5YHIeT8ck4iGOGOlGXjZDSRa1uYe2tttL5yMKbBvitoSnkTjSigh.FlK65xcDmZ6urHfpZGFPGxpRN6SSmS9FQofwFpEZYGOXccv_87Iu_X7ITDj4lc5wcYK.q1Rl83nTmjoI5fZ_PM3K6f9mPR2q.nKkFEjMJgq4JC9qV2U5H1cqgpnBrRy4OpScr3OOiBl1AfsPShqaLIR.D8BMnoliI4g207Fd.hYoN0ICDTFUKfxBdpMdsEnj9x1lBCaIo8Zi4Qnhrlck4Fuz39UxEe0yALDnqSnezQtwBFwcSdhTSLfwpGcPSr9AhJA6bd5frEC1cZxdagOzF06_aUmS3EgwKJNyj7jTwwonHohPHXE_OZIecGczx0h2doZDMoMdftiH0Hbo1us5z0ORdyWe7eYur_qQ6talz0peG5uH_TK3ueOqk0V_IO2FEKiph76_wOGqB7oJ2YtqmUdqaq1JVgGXdzdruGPC_o5pBi4em.iQizO4u62EL.N0bv75ePwI-" 
+          style="width:100%; height:649px"  allowfullscreen>
+          </iframe>
+        </b-col>
+      </b-row>
     </b-container>
   </div>
 </template>
