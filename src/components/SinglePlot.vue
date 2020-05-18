@@ -39,10 +39,24 @@
         </b-col>
       </b-row>
       <br />
-      <b-row>
-        <b-col cols="4">
+      <b-row v-if="!histoneflag">
+        <b-col>
           <LineChart
             v-if="flag"
+            :labeldata="sampleLabels"
+            :expressData="exprData"
+            :genename="genename"
+            :ylabel="ylabel"
+            :title="title"
+            :datasets="datasets"
+            :key="componentKey"
+          /> 
+        </b-col>
+      </b-row>
+      <b-row v-if="flag">
+        <b-col cols="4">
+          <LineChart
+            v-if="histoneflag"
             :labeldata="sampleLabels"
             :expressData="exprData"
             :genename="genename"
@@ -54,7 +68,7 @@
         </b-col>
         <b-col cols="4">
           <LineChart
-            v-if="flag"
+            v-if="histoneflag"
             :labeldata="sampleLabels"
             :expressData="exprData2"
             :genename="genename"
@@ -66,7 +80,7 @@
         </b-col>
         <b-col cols="4">
           <LineChart
-            v-if="flag"
+            v-if="histoneflag"
             :labeldata="sampleLabels"
             :expressData="exprData3"
             :genename="genename"
@@ -102,6 +116,7 @@ export default {
       sampleLabels: [],
       geneObj: {},
       flag: false,
+      histoneflag: false,
       componentKey: 0,
       geneData: [],
       ylabel: "",
@@ -195,8 +210,11 @@ export default {
       //fetch data based on URL
       let mypage = false;
       if (this.$route.name == "expression") {
+        // this.geneData = await d3.tsv(
+        //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
+        // );
         this.geneData = await d3.tsv(
-          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
+          "https://129.114.16.59.xip.io/website-data/dev_fpkm.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
@@ -210,6 +228,7 @@ export default {
         this.title = "Accessibility Across Development";
       }
       else {
+        this.histoneflag = true;
         this.geneData = await d3.tsv(
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k4me1_prom.fc.tsv"
         );
