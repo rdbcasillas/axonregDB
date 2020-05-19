@@ -22,7 +22,7 @@
             }
           },
           title: {
-            display: true,
+            display: false,
             text:  this.title,
             fontSize: 14
           },

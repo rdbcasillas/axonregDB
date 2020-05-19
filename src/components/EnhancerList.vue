@@ -35,6 +35,7 @@
         <b-row>
 
           <b-col cols="4" v-for="(item,index) in this.chartSets" :key="index">
+            <h5>{{ titleArray[index] }}</h5>
             <LineChart
               v-if="flag"
               :labeldata="sampleLabels"
@@ -347,7 +348,7 @@ export default {
       this.sampleLabels = _.keys(this.filteredData[0]).slice(4);
       //console.log(currData, currName);
       this.filteredData.forEach(obj => {
-        titlearr.push(obj.chr + ":  " + obj.start + "-" + obj.stop);
+        titlearr.push(obj.chr + ":" + obj.start + "-" + obj.stop);
       });
       this.count = titlearr.length;
 
