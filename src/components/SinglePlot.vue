@@ -91,6 +91,7 @@
           />
         </b-col>
       </b-row>
+      <IGVTest :gene="this.genename" :type="this.$route.name" ref="igvComp" />
 
     </b-container>
     <br />
@@ -102,12 +103,14 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
 import LineChart from "./charts/devExpression.vue";
+import IGVTest from "./charts/IGVTest.vue";
 import Autocomplete from "./Autocomplete.vue";
 export default {
   name: "SinglePlot",
   components: {
     LineChart,
-    Autocomplete
+    Autocomplete,
+    IGVTest
   },
   props: ["plotType"],
   data: function() {
@@ -134,9 +137,15 @@ export default {
   },
   methods: {
     finished(value) {
+      this.datasets = []
+      this.datasets2 = []
+      this.datasets3 = []
       this.geneArray = _.uniq(value.split(","));
       this.genename = value;
       this.getChart();
+     // this.$refs.igvComp.loadBrowser();
+
+      this.$refs.igvComp.loadBrowser(this.geneArray[0]);
     },
     getLabels() {
       this.sampleLabels = _.keys(this.geneData[0]).slice(1);

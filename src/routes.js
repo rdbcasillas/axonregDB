@@ -3,6 +3,7 @@ import Enhancer from './components/EnhancerList.vue'
 import TfBinding from './components/TfBinding.vue'
 import findGeneTargets from './components/findGeneTargets.vue'
 import findBoundTF from './components/findBoundTF.vue'
+import IGVTest from './components/charts/IGVTest.vue'
 //import Home from './components/Home.vue'
 import SelectModule from './components/SelectModule.vue'
 export const routes = [
@@ -14,6 +15,7 @@ export const routes = [
     {path: '/genetarget', name: 'genetarget',component:  findGeneTargets, props:true},
     {path: '/boundtf', name: 'boundtf',component:  findBoundTF, props:true},
     {path: '/select', component:  SelectModule},
+    {path: '/igvtest', component:  IGVTest},
     {path: '/', component:  SelectModule},
     //{path: '/', component:  Home}
 ]

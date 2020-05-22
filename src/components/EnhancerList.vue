@@ -34,8 +34,8 @@
       <br />
         <b-row>
 
-          <b-col cols="4" v-for="(item,index) in this.chartSets" :key="index">
-            <h5>{{ titleArray[index] }}</h5>
+          <b-col class="enhancerplot" cols="4" v-for="(item,index) in this.chartSets" :key="index">
+            <h5 class="title">{{ titleArray[index] }}</h5>
             <LineChart
               v-if="flag"
               :labeldata="sampleLabels"
@@ -95,10 +95,8 @@
       <hr>
       <b-row v-if="flag">
         <b-col>
-          <h3>  Visualize the Enhancers in IGV </h3>
-          <iframe src="https://igv.org/web/release/2.2.0/embed.html?sessionURL=blob:tVX_b9o.EP1XKv_UScGJE6BNftw0VZU.UyW6zzppqionORKriZ3ZTqFF_O89h9BSwrov3RCg4Dvf8717fqyIhjlokBmQZEVEThJS1ywgHpG8xjXySbUGjo7PZh_q6NR3sXcYnHNj.f.z_zChtLYxie.biOYtr3A9u6WtGQGmjBjlNX9Qki8MzVTti.KOplrxXEhjhW0tUKULvwCpajC.ge8dRPdF5xyRhMxh.e.R8C0QLbu3KuUy_3uAXEpluRVKmg2gg3iPEOc5KGqXlhYPCKx0DpokLOhea49UKmsNSb6RrNRREo29aRR50XQ8co_T2AtiRq49UlhYXkIFWYfgZvhKPkaxfzfVy4uvIaIa2ZBEtlW1RkSrsT0HuSL2vnFZSFLbSePpfKM4CE5YHIeT8ck4iGOGOlGXjZDSRa1uYe2tttL5yMKbBvitoSnkTjSigh.FlK65xcDmZ6urHfpZGFPGxpRN6SSmS9FQofwFpEZYGOXccv_87Iu_X7ITDj4lc5wcYK.q1Rl83nTmjoI5fZ_PM3K6f9mPR2q.nKkFEjMJgq4JC9qV2U5H1cqgpnBrRy4OpScr3OOiBl1AfsPShqaLIR.D8BMnoliI4g207Fd.hYoN0ICDTFUKfxBdpMdsEnj9x1lBCaIo8Zi4Qnhrlck4Fuz39UxEe0yALDnqSnezQtwBFwcSdhTSLfwpGcPSr9AhJA6bd5frEC1cZxdagOzF06_aUmS3EgwKJNyj7jTwwonHohPHXE_OZIecGczx0h2doZDMoMdftiH0Hbo1us5z0ORdyWe7eYur_qQ6talz0peG5uH_TK3ueOqk0V_IO2FEKiph76_wOGqB7oJ2YtqmUdqaq1JVgGXdzdruGPC_o5pBi4em.iQizO4u62EL.N0bv75ePwI-" 
-          style="width:100%; height:649px"  allowfullscreen>
-          </iframe>
+          <!-- <EnhancerIGV :age="selected"/> -->
+          <IGVTest :gene="this.genename" :type="this.$route.name" :age="this.selected" ref="igvComp"/>
         </b-col>
       </b-row>
     </b-container>
@@ -109,14 +107,18 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
 import Autocomplete from "./Autocomplete.vue";
+import EnhancerIGV from "./EnhancerIGV.vue";
 import LineChart from "./charts/enhancerChart.vue";
 import LineChart2 from "./charts/devExpression.vue";
+import IGVTest from "./charts/IGVTest.vue";
 export default {
   name: "Enhancer",
   components: {
     LineChart,
     LineChart2,
     Autocomplete,
+    EnhancerIGV,
+    IGVTest
   },
   data: function() {
     return {
@@ -223,6 +225,7 @@ export default {
     finished(value) {
       this.genename = value;
       this.getChart();
+      //console.log(this.$refs)
     },
     async loadGenes() {
       let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`;
@@ -360,11 +363,22 @@ export default {
       this.devArray = temparr;
       //console.log(this.titleArray);
       this.ylabel = "Normalized Feature Count";
+
+//      this.$refs.igvComp.loadBrowser();
+      this.callIGV();
+    },
+    callIGV(){
+      this.$nextTick(function () {
+        this.$refs.igvComp.loadBrowser(this.genename);
+        //this.$refs.igvComp.loadBrowser();
+      })
     },
     cleanSlate() {
         this.chartSets = [];
         this.chartGroup = [];
         this.filteredChartGroup = [];
+        this.rnadataset = [];
+        this.atacdataset = [];
     },
     async fetchData() {
         this.rnaData = await d3.tsv(
@@ -381,6 +395,9 @@ export default {
   },
   created() {
     this.fetchData();
+  },
+  mounted() {
+
   },
   watch: {
       'selections': function(){
@@ -410,8 +427,8 @@ export default {
 
 <style lang="css" scoped>
 img {
-  width: 25px;
-  height: 25px;
+  width: 20px;
+  height: 20px;
 }
 b-form-group {
   font-weight: bold;
@@ -421,5 +438,13 @@ b-form-group {
 }
 .access {
   margin-left: 38px;
+}
+.enhancerplot {
+  border: 0.5px solid darkcyan;
+  padding: 5px;
+  margin: 0 0px 0 0px
+}
+.title {
+  color: darkcyan
 }
 </style>
