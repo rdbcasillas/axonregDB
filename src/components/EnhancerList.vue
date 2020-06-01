@@ -107,7 +107,7 @@
 import * as _ from "lodash";
 import * as d3 from "d3";
 import Autocomplete from "./Autocomplete.vue";
-import EnhancerIGV from "./EnhancerIGV.vue";
+//import EnhancerIGV from "./EnhancerIGV.vue";
 import LineChart from "./charts/enhancerChart.vue";
 import LineChart2 from "./charts/devExpression.vue";
 import IGVTest from "./charts/IGVTest.vue";
@@ -117,7 +117,7 @@ export default {
     LineChart,
     LineChart2,
     Autocomplete,
-    EnhancerIGV,
+    //EnhancerIGV,
     IGVTest
   },
   data: function() {

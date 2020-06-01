@@ -145,7 +145,10 @@ export default {
       this.getChart();
      // this.$refs.igvComp.loadBrowser();
 
-      this.$refs.igvComp.loadBrowser(this.geneArray[0]);
+      this.$nextTick(function () {
+        this.$refs.igvComp.loadBrowser(this.geneArray[0]);
+      });
+      //this.$refs.igvComp.loadBrowser(this.geneArray[0]);
     },
     getLabels() {
       this.sampleLabels = _.keys(this.geneData[0]).slice(1);

@@ -8,6 +8,20 @@
         <b-button @click="loadBrowser()">Load other IGV</b-button> -->
         <div id="igvtest">
         </div>
+        <b-container v-if="flag">
+            <b-row>
+                <b-col>
+                    <b-button @click="loadH3k4me3()">
+                        Show h3k4me3 tracks
+                    </b-button>
+                </b-col>
+                <b-col>
+                    <b-button @click="loadH3k4me1()">
+                        Show h3k4me1 tracks
+                    </b-button>
+                </b-col>
+            </b-row>
+        </b-container>
     </div>
 </template>
 
@@ -19,6 +33,7 @@
         props: ['gene', 'type','age'],
         data: function() {
             return {
+                flag: false,
                 igvbrowser : {},
                 options: {},
                 genename: '',
@@ -92,19 +107,205 @@
                     },
                     {
                         "label": "P0 BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-rna-bam/E18merged.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-rna-bam/P0merged.bw",
                         "color": "#9900FF"
                     },         
                 ],
+                h3k27actracks: [
+                    {
+                        "label": "E11 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E11_h3k27ac.bw",
+                        "color": "#4682B4"
+                    },
+                    {
+                        "label": "New E11 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E11_chip-merged_1bp.bw",
+                        "color": "#4682B4"
+                    },
+                    {
+                        "label": "E12 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12_h3k27ac.bw",
+                        "color": "#800000"
+                    },
+                    {
+                        "label": "New E12 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12_chip-merged_1bp.bw",
+                        "color": "#800000"
+                    },
+                    {
+                        "label": "E13 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E13_h3k27ac.bw",
+                        "color": "#A52A2A"
+                    },
+                    {
+                        "label": "New E13 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E13_chip-merged_1bp.bw",
+                        "color": "#A52A2A"
+                    },
+                    {
+                        "label": "E14 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E14_h3k27ac.bw",
+                        "color": "#00B300"
+                    },
+                    {
+                        "label": "E16 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E16_h3k27ac.bw",
+                        "color": "#40E0D0"
+                    },
+                    {
+                        "label": "E18 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E18_h3k27ac.bw",
+                        "color": "#ADD9E6"
+                    },
+                    {
+                        "label": "P0 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/P0_h3k27ac.bw",
+                        "color": "#9900FF"
+                    },         
+                    {
+                        "label": "Adult BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/Adult_h3k27ac.bw",
+                        "color": "black"
+                    },         
+                    {
+                        "label": "New Adult BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/Adult_chip-merged_1bp.bw",
+                        "color": "black"
+                    },         
+                ],
+                h3k4me1tracks: [
+                    {
+                        "label": "E11 h3k4me1 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/E11_merged_h3k4me1.bw",
+                        "color": "#4682B4",
+//                        "autoscaleGroup": '1'
+                    },
+                    {
+                        "label": "E12 h3k4me1 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/E12_merged_h3k4me1.bw",
+                        "color": "#800000",
+ //                       "autoscaleGroup": '1'
+                    },
+                    {
+                        "label": "E13 h3k4me1 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/E13_merged_h3k4me1.bw",
+                        "color": "#A52A2A",
+  //                      "autoscaleGroup": '1'
+                    },
+                    {
+                        "label": "E14 h3k4me1 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/E14_merged_h3k4me1.bw",
+                        "color": "#00B300",
+   //                     "autoscaleGroup": '1'
+                    },
+                    {
+                        "label": "E16 h3k4me1 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/E16_merged_h3k4me1.bw",
+                        "color": "#40E0D0",
+    //                    "autoscaleGroup": '1'
+                    },
+                    {
+                        "label": "E18 h3k4me1 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/E18_merged_h3k4me1.bw",
+                        "color": "#ADD9E6",
+     //                   "autoscaleGroup": '1'
+                    },
+                    {
+                        "label": "P0 h3k4me1  BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/P0_merged_h3k4me1.bw",
+                        "color": "#9900FF",
+      //                  "autoscaleGroup": '1'
+                    },         
+                    {
+                        "label": "Adult h3k4me1  BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me1/Adult_merged_h3k4me1.bw",
+                        "color": "black",
+       //                 "autoscaleGroup": '1'
+                    },         
+                ],
+                h3k4me3tracks: [
+                    {
+                        "label": "E11 h3k4me3 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/E11_merged_h3k4me3.bw",
+                        "color": "#4682B4",
+        //                "autoscaleGroup": '2'
+                    },
+                    {
+                        "label": "E12 h3k4me3 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/E12_merged_h3k4me3.bw",
+                        "color": "#800000",
+         //               "autoscaleGroup": '2'
+                    },
+                    {
+                        "label": "E13 h3k4me3 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/E13_merged_h3k4me3.bw",
+                        "color": "#A52A2A",
+          ////              "autoscaleGroup": '2'
+                    },
+                    {
+                        "label": "E14 h3k4me3 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/E14_merged_h3k4me3.bw",
+                        "color": "#00B300",
+            //            "autoscaleGroup": '2'
+                    },
+                    {
+                        "label": "E16 h3k4me3 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/E16_merged_h3k4me3.bw",
+                        "color": "#40E0D0",
+             //           "autoscaleGroup": '2'
+                    },
+                    {
+                        "label": "E18 h3k4me3 BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/E18_merged_h3k4me3.bw",
+                        "color": "#ADD9E6",
+              //          "autoscaleGroup": '2'
+                    },
+                    {
+                        "label": "P0 h3k4me3  BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/P0_merged_h3k4me3.bw",
+                        "color": "#9900FF",
+               //         "autoscaleGroup": '2'
+                    },         
+                    {
+                        "label": "Adult h3k4me3  BAM",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k4me3/Adult_merged_h3k4me3.bw",
+                        "color": "black",
+                //        "autoscaleGroup": '2'
+                    },         
+                ],
+
                 counter: 0
             }
         },
         methods: {
+            loadH3k4me3(){
+                let mybrowser = this.igvbrowser;
+                this.h3k4me3tracks.forEach(function(track){
+                    mybrowser 
+                    .loadTrack(track)
+                    .then(function (loadedtrack){
+                        console.log("new tracks loaded")
+                    })
+                    .catch(err=>{console.log(err + " happened")})
+                })
+            },
+            loadH3k4me1(){
+                let mybrowser = this.igvbrowser;
+                this.h3k4me1tracks.forEach(function(track){
+                    mybrowser 
+                    .loadTrack(track)
+                    .then(function (loadedtrack){
+                        console.log("new tracks loaded")
+                    })
+                    .catch(err=>{console.log(err + " happened")})
+                })
+            },
             loadBrowser(geneofinterest){
 
                 this.options = {
                     genome: "mm10",
-                    tracks: this.getTracks() 
+                    tracks: this.getTracks(),
+                    locus : [geneofinterest]
                 };
                 let currOptions = this.options
                 let currState = this;
@@ -114,11 +315,10 @@
                             //browser.loadGenome(currOptions.reference);
                             currState.igvbrowser = browser;
                             console.log("Browser Loaded")
-                            console.log(currState.igvbrowser)
-                            setTimeout(function()
-                            { 
-                                currState.doSomething(geneofinterest)
-                            }, 1000);
+                            // setTimeout(function()
+                            // { 
+                            //     currState.doSomething(geneofinterest)
+                            // }, 1000);
                         })
                         .catch(function (err){
                             alert("browser couldn't load. Please refresh")
@@ -138,6 +338,10 @@
                 }
                 else if (parent == 'featurecount') {
                     return this.accesstracks;
+                }
+                else if (parent == 'histone') {
+                    this.flag = true; 
+                    return this.h3k4me1tracks;
                 }
                 else if (parent == 'enhancer'){
                     let enhancertrack = [
@@ -174,13 +378,6 @@
                 this.igvbrowser.search(mygene)
                 }
             },
-        created(){
-            //this.loadBrowser();
-                this.options = {
-                    genome: "mm10",
-                    tracks: this.accesstracks 
-                };
-        },
     }
 </script>
 
