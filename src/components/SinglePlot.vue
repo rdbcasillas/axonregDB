@@ -180,8 +180,11 @@ export default {
     },
     getLabels() {
       this.sampleLabels = _.keys(this.geneData[0]).slice(1);
-      this.sampleLabels2 = _.keys(this.geneData4[0]).slice(1)
-      this.sampleLabels3 = _.keys(this.geneData5[0]).slice(1)
+      
+      if (this.$route.name == "histone") {
+        this.sampleLabels2 = _.keys(this.geneData4[0]).slice(1)
+        this.sampleLabels3 = _.keys(this.geneData5[0]).slice(1)
+      }
       let colors = d3.scaleOrdinal(d3.schemeCategory10);
       this.geneArray = _.uniq(this.geneArray);
       for (let item in this.geneArray) {
