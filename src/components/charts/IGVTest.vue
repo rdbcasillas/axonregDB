@@ -366,6 +366,7 @@
                     }
                 ],
                 currentTracks: [],
+                currentHistoneTracks: [],
                 counter: 0
             }
         },
@@ -539,41 +540,44 @@
                             .catch((err)=>console.log(err))                       
                        })
 
-                    //    mybrowser.loadTrack(accesstrack)
-                    //    .then(function(newtrack){
-                    //    })
-                    //    .catch((err)=>console.log(err))
-
                        this.currentTracks
                        .push(rnatrack.label,accesstrack.label)
 
                     }) 
                 },
                 'selections3': function(){
-                    if (_.includes(this.selections3, 'h3k27ac')){
-                       let mybrowser = this.igvbrowser;
-                        mybrowser.loadTrack(
-                        {
-                            "label": "E11 h3k27ac BAM",
-                            "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E11_h3k27ac.bw",
-                            "color": "#4682B4",
-                        }
-                        ).then(function(newtrack){
-                           console.log("E11 histone loaded")
-                       })
-                       .catch((err)=>console.log(err))                      
-
-                        mybrowser.loadTrack(
-                        {
-                            "label": "E12 h3k27ac BAM",
-                            "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12_h3k27ac.bw",
-                            "color": "#800000",
-                        }
-                        ).then(function(newtrack){
-                           console.log("E12 histone loaded")
-                       })
-                       .catch((err)=>console.log(err))
+                    let mybrowser = this.igvbrowser;
+                    if (this.currentHistoneTracks.length != 0){
+                        this.currentHistoneTracks.forEach((tracklabel)=>{
+                            mybrowser
+                            .removeTrackByName(tracklabel);
+                        })
                     }
+
+                    let cht = this.currentHistoneTracks
+                    let ages = this.ageselections;
+                    this.selections3.forEach(function(histonemark){
+                        ages.forEach((age)=>{
+                            let label = `${age} ${histonemark}`
+                            let url = `https://129.114.16.59.xip.io/website-data/IGV/dev-hist-${histonemark}/${age}_merged_${histonemark}.bw`
+                            mybrowser.loadTrack(
+                            {
+                                "label": label,
+                                "url" : url,
+                                "color": "#00B300",
+                            }
+                            ).then(function(newtrack){
+                            console.log("E11 histone loaded")
+                            })
+                            .catch((err)=>{
+                                let errmsg = `${histonemark} for ${age} does not exist`
+                                alert(errmsg)
+                            })
+
+                            cht.push(label)
+                        })
+                    })
+                    this.currentHistoneTracks = cht
                 }
             }
     }
