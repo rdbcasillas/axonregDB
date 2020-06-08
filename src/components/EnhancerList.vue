@@ -3,9 +3,14 @@
     <b-container>
 
       <b-row>
-        <b>To define functional enhancers in forebrain across murine development, we ran the package Activity by contact model (ABC) developed 
-            by the Broad Institute on forebrain RNA-Seq, ATAC-Seq and ChIP-Seq datasets from ENCODE consortia. For annotated functional enhancers, 
-            chromatin accessibility and histone mark enrichment was quantified by counting reads present in enhancer regions using the tool - FeatureCounts</b>
+        <p>
+        <b>To define functional enhancers across murine development, we ran the package <a href="https://github.com/broadinstitute/ABC-Enhancer-Gene-Prediction"> Activity By Contact model (ABC) </a> developed 
+            by the Broad Institute on forebrain and frontal cortex (for Adult) 
+            <a href="https://www.encodeproject.org/search/?type=Experiment&assay_term_name=RNA-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&status=released&assembly=mm10&assay_title=polyA+plus+RNA-seq&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=frontal+cortex"> RNA-Seq </a>, 
+            <a href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&assembly=mm10&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=frontal+cortex"> ATAC-Seq </a> and 
+            <a href="https://www.encodeproject.org/search/?type=Experiment&assay_title=Histone+ChIP-seq&assembly=mm10&target.label=H3K27ac&biosample_ontology.term_name=forebrain&target.label=H3K4me1"> ChIP-Seq </a> datasets from ENCODE consortia. For annotated functional enhancers, 
+            chromatin accessibility and histone mark enrichment was quantified by counting reads present in enhancer regions using the tool <a href="http://bioinf.wehi.edu.au/featureCounts/"> FeatureCounts </a></b>
+        </p>
       </b-row>
       <br />
       <b-col cols="12">

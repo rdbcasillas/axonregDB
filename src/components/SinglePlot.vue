@@ -26,8 +26,8 @@
       <b-row v-else>
         <b>
           Analyze temporal  patterns of histone mark enrichment on gene promoters across murine development in forebrain datasets from <a href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&biosample_ontology.term_name=forebrain" > ENCODE consortia </a> .  
-          We've chosen a combination of marks that are indicative of multiple chromatin states -  H3K4me3 (accessible promoter), H3K4me1 (accessible enhancer), 
-          h3k27ac (accessible and active enhancer), H3K9Ac and H3K36me3 (actively transcribed regions of chromatin), H3K27me3 and H3K36me3 (repressive chromatin).  
+          We have chosen a combination of marks that are indicative of multiple chromatin states -  H3K4me3 (accessible promoter), H3K4me1 (accessible enhancer), 
+          h3k27ac (accessible and active enhancer), H3K9Ac and H3K36me3 (latter in the works), H3K27me3 (repressive chromatin) and H3K36me3 (in the works).  
           BAM files from ENCODE were merged and reads in promoter regions (1000 upstream, 100 downstream of TSS) were quantified using the tool - 
           FeatureCounts to quantify enrichment of specific marks in promoter regions.
         </b>

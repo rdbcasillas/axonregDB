@@ -56,13 +56,13 @@
         methods: {
             getPlaceholder(type){
                 if (type=='multiple') {
-                    return "Search for a gene or paste a comma separated list of genes"
+                    return "Search for a gene or paste a comma separated list of genes (Eg: Dcx,Klf6)"
                 }
                 else if (type=='TF') {
-                    return "Search for a TF"
+                    return "Search for a Transcription Factor (Eg: FOXA1)"
                 }
                 else {
-                    return "Search for a gene"
+                    return "Search for a gene (Eg: Klf6)"
                 }
             },
             onArrowDown(){

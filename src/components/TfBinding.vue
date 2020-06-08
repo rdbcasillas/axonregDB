@@ -4,7 +4,7 @@
             <b-row>
                 <p align="justify">
                     ATAC-Seq datasets from ENCODE consortia were footprinted using TOBIAS
-                    algorithm to capture binding dynamics across nervous system development. 
+                    algorithm to capture TF binding dynamics across nervous system development. 
                 </p>
             </b-row>
             <br>
