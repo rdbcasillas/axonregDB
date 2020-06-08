@@ -89,12 +89,12 @@
         </b-col>
         <b-col>
           <h5>Gene Network Analysis</h5>
-          <b-link :to="{ name: 'featurecount', params: { plotType: 'featureCount' } }">
+          <!-- <b-link :to="{ name: 'featurecount', params: { plotType: 'featureCount' } }"> -->
             <b-img thumbnail src="./images/network3d-2.png" fluid alt="Responsive image"></b-img>
               <div class="middle">
-                <div class="text">Perform gene network analyses</div>
+                <div class="text">Perform gene network analyses (UNDER CONSTRUCTION)</div>
               </div>
-          </b-link>
+          <!-- </b-link> -->
         </b-col>
       </b-row>
     </b-container>
