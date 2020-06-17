@@ -31,8 +31,13 @@
           <b-col cols="6">
             <autocomplete :items="this.allgenes" @finished="finished" />
           </b-col>
+
         <b-col>
          <b-button v-if="flag" v-b-toggle.sidebar-1>Plot gene-expression/promoter-accessibility</b-button>
+        </b-col>
+        <b-col cols="3" v-if="flag">
+        <a v-if="$route.name== 'enhancer'"  :href="this.datalink" class="btn btn-primary" download target="_blank">Download Raw Data</a>
+
         </b-col>
       </b-row>
       </b-col>
@@ -127,6 +132,7 @@ export default {
   },
   data: function() {
     return {
+        datalink: '',
         selections: [], // Must be an array reference!
         selections2: [],
         chartoptions2: [
@@ -233,9 +239,9 @@ export default {
       //console.log(this.$refs)
     },
     async loadGenes() {
-      let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_genes_devFC.tsv`;
-      let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_chip_genes_devFC.tsv`;
-      let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
+      let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
+      let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+      let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
 
       this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
@@ -244,6 +250,7 @@ export default {
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
+      this.datalink = url;
     },
     getChart() {
       this.cleanSlate();

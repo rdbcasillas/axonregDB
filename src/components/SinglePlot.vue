@@ -37,6 +37,20 @@
         <b-col>
           <autocomplete :items="this.allgenes" @finished="finished" type="multiple"></autocomplete>
         </b-col>
+        <b-col cols="3" v-if="flag">
+          <a v-if="$route.name== 'expression'"  href="https://129.114.16.59.xip.io/website-data/dev_fpkm.tsv" class="btn btn-primary" download>Download Raw Data</a>
+          <a v-if="$route.name== 'featurecount'"  href="https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv" class="btn btn-primary" download target="_blank">Download Raw Data</a>
+          <a v-if="$route.name== 'histone'"  href="https://129.114.16.59.xip.io/website-data/histone-prom-fc.zip" class="btn btn-primary" download>Download Raw Data</a>
+        </b-col>
+        <b-col cols="2" v-if="flag">
+          <a id="download"
+            download="ChartImage.jpg" 
+            href=""
+            @click="downloadChart()"
+            class="btn btn-primary float-right bg-flat-color-1">
+            Download Chart
+          </a>
+        </b-col>
       </b-row>
       <br />
       <b-row v-if="!histoneflag">
@@ -114,6 +128,7 @@
             :key="componentKey"
           />
         </b-col>
+
       </b-row>
       <IGVTest :gene="this.genename" :type="this.$route.name" ref="igvComp" />
 
@@ -162,6 +177,13 @@ export default {
     };
   },
   methods: {
+    downloadChart(){
+      var url_base64jp = document.getElementById("line-chart").toDataURL("image/jpg");
+      /*get download button (tag: <a></a>) */
+      var a =  document.getElementById("download");
+      /*insert chart image url to download button (tag: <a></a>) */
+      a.href = url_base64jp;
+    },
     finished(value) {
       this.datasets = []
       this.datasets2 = []
