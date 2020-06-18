@@ -29,7 +29,7 @@
 
           </b-col>
           <b-col cols="6">
-            <autocomplete :items="this.allgenes" @finished="finished" />
+            <autocomplete :items="this.allgenes" :buttonstate="this.plotdisable" @finished="finished" />
           </b-col>
 
         <b-col>
@@ -133,6 +133,7 @@ export default {
   data: function() {
     return {
         datalink: '',
+        plotdisable: true,
         selections: [], // Must be an array reference!
         selections2: [],
         chartoptions2: [
@@ -142,7 +143,10 @@ export default {
         chartoptions: [
           { text: 'Enhancer Accessibility', value: 'atac' },
           { text: 'H3K27ac Enrichment', value: 'h3k27ac' },
-          { text: 'H3K4me1 Enrichment', value: 'h3k4me1' }
+          { text: 'H3K4me1 Enrichment', value: 'h3k4me1' },
+          { text: 'H3K4me3 Enrichment', value: 'h3k4me3' },
+          { text: 'H3K9ac Enrichment', value: 'h3k9ac' },
+          { text: 'H3K27me3 Enrichment', value: 'h3k27me3'}
         ],
       selected: null,
       allgenes: [],
@@ -242,14 +246,27 @@ export default {
       let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
       let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
       let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
+      let url4 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
+      let url5 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`
+      let url6 = ''
+      if (this.selected != 'E11') {
+        console.log("not E11")
+        url6 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`
+      }
 
       this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
-      this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
-      this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
-      console.log(this.enhancerData[this.selected]);
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
+      this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
+      this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
+      this.enhancerData[this.selected]["h3k4me3"] = await d3.tsv(url4);
+      this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
+
+      if (this.selected != 'E11') {
+        this.enhancerData[this.selected]["h3k9ac"] = await d3.tsv(url6);
+      }
+      this.plotdisable = false;
       this.datalink = url;
     },
     getChart() {
@@ -335,7 +352,10 @@ export default {
     let colorObj = {
         'atac':'steelblue',
         'h3k27ac':'orange',
-        'h3k4me1': 'green'
+        'h3k4me1': 'green',
+        'h3k4me3': 'skyblue',
+        'h3k9ac': 'darkgreen',
+        'h3k27me3': 'violet'
     }
     console.log(myobj)
     let tmpselections = this.selections;

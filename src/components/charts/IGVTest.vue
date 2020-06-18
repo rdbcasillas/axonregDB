@@ -501,7 +501,8 @@
             watch: {
                 'ageselections': function(){
                     let mybrowser = this.igvbrowser;
-                    
+                    let histoneselections = this.selections3 
+                    console.log(histoneselections)
                     if (this.currentTracks.length != 0){
                         this.currentTracks.forEach((tracklabel)=>{
                             mybrowser
@@ -509,6 +510,7 @@
                         })
                     }
 
+                    let histonemarkarr = []
                     this.ageselections.forEach((age)=>{
 
                        let rnatrack = {
@@ -530,9 +532,19 @@
                             "format": "bedpe",
                             "color": "#9900FF"
                         }
+                        histoneselections.forEach((mark)=>{
+                            let markobj = {
+                                "label": `${age} ${mark} bam`,
+                                "url": `https://129.114.16.59.xip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
+                                "color": "#00B300"
+                            }
+                            histonemarkarr.push(markobj)
+                        })
 
-                       let trackset = [rnatrack, accesstrack, bedpetrack]
-
+                        
+                       console.log(histonemarkarr)
+                       let trackset = _.flatten([rnatrack, accesstrack, bedpetrack],histonemarkarr)
+                       console.log(trackset)
                        trackset.forEach((tracktype)=>{
                             mybrowser.loadTrack(tracktype)
                             .then(function(newtrack){
@@ -542,6 +554,12 @@
 
                        this.currentTracks
                        .push(rnatrack.label,accesstrack.label)
+
+                       let tmpcurrTracks = this.currentTracks 
+                       histonemarkarr.forEach((mark)=>{
+                          tmpcurrTracks.push(mark.label) 
+                       })
+                       this.currentTracks = tmpcurrTracks 
 
                     }) 
                 },

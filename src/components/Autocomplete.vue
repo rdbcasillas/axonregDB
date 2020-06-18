@@ -21,7 +21,7 @@
                 </ul>
             </b-col>
             <b-col>
-                <b-button @click="callParentForChart" variant="outline-primary">
+                <b-button :disabled="buttonstate" @click="callParentForChart" variant="primary">
                     Plot
                 </b-button>
             </b-col>
@@ -43,7 +43,8 @@
             type: {
                 type: String,
                 default: () => ''
-            } 
+            },
+            buttonstate: false
         },
         data() {
             return {
