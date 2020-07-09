@@ -173,42 +173,42 @@
                 h3k27actracks: [
                     {
                         "label": "E11 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E11_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E11_merged_h3k27ac.bw",
                         "color": "#4682B4"
                     },
                     {
                         "label": "E12 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12__merged_h3k27ac.bw",
                         "color": "#800000"
                     },
                     {
                         "label": "E13 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E13_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E13_merged_h3k27ac.bw",
                         "color": "#A52A2A"
                     },
                     {
                         "label": "E14 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E14_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E14_merged_h3k27ac.bw",
                         "color": "#00B300"
                     },
                     {
                         "label": "E16 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E16_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E16_merged_h3k27ac.bw",
                         "color": "#40E0D0"
                     },
                     {
                         "label": "E18 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E18_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E18_merged_h3k27ac.bw",
                         "color": "#ADD9E6"
                     },
                     {
                         "label": "P0 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/P0_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/P0_merged_h3k27ac.bw",
                         "color": "#9900FF"
                     },         
                     {
                         "label": "Adult h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/Adult_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/Adult_merged_h3k27ac.bw",
                         "color": "black"
                     },         
                 ],
@@ -299,32 +299,32 @@
                 h3k9actracks: [
                     {
                         "label": "E12 h3k9ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E12_h3k9ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E12_merged_h3k9ac.bw",
                         "color": "#800000",
                     },
                     {
                         "label": "E13 h3k9ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E13_h3k9ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E13_merged_h3k9ac.bw",
                         "color": "#A52A2A",
                     },
                     {
                         "label": "E14 h3k9ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E14_h3k9ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E14_merged_h3k9ac.bw",
                         "color": "#00B300",
                     },
                     {
                         "label": "E16 h3k9ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E16_h3k9ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E16_merged_h3k9ac.bw",
                         "color": "#40E0D0",
                     },
                     {
                         "label": "E18 h3k9ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E18_h3k9ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/E18_merged_h3k9ac.bw",
                         "color": "#ADD9E6",
                     },
                     {
                         "label": "P0 h3k9ac  BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/P0_h3k9ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k9ac/P0_merged_h3k9ac.bw",
                         "color": "#9900FF",
                     },
                 ],
