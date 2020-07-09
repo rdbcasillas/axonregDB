@@ -178,7 +178,7 @@
                     },
                     {
                         "label": "E12 h3k27ac BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12__merged_h3k27ac.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/dev-hist-h3k27ac/E12_merged_h3k27ac.bw",
                         "color": "#800000"
                     },
                     {
