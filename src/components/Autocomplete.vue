@@ -44,7 +44,10 @@
                 type: String,
                 default: () => ''
             },
-            buttonstate: false
+            buttonstate: {
+                type: Boolean,
+                default: false
+            }
         },
         data() {
             return {
