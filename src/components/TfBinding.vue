@@ -15,12 +15,12 @@
             <b-row>
                 <b-col class="colclass">
                         <b-link :to="{ name: 'enhancertf'}">
-                            Identify Enhancer TFs
+                            Identify TFs bound to gene Enhancers
                         </b-link>
                 </b-col>
                 <b-col class="colclass">
                         <b-link :to="{ name: 'promotertf'}">
-                            Identify Promoter TFs
+                            Identify TFs bound to gene Promoters
                         </b-link>
                 </b-col>
             </b-row>
