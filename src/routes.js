@@ -3,6 +3,8 @@ import Enhancer from './components/EnhancerList.vue'
 import TfBinding from './components/TfBinding.vue'
 import findGeneTargets from './components/findGeneTargets.vue'
 import findBoundTF from './components/findBoundTF.vue'
+import PromoterFoot from './components/PromoterFoot.vue'
+import EnhancerFoot from './components/EnhancerFoot.vue'
 import IGVTest from './components/charts/IGVTest.vue'
 //import Home from './components/Home.vue'
 import SelectModule from './components/SelectModule.vue'
@@ -12,6 +14,8 @@ export const routes = [
     {path: '/histone', name: 'histone',component:  SinglePlot, props:true},
     {path: '/enhancer', name: 'enhancer',component:  Enhancer, props:true},
     {path: '/tfbind', name: 'tfbind',component:  TfBinding, props:true},
+    {path: '/promotertf', name: 'promotertf',component:  PromoterFoot, props:true},
+    {path: '/enhancertf', name: 'enhancertf',component:  EnhancerFoot, props:true},
     {path: '/genetarget', name: 'genetarget',component:  findGeneTargets, props:true},
     {path: '/boundtf', name: 'boundtf',component:  findBoundTF, props:true},
     {path: '/select', component:  SelectModule},

@@ -330,7 +330,7 @@ export default {
         this.title = "Expression Across Development";
       } else if (this.$route.name == "featurecount") {
         this.geneData = await d3.tsv(
-          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv"
+          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms-2.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "Feature Count";

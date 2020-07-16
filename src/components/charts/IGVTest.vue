@@ -492,7 +492,7 @@
             },
             doSomething(mygene){
                 console.log(mygene);
-                this.igvbrowser.search(mygene)
+                this.igvbrowser.search(mygene.split("-")[0])
                 }
             },
             created() {

@@ -258,6 +258,7 @@ export default {
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
+      console.log(this.allgenes)
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
       this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
       this.enhancerData[this.selected]["h3k4me3"] = await d3.tsv(url4);
