@@ -3,7 +3,7 @@
         <b-container>
             <b-row>
                 <b-col cols="2">
-                    <b-form-select v-model="selected" :options="options"></b-form-select>
+                    <b-form-select v-model="selected" :options="options" @change="loadData(selected)"></b-form-select>
                 </b-col>
                 <b-col>
                     <autocomplete :items="this.geneset" @finished="finished" type="single" />
@@ -79,8 +79,12 @@
                let genelist = await d3.tsv("./datasets/enhancers/footprints/E12-genelist.txt")
                this.geneset =  _.map(genelist, 'genename');
                //this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-tfcobound-genelist.tsv") 
-               this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-ABC-TOBIAS-mega2.tsv") 
-               console.log(this.geneset)
+               //this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-ABC-TOBIAS-mega2.tsv") 
+           },
+           async loadData(){
+               let enhancerDataUrl = `./datasets/enhancers/footprints/${this.selected}-enhancers-ABC-TOBIAS-mega2.tsv`
+               console.log(enhancerDataUrl)
+               this.enhancerlist = await d3.tsv(enhancerDataUrl) 
            }
        },
        created(){
