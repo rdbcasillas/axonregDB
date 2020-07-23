@@ -12,7 +12,8 @@
             <b-row v-if="flag">
                 <b-col v-for="(enhancer,index) in filteredlist" :key="index">
                     <b-button v-b-toggle="'collapse-' + index.toString()" variant="info" class="m-1">
-                        {{ enhancer.chr + ':' + enhancer.start + '-' + enhancer.stop }}
+                        {{ enhancer.chr + ':' + enhancer.start + '-' + enhancer.stop 
+                        + " (" + enhancer.ABCscore  + ")"}}
                     </b-button>
 
                     <!-- Element to collapse -->
@@ -20,7 +21,7 @@
                         <b-card>
                             <b-list-group v-for="(item,index2) in enhancer.tflist.split(',')" :key="index2" class="mainpanel" flush>
                                 <b-list-group-item >
-                                    {{ item }} 
+                                    {{ item }} <em>({{ enhancer.motifscore.split(',')[index2] }}) </em>
                                 </b-list-group-item>
                             </b-list-group>
                         </b-card>
@@ -77,7 +78,8 @@
            async fetchgenelist(){
                let genelist = await d3.tsv("./datasets/enhancers/footprints/E12-genelist.txt")
                this.geneset =  _.map(genelist, 'genename');
-               this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-tfcobound-genelist.tsv") 
+               //this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-tfcobound-genelist.tsv") 
+               this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-ABC-TOBIAS-mega2.tsv") 
                console.log(this.geneset)
            }
        },
