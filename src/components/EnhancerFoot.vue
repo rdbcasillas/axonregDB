@@ -83,8 +83,8 @@
            },
            async loadData(){
                let enhancerDataUrl = `./datasets/enhancers/footprints/${this.selected}-enhancers-ABC-TOBIAS-mega2.tsv`
-               console.log(enhancerDataUrl)
                this.enhancerlist = await d3.tsv(enhancerDataUrl) 
+               console.log(this.enhancerlist);
            }
        },
        created(){
