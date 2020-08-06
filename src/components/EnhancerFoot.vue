@@ -13,7 +13,7 @@
                 <b-col v-for="(enhancer,index) in filteredlist" :key="index">
                     <b-button v-b-toggle="'collapse-' + index.toString()" variant="info" class="m-1">
                         {{ enhancer.chr + ':' + enhancer.start + '-' + enhancer.stop 
-                        + " (" + enhancer.ABCscore  + ")"}}
+                        + " (" + enhancer.ABCscore  + ")"  }} <sup><a class="suplink" href="https://github.com/broadinstitute/ABC-Enhancer-Gene-Prediction" title="ABC score for each enhancer refers to...">?</a></sup>
                     </b-button>
 
                     <!-- Element to collapse -->
@@ -76,23 +76,27 @@
             console.log(this.filteredlist)
             },
            async fetchgenelist(){
-               let genelist = await d3.tsv("./datasets/enhancers/footprints/E12-genelist.txt")
-               this.geneset =  _.map(genelist, 'genename');
                //this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-tfcobound-genelist.tsv") 
                //this.enhancerlist = await d3.tsv("./datasets/enhancers/footprints/E12-enhancers-ABC-TOBIAS-mega2.tsv") 
            },
            async loadData(){
+               let genelistUrl =  `./datasets/enhancers/footprints/${this.selected}-genelist.txt`
+               let genelist = await d3.tsv(genelistUrl)
+               console.log(genelist);
+               this.geneset =  _.map(genelist, 'genename');
                let enhancerDataUrl = `./datasets/enhancers/footprints/${this.selected}-enhancers-ABC-TOBIAS-mega2.tsv`
                this.enhancerlist = await d3.tsv(enhancerDataUrl) 
                console.log(this.enhancerlist);
            }
        },
        created(){
-           this.fetchgenelist();
+           //this.fetchgenelist();
        }
     }
 </script>
 
 <style scoped>
-
+a.suplink  {
+    color: whitesmoke;
+}
 </style>
