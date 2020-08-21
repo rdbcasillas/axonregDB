@@ -433,12 +433,14 @@
                             //browser.loadGenome(currOptions.reference);
                             currState.igvbrowser = browser;
                             console.log("Browser Loaded")
+                            //currState.doSomething(geneofinterest);
                             // setTimeout(function()
                             // { 
                             //     currState.doSomething(geneofinterest)
                             // }, 1000);
                         })
                         .catch(function (err){
+                            console.log(err)
                             alert("browser couldn't load. Please refresh")
                         })
                     this.counter += 1;

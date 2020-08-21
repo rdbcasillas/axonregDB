@@ -11,11 +11,11 @@
 <script>
 import * as d3 from "d3";
 
-import MultiLine from "./components/MultiLine.vue";
+//import MultiLine from "./components/MultiLine.vue";
 import Header from "./components/Header.vue";
 import Footer from "./components/Footer.vue";
 import Home from "./components/Home.vue"
-import * as _ from "lodash";
+//import * as _ from "lodash";
 
 export default {
   name: "app",
@@ -23,14 +23,14 @@ export default {
     Header,
     Footer
   },
-  data: function() {
-    return {
-      loadData: [],
-      exprData: [],
-      fcdata:[],
-      labels:[]
-    };
-  },
+  // data: function() {
+  //   return {
+  //     loadData: [],
+  //     exprData: [],
+  //     fcdata:[],
+  //     labels:[]
+  //   };
+  // },
   mounted() {
     console.log("App loaded");
   },

@@ -30,9 +30,8 @@
           We've organized the data into six regulatory categories, with widgets
           below to access each type of data. You can either input individual
           genes/TFs to retrieve corresponding data or feed in gene lists (upto
-          100 genes per list) for certain categories. We have an integrated
-          genome browser to visualize patterns in data, and also offer links to
-          view data on external browsers like UCSC and WashU epigenome browser.
+          100 genes per list) for certain categories. We have also integrated
+          <a href="https://github.com/igvteam/igv.js">IGV genome browser</a>  to visualize patterns in raw data at the gene locus or chromosome level.
         </p>
       </b-row>
       <b-row>

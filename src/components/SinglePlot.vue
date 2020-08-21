@@ -37,6 +37,10 @@
         <b-col>
           <autocomplete :items="this.allgenes" @finished="finished" type="multiple"></autocomplete>
         </b-col>
+        <b-col cols="2" v-if="progressflag">
+            <p>Fetching {{$route.name}} data..</p>
+            <b-img class="dnagif" src="./dnagif.gif"></b-img>
+        </b-col>
         <b-col cols="3" v-if="flag">
           <a v-if="$route.name== 'expression'"  href="https://129.114.16.59.xip.io/website-data/dev_fpkm.tsv" class="btn btn-primary" download>Download Raw Data</a>
           <a v-if="$route.name== 'featurecount'"  href="https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv" class="btn btn-primary" download target="_blank">Download Raw Data</a>
@@ -158,6 +162,7 @@ export default {
       sampleLabels: [],
       geneObj: {},
       flag: false,
+      progressflag: false,
       histoneflag: false,
       componentKey: 0,
       geneData: [],
@@ -319,6 +324,7 @@ export default {
       //fetch data based on URL
       let mypage = false;
       if (this.$route.name == "expression") {
+        this.progressflag = true;
         // this.geneData = await d3.tsv(
         //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
         // );
@@ -328,16 +334,20 @@ export default {
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
         this.title = "Expression Across Development";
+        this.progressflag = false;
       } else if (this.$route.name == "featurecount") {
+        this.progressflag = true;
         this.geneData = await d3.tsv(
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms-2.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "Feature Count";
         this.title = "Accessibility Across Development";
+        this.progressflag = false;
       }
       else {
         this.histoneflag = true;
+        this.progressflag = true;
         this.geneData = await d3.tsv(
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k4me1_prom.fc.tsv"
         );
@@ -360,6 +370,7 @@ export default {
         this.title3 = "H3K27ac Enrichment Across Development";
         this.title4 = "H3K27me3 Enrichment Across Development";
         this.title5 = "H3K9ac Enrichment Across Development";
+        this.progressflag = false;
       }
     }
   },
@@ -372,5 +383,9 @@ export default {
 <style scoped>
 .expdesc {
   margin-left: 65px;
+}
+.dnagif {
+    height: 60px;
+    width: 140px
 }
 </style>
