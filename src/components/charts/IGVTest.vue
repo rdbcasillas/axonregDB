@@ -373,7 +373,10 @@
         methods: {
             saveIGV(){
                 let mysvg = this.igvbrowser.toSVG();
+                console.log(this.igvbrowser);
                 this.igvbrowser.renderSVG(mysvg);
+                //let mysvg = this.igvbrowser;
+
             },
             loadHistone(){
                 this.flag = true;
@@ -423,7 +426,7 @@
                 this.options = {
                     genome: "mm10",
                     tracks: this.getTracks(),
-                    locus : [geneofinterest]
+                    //locus : [geneofinterest]
                 };
                 let currOptions = this.options
                 let currState = this;
@@ -433,7 +436,7 @@
                             //browser.loadGenome(currOptions.reference);
                             currState.igvbrowser = browser;
                             console.log("Browser Loaded")
-                            //currState.doSomething(geneofinterest);
+                            currState.doSomething(geneofinterest);
                             // setTimeout(function()
                             // { 
                             //     currState.doSomething(geneofinterest)
@@ -494,7 +497,8 @@
             },
             doSomething(mygene){
                 console.log(mygene);
-                this.igvbrowser.search(mygene.split("-")[0])
+                //this.igvbrowser.search(mygene.split("-")[0])
+                this.igvbrowser.search(mygene)
                 }
             },
             created() {

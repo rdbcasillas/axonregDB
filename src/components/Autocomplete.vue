@@ -13,7 +13,7 @@
                 <ul v-show="isOpen" class="autocomplete-results">
                     <li v-for="(result,i) in results" :key="i"
                         @click="setResult(result)"
-                        v-on:keyup.enter="setResult(result)"
+                        v-on:keyup.enter="setResult(result); "
                         class="autocomplete-result"
                         :class="{'is-active': i===arrowCounter}">
                         {{ result }}
@@ -81,19 +81,36 @@
             },
             onEnter(){
                 if (this.search.includes(",")){
-                        let commaloc = this.search.lastIndexOf(",")
+                    this.search = this.search.replace(/\s+/g, '');
+                    let commaloc = this.search.lastIndexOf(",")
+                    if (this.results[this.arrowCounter]) {
                         this.search = this.search.slice(0,commaloc+1) 
-                                     + this.results[this.arrowCounter]
+                                    + this.results[this.arrowCounter]
+                    }
+                    else {
+                        this.search = this.search.slice(0,commaloc+1) 
+                                    + this.capitalFirstLetter(this.search.slice(commaloc+1,));
+                    }
                 }
                 else {
-                    this.search = this.results[this.arrowCounter];
+                    console.log(this.search)
+                    if (this.results[this.arrowCounter]) {
+                        this.search = this.results[this.arrowCounter];
+                    }
+                    else {
+                        this.search = this.capitalFirstLetter(this.search);
+                    }
                 }
                 this.isOpen = false;
                 this.arrowCounter = -1;
+                this.callParentForChart();
             }, 
             onChange() {
                 this.isOpen = true;
                 this.filterResults();
+            },
+            capitalFirstLetter(genename) {
+                return genename.charAt(0).toUpperCase() + genename.slice(1);
             },
             filterResults() {
                 if (this.search == "" || this.search == ","){

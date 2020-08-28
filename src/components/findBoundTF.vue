@@ -19,9 +19,11 @@
             <b-row v-if="flag">
                 <b-card-group deck
                 v-for="(obj,index) in geneTFarr" :key="index">
-                    <b-card class="mainpanelheader" :header="cardHeader + obj.genename +  ' bound TF (' + getCount(selected,obj.rnadata) + ' )'" >
+                    <b-card class="mainpanelheader" :header="cardHeader 
+                    + obj.genename +  ' bound TF (' + getCount(selected,obj.rnadata) + ' )'">
                         <b-list-group v-for="(item,index2) in obj.rnadata" :key="index2" class="mainpanel" flush>
-                            <b-list-group-item v-if="parseInt(item[selected])>=slidervalue[0] && parseInt(item[selected])<=slidervalue[1]" class="genebox"  >
+                            <b-list-group-item v-if="parseInt(item[selected])>=slidervalue[0] 
+                                && parseInt(item[selected])<=slidervalue[1]" class="genebox">
                                 {{ item.external_gene_name }} 
                             </b-list-group-item>
                         </b-list-group>
@@ -129,6 +131,7 @@
                                         .keyBy('external_gene_name')
                                         .at(this.geneTFobj[gene])
                                         .value());
+                    console.log(tmpobj['rnadata'])
                     this.geneTFarr.push(tmpobj);
                }
                this.geneTFarr = _.uniq(this.geneTFarr, 'genename');

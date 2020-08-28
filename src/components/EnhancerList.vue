@@ -20,11 +20,15 @@
         </b-col>
         <b-col cols="3">
           <b-form-group 
-            id="checkbox-group-1"
+            id="checkbox-group-1" 
            >
-           <b-form-checkbox v-model="selections" v-for="option in chartoptions" :value="option.value" :key="option.value" :class="option.value" switch>
+           <!-- <b-form-checkbox v-model="selections" v-for="option in chartoptions" :value="option.value" :key="option.value" :class="option.value" switch>
              {{ option.text }}
-           </b-form-checkbox>
+           </b-form-checkbox> -->
+           <b-form-checkbox-group
+             v-model="selections"
+             :options="chartoptions" switches>
+           </b-form-checkbox-group>
            </b-form-group>
 
           </b-col>
@@ -151,8 +155,8 @@ export default {
           { text: 'H3K27ac Enrichment', value: 'h3k27ac' },
           { text: 'H3K4me1 Enrichment', value: 'h3k4me1' },
           { text: 'H3K4me3 Enrichment', value: 'h3k4me3' },
-          { text: 'H3K9ac Enrichment', value: 'h3k9ac' },
-          { text: 'H3K27me3 Enrichment', value: 'h3k27me3'}
+          { text: 'H3K9ac Enrichment', value: 'h3k9ac', disabled: false },
+          { text: 'H3K27me3 Enrichment', value: 'h3k27me3', disabled: false}
         ],
       selected: null,
       allgenes: [],
@@ -232,7 +236,7 @@ export default {
       rnatitle: 'Expression Across Age',
       rnaylabel: 'FPKM value',
       atactitle: 'Chromatin Accessibility Across Age',
-      atacylabel: 'Accessibility at Promoter'
+      atacylabel: 'Accessibility at Promoter',
     };
   },
   computed: {
@@ -255,18 +259,28 @@ export default {
       let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
       let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
       let url4 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
-      let url5 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`
+      let url5 = '' 
       let url6 = ''
-      if (this.selected != 'E11') {
-        console.log("not E11")
+      if (!(this.selected == 'Adult')) {
+        this.chartoptions[5]['disabled'] = false
+        url5 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`
+      }
+      if (!(this.selected == 'E11' || this.selected == 'Adult')) {
+        this.chartoptions[4]['disabled'] = false
+        console.log("adult called!")
         url6 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`
+      }
+      if (this.selected == 'E11' || this.selected == 'Adult') {
+        this.chartoptions[4]['disabled'] = true
+      }
+      if (this.selected == 'Adult') {
+        this.chartoptions[5]['disabled'] = true
       }
 
       this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
       this.allgenes = _.uniq(
         _.map(this.enhancerData[this.selected]["atac"], "TargetGene")
       );
-      console.log(this.allgenes)
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
       this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
       this.enhancerData[this.selected]["h3k4me3"] = await d3.tsv(url4);

@@ -189,13 +189,27 @@ export default {
       /*insert chart image url to download button (tag: <a></a>) */
       a.href = url_base64jp;
     },
+    capitalFirstLetter(genename) {
+        return genename.charAt(0).toUpperCase() + genename.slice(1);
+    },    
     finished(value) {
       this.datasets = []
       this.datasets2 = []
       this.datasets3 = []
       this.datasets4 = []
       this.datasets5 = []
-      this.geneArray = _.uniq(value.split(","));
+      if (value.includes(" ")){
+        this.geneArray = _.uniq(value.split(", "));
+      }
+      else {
+        this.geneArray = _.uniq(value.split(","));
+      }
+      console.log(this.geneArray);
+      this.geneArray = this.geneArray
+                      .map((gene)=>{
+                        return this.capitalFirstLetter(gene);
+                      });
+      console.log(this.geneArray);
       this.genename = value;
       this.getChart();
      // this.$refs.igvComp.loadBrowser();

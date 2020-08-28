@@ -8,6 +8,7 @@ import EnhancerFoot from './components/EnhancerFoot.vue'
 import IGVTest from './components/charts/IGVTest.vue'
 //import Home from './components/Home.vue'
 import SelectModule from './components/SelectModule.vue'
+import frontPage from './components/frontPage.vue'
 export const routes = [
     {path: '/expression', name: 'expression',component:  SinglePlot, props:true},
     {path: '/featurecount', name: 'featurecount',component:  SinglePlot, props:true},
@@ -21,5 +22,6 @@ export const routes = [
     {path: '/select', component:  SelectModule},
     {path: '/igvtest', component:  IGVTest},
     {path: '/', component:  SelectModule},
+    {path: '/home', component:  frontPage},
     //{path: '/', component:  Home}
 ]
