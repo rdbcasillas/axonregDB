@@ -21,7 +21,7 @@
                     <b-form-group 
                         id="checkbox-group-3"
                     >Histone Marks
-                    <b-form-checkbox v-model="selections3" v-for="option in histoneoptions" :value="option.value" :key="option.value" :class="option.value" switch>
+                    <b-form-checkbox v-model="histselections" v-for="option in histoneoptions" :value="option.value" :key="option.value" :class="option.value" switch>
                         {{ option.text }}
                     </b-form-checkbox>
                     </b-form-group>               
@@ -65,9 +65,9 @@
             return {
                 selections: ['access','bedpe'],
                 ageselections: [this.age],
-                selections3: [],
+                histselections: [],
                 chartoptions: [
-                { text: 'RNA', value: 'expr' },
+                { text: 'Gene Expression', value: 'expr' },
                 { text: 'Chromatin Accessibility', value: 'access' },
                 { text: 'Prom-Enhancer Loops', value: 'bedpe' },
                 ],
@@ -367,7 +367,8 @@
                 ],
                 currentTracks: [],
                 currentHistoneTracks: [],
-                counter: 0
+                counter: 0,
+                histonesecretflag: false
             }
         },
         methods: {
@@ -499,109 +500,161 @@
                 console.log(mygene);
                 //this.igvbrowser.search(mygene.split("-")[0])
                 this.igvbrowser.search(mygene)
-                }
             },
+            giveBackTracks(age){
+                let histoneselections = [];
+                if (this.histonesecretflag){
+                    histoneselections = this.oldhistselections 
+                } else {
+                    histoneselections = this.histselections 
+                }
+                console.log(histoneselections);
+                let rnatrack = {
+                "label": `${age} RNA`,
+                "url" : `https://129.114.16.59.xip.io/website-data/IGV/dev-rna-bam/${age}merged.bw`,
+                "color": "#4682B4"
+                }
+
+                let accesstrack = {
+                "label": `${age} Prom Access`,
+                "url" : `https://129.114.16.59.xip.io/website-data/IGV/${age}_merged_1bp.bw`,
+                "color": "#800000"
+                }
+
+                let bedpetrack = {
+                    "label": `${age} enhancer-promoter loops`,
+                    "url": `https://129.114.16.59.xip.io/website-data/IGV/${age}_enhancers.bedpe`, 
+                    "type": "interaction",
+                    "format": "bedpe",
+                    "color": "#9900FF"
+                }
+
+                let histonemarkarr = [];
+                histoneselections.forEach((mark)=>{
+                    let markobj = {
+                        "label": `${age} ${mark} bam`,
+                        "url": `https://129.114.16.59.xip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
+                        "color": "#00B300"
+                    }
+                    histonemarkarr.push(markobj)
+                })
+               
+                let tmpobj = {
+                    'expr': rnatrack,
+                    'access': accesstrack,
+                    'bedpe': bedpetrack,
+                }
+                
+                return [tmpobj,histonemarkarr]
+            },
+        },
             created() {
                 this.histoneprevious = this.histoneselected;
+                this.oldselections = this.selections;
+                this.oldhistselections = this.histselections;
+                this.oldageselections  = this.ageselections;
             },
             watch: {
                 'ageselections': function(){
                     let mybrowser = this.igvbrowser;
-                    let histoneselections = this.selections3 
-                    console.log(histoneselections)
-                    if (this.currentTracks.length != 0){
-                        this.currentTracks.forEach((tracklabel)=>{
-                            mybrowser
-                            .removeTrackByName(tracklabel);
-                        })
-                    }
+                    let histoneselections = this.histselections 
+                    let generegmarks = this.selections 
+                    //console.log(histoneselections)
+                    // if (this.currentTracks.length != 0){
+                    //     this.currentTracks.forEach((tracklabel)=>{
+                    //         mybrowser
+                    //         .removeTrackByName(tracklabel);
+                    //     })
+                    // }
 
                     let histonemarkarr = []
-                    this.ageselections.forEach((age)=>{
+                    
+                    let addTracks = _.difference(this.ageselections, this.oldageselections) 
+                    let removeTracks = _.difference(this.oldageselections,this.ageselections);
 
-                       let rnatrack = {
-                        "label": `${age} RNA`,
-                        "url" : `https://129.114.16.59.xip.io/website-data/IGV/dev-rna-bam/${age}merged.bw`,
-                        "color": "#4682B4"
-                       }
-
-                       let accesstrack = {
-                        "label": `${age} Prom Access`,
-                        "url" : `https://129.114.16.59.xip.io/website-data/IGV/${age}_merged_1bp.bw`,
-                        "color": "#800000"
-                       }
-
-                        let bedpetrack = {
-                            "label": `${age} enhancer-promoter loops`,
-                            "url": `https://129.114.16.59.xip.io/website-data/IGV/${age}_enhancers.bedpe`, 
-                            "type": "interaction",
-                            "format": "bedpe",
-                            "color": "#9900FF"
-                        }
-                        histoneselections.forEach((mark)=>{
-                            let markobj = {
-                                "label": `${age} ${mark} bam`,
-                                "url": `https://129.114.16.59.xip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
-                                "color": "#00B300"
-                            }
-                            histonemarkarr.push(markobj)
+                    if (addTracks.length != 0){
+                        let tmparr = this.giveBackTracks(addTracks[0]);
+                        generegmarks.forEach((regmark)=>{
+                            mybrowser.loadTrack(tmparr[0][regmark]) 
+                            .then((newtrack)=>{})
+                            .catch((err)=>console.log(err));
                         })
-
-                        
-                       console.log(histonemarkarr)
-                       let trackset = _.flatten([rnatrack, accesstrack, bedpetrack],histonemarkarr)
-                       console.log(trackset)
-                       trackset.forEach((tracktype)=>{
-                            mybrowser.loadTrack(tracktype)
-                            .then(function(newtrack){
-                            })
-                            .catch((err)=>console.log(err))                       
-                       })
-
-                       this.currentTracks
-                       .push(rnatrack.label,accesstrack.label)
-
-                       let tmpcurrTracks = this.currentTracks 
-                       histonemarkarr.forEach((mark)=>{
-                          tmpcurrTracks.push(mark.label) 
-                       })
-                       this.currentTracks = tmpcurrTracks 
-
-                    }) 
-                },
-                'selections3': function(){
-                    let mybrowser = this.igvbrowser;
-                    if (this.currentHistoneTracks.length != 0){
-                        this.currentHistoneTracks.forEach((tracklabel)=>{
-                            mybrowser
-                            .removeTrackByName(tracklabel);
+                        tmparr[1].forEach((histonetrack)=>{
+                            mybrowser.loadTrack(histonetrack) 
+                            .then((newtrack)=>{})
+                            .catch((err)=>console.log(err));
                         })
                     }
 
-                    let cht = this.currentHistoneTracks
+                    if (removeTracks.length != 0){
+                        let tmparr = this.giveBackTracks(removeTracks[0]);
+                        generegmarks.forEach((regmark)=>{
+                            mybrowser.removeTrackByName(tmparr[0][regmark].label) 
+                        })
+                        tmparr[1].forEach((histonetrack)=>{
+                            mybrowser.removeTrackByName(histonetrack.label) 
+                        })
+                    }
+                        
+                    this.oldageselections = this.ageselections;
+                },
+                'histselections': function(){
+                    let mybrowser = this.igvbrowser;
                     let ages = this.ageselections;
-                    this.selections3.forEach(function(histonemark){
-                        ages.forEach((age)=>{
-                            let label = `${age} ${histonemark}`
-                            let url = `https://129.114.16.59.xip.io/website-data/IGV/dev-hist-${histonemark}/${age}_merged_${histonemark}.bw`
-                            mybrowser.loadTrack(
-                            {
-                                "label": label,
-                                "url" : url,
-                                "color": "#00B300",
-                            }
-                            ).then(function(newtrack){
-                            console.log("E11 histone loaded")
-                            })
-                            .catch((err)=>{
-                                let errmsg = `${histonemark} for ${age} does not exist`
-                                alert(errmsg)
-                            })
+                    let myfunction = this.giveBackTracks;
+                    ages.forEach((age)=>{
+                    //     //let currTracks = this.currentTracks;
 
-                            cht.push(label)
+                        let removeTracks = _.difference(this.oldhistselections,this.histselections);
+                        let addTracks = _.difference(this.histselections, this.oldhistselections) 
+
+                        if (removeTracks.length != 0) {
+                            this.histonesecretflag = true;    
+                        }
+                        let histonetrack = myfunction(age)[1]
+                        removeTracks.forEach((track)=>{
+                            let removelabel = age + ' ' + track + ' bam' 
+                            let trackobj = _.filter(histonetrack,{'label': removelabel})[0]
+                            mybrowser
+                            .removeTrackByName(_.filter(trackobj.label));
+                            this.histonesecretflag = false;
+                        })
+
+                        addTracks.forEach((track)=>{
+                            let label = age + ' ' + track + ' bam' 
+                            let trackobj = _.filter(histonetrack,{'label': label})[0]
+                            mybrowser
+                            .loadTrack(trackobj);
                         })
                     })
-                    this.currentHistoneTracks = cht
+
+                    this.oldhistselections = this.histselections;
+                },
+                'selections': function(){
+                    let mybrowser = this.igvbrowser;
+                    let ages = this.ageselections;
+                    let myfunction = this.giveBackTracks;
+                    ages.forEach((age)=>{
+                       let tmparr = myfunction(age) 
+                    //     //let currTracks = this.currentTracks;
+
+                        let removeTracks = _.difference(this.oldselections,this.selections);
+                        let addTracks = _.difference(this.selections, this.oldselections) 
+
+                        removeTracks.forEach((track)=>{
+                            mybrowser
+                            .removeTrackByName(tmparr[0][track].label);
+                            //.removeTrackByName(tmpobj[track].label);
+                        })
+
+                        addTracks.forEach((track)=>{
+                            mybrowser
+                            .loadTrack(tmparr[0][track]);
+                            //.loadTrack(tmpobj[track]);
+                        })
+                    })
+                    this.oldselections = this.selections;
+
                 }
             }
     }
