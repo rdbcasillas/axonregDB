@@ -98,6 +98,7 @@
             :ylabel="rnaylabel"
             :title="rnatitle"
             :datasets="rnadataset"
+            :key="compKey"
           />
           <LineChart2
             v-if="atacflag"
@@ -107,6 +108,7 @@
             :ylabel="atacylabel"
             :title="atactitle"
             :datasets="atacdataset"
+            :key="compKey"
           />
           </b-sidebar> 
       <b-row>
