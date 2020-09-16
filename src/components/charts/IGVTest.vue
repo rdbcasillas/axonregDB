@@ -60,7 +60,7 @@
     import * as _ from "lodash";
     export default {
         name:  "IGVTest",
-        props: ['gene', 'type','age'],
+        props: ['gene', 'type','age','loc'],
         data: function() {
             return {
                 selections: ['access','bedpe'],
@@ -424,9 +424,11 @@
                 })
             },
             loadBrowser(geneofinterest){
+                console.log(this.loc);
                 this.options = {
                     genome: "mm10",
                     tracks: this.getTracks(),
+                    locus: this.loc
                     //locus : [geneofinterest]
                 };
                 let currOptions = this.options
@@ -437,7 +439,7 @@
                             //browser.loadGenome(currOptions.reference);
                             currState.igvbrowser = browser;
                             console.log("Browser Loaded")
-                            currState.doSomething(geneofinterest);
+                            //currState.doSomething(geneofinterest);
                             // setTimeout(function()
                             // { 
                             //     currState.doSomething(geneofinterest)
@@ -467,6 +469,40 @@
                     this.flag = true;
                     this.histoneIGV = true; 
                     return this.h3k27actracks;
+                }
+                else if (parent == 'enhancertf') {
+                    let footprintTrack = {
+                        "label": this.age + ' Footprints',
+                        "url": `https://129.114.16.59.xip.io/website-data/IGV/enhancer-footprints/${this.age}_enhancer_footprints.bw`,
+                        "color": "#800000"
+                    }
+
+                    let conserveTrack = {
+                        "label": "mm10 Cons60wayPlacental",
+                        "url": "https://129.114.16.59.xip.io/Enhancer-files/mm10.60way.phastCons60wayPlacental.bw",
+                        "color": "#9900FF"
+                    }
+
+                    let annotationTrack = {
+                        name: "Motifs",
+                        type: "annotation",
+                        format: "bigBed",
+                        sourceType: "file",
+                        //url: "https://cors-anywhere.herokuapp.com/http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks/2018/mm10/JASPAR2018_mm10_all_chr.bb",
+                        url: "https://cors-anywhere.herokuapp.com/http://resources.altius.org/~jvierstra/projects/motif-clustering/releases/v1.0/mm10.archetype_motifs.v1.0.bb",
+                        displayMode: "EXPANDED"
+                    }
+                    let annotationTrack2 = {
+                        name: "Motifs",
+                        type: "annotation",
+                        format: "bigBed",
+                        sourceType: "file",
+                        url: "https://cors-anywhere.herokuapp.com/http://expdata.cmmt.ubc.ca/JASPAR/downloads/UCSC_tracks/2018/mm10/JASPAR2018_mm10_all_chr.bb",
+                        displayMode: "EXPANDED"
+                    }
+
+                    let trackset = [annotationTrack, annotationTrack2, footprintTrack, conserveTrack]
+                    return trackset;
                 }
                 else if (parent == 'enhancer'){
                     this.flag = true;
@@ -528,7 +564,6 @@
                     "format": "bedpe",
                     "color": "#9900FF"
                 }
-
                 let histonemarkarr = [];
                 histoneselections.forEach((mark)=>{
                     let markobj = {

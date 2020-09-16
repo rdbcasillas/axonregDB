@@ -14,6 +14,7 @@
                 </b-col>
             </b-row>
             <!-- <b-spinner v-if="progressflag" variant="primary" label="Spinning"></b-spinner> -->
+            <p v-if="progressflag">Fetching footprinting data..</p>
             <b-img v-if="progressflag" class="dnagif" src="./dnagif.gif"></b-img>
             <br>
             <b-row v-if="flag">

@@ -9,6 +9,7 @@
                     @keydown.down="onArrowDown"
                     @keydown.up="onArrowUp"
                     @keydown.enter="onEnter"
+                    autocomplete="off"
                 />
                 <ul v-show="isOpen" class="autocomplete-results">
                     <li v-for="(result,i) in results" :key="i"
