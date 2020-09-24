@@ -14,7 +14,7 @@
             <br>
             <b-row>
                 <b-col class="colclass">
-                        <b-link :to="{ name: 'enhancertf'}">
+                        <b-link :to="{ name: 'selectenhanceranalysis'}">
                             Identify TFs bound to gene Enhancers
                         </b-link>
                 </b-col>
