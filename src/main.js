@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import { BootstrapVue} from 'bootstrap-vue'
+import Vuetify from "vuetify";
+import "vuetify/dist/vuetify.min.css";
 import App from './App.vue'
 import VueAnalytics from 'vue-analytics'
 import VueRouter from 'vue-router'
@@ -12,6 +14,7 @@ import 'bootstrap-vue/dist/bootstrap-vue.css'
 Vue.config.productionTip = false
 Vue.use(BootstrapVue)
 Vue.use(VueRouter)
+Vue.use(Vuetify)
 Vue.component('VueSlider', VueSlider);
 
 const router = new VueRouter({
