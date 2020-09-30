@@ -66,13 +66,13 @@ export default {
       allgenes: [],
       filteredlist: [],
       ageoptions: [
-        { value: "E11", text: "E11" },
-        { value: "E12", text: "E12" },
-        { value: "E13", text: "E13" },
-        { value: "E14", text: "E14" },
-        { value: "E16", text: "E16" },
-        { value: "P0", text: "P0" },
-        { value: "Adult", text: "Adult" },
+        { value: "E11", text: "E11", disabled:false},
+        { value: "E12", text: "E12", disabled: false },
+        { value: "E13", text: "E13", disabled:false},
+        { value: "E14", text: "E14", disabled:false},
+        { value: "E16", text: "E16", disabled:false},
+        { value: "P0", text: "P0", disabled:false},
+        { value: "Adult", text: "Adult", disabled:false },
       ],
       disgenes: {},
       totalcolumns: [],
@@ -209,11 +209,17 @@ export default {
     },
     async loadData() {
       this.progressflag = true;
+      this.ageoptions.forEach((age)=>{
+        age.disabled = true;
+      })
       this.tfdata1 = await d3.tsv(this.url);
       if (!(this.currAge in this.mainObj)) {
         this.mainObj[this.currAge] = this.tfdata1
       }
       this.progressflag = false;
+      this.ageoptions.forEach((age)=>{
+        age.disabled = false;
+      })
     },
     setupChart() {
       d3.select("#vizdiv")
