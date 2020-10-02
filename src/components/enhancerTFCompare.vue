@@ -1,22 +1,23 @@
 <template>
   <div>
-    <b-container>
+    <b-container fluid>
       <b-row>
-        <b-col>
+        <b-col cols="7">
           <b-form-group id="checkbox-group-1">
             <!-- <b-form-checkbox v-model="selections" v-for="option in chartoptions" :value="option.value" :key="option.value" :class="option.value" switch>
              {{ option.text }}
             </b-form-checkbox>-->
-            <b-form-checkbox-group v-model="selections" :options="ageoptions"></b-form-checkbox-group>
+            <b-form-checkbox-group
+              v-model="selections"
+              :options="ageoptions"
+            ></b-form-checkbox-group>
           </b-form-group>
         </b-col>
-        <b-col>
-          <autocomplete
-            :items="this.allgenes"
-            @finished="finished"
-          />
+        <b-col cols="4">
+          <autocomplete :items="this.allgenes" @finished="finished" />
         </b-col>
       </b-row>
+      <hr>
       <b-row>
         <b-col v-if="progressflag">
           <p>Fetching enhancer data ..</p>
@@ -25,17 +26,28 @@
       </b-row>
       <br />
       <b-row>
-        <b-col cols="10">
+        <b-col v-show="vizactive" cols="3">
+          <h6>
+            Enhancer Locations Across Age
+          </h6>
+          <b-card-group >
+            <b-card class="enhancerCards" no-body v-for="item in enhancerList" :key="item.age" :header="item.age">
+              <b-list-group flush>
+                <b-list-group-item v-for="(loc,key) in item.enhancers" :key="key">
+                  {{loc}}
+                </b-list-group-item>
+              </b-list-group>
+            </b-card>
+          </b-card-group>
+        </b-col>
+        <b-col v-show="vizactive" cols="6">
           <div id="vizdiv"></div>
         </b-col>
-        <b-col v-if="vizactive">
-          <p>
-            Click on a chord to display the list of TFs
-          </p>
+        <b-col cols="2" v-if="vizactive">
+          <p>Click a chord to view TFs</p>
           <div id="tflist">
-            <ul class="list-group ul">
-            </ul>
-          </div> 
+            <ul class="list-group ul"></ul>
+          </div>
         </b-col>
       </b-row>
     </b-container>
@@ -50,7 +62,7 @@ import * as multichord from "../assets/scripts/multichord.js";
 import * as mycolors from "../assets/scripts/colors2.js";
 import "bootstrap/js/dist/tooltip.js";
 import "bootstrap/dist/js/bootstrap.bundle.js";
-import "bootstrap/js/dist/popover.js"
+import "bootstrap/js/dist/popover.js";
 export default {
   name: "enhancerTFCompare",
   components: {
@@ -59,30 +71,31 @@ export default {
   data: function () {
     return {
       progressflag: false,
-      vizactive:false,
+      vizactive: false,
       genename: "",
       plotdisable: true,
       selections: [],
       allgenes: [],
       filteredlist: [],
       ageoptions: [
-        { value: "E11", text: "E11", disabled:false},
+        { value: "E11", text: "E11", disabled: false },
         { value: "E12", text: "E12", disabled: false },
-        { value: "E13", text: "E13", disabled:false},
-        { value: "E14", text: "E14", disabled:false},
-        { value: "E16", text: "E16", disabled:false},
-        { value: "P0", text: "P0", disabled:false},
-        { value: "Adult", text: "Adult", disabled:false },
+        { value: "E13", text: "E13", disabled: false },
+        { value: "E14", text: "E14", disabled: false },
+        { value: "E16", text: "E16", disabled: false },
+        { value: "P0", text: "P0", disabled: false },
+        { value: "Adult", text: "Adult", disabled: false },
       ],
       disgenes: {},
       totalcolumns: [],
-      width: 700,
-      height: 700,
+      width: 600,
+      height: 600,
       circosdata: [],
       padding: 0.1,
-      url:'',
-      currAge:'',
-      mainObj: {}
+      url: "",
+      currAge: "",
+      mainObj: {},
+      enhancerList: [],
     };
   },
   methods: {
@@ -91,24 +104,40 @@ export default {
       //this.getChart();
       //console.log(this.$refs)
       this.createMainObj();
-
     },
-    createMainObj(){
+    createMainObj() {
       let currentGene = this.genename;
-      let ageTFObj = {}
-      _.map(this.mainObj, function(value,key){
-        let filteredlist = _.filter(value,{
+      let ageTFObj = {};
+      let tmplist = [];
+      _.map(this.mainObj, function (value, key) {
+        let filteredlist = _.filter(value, {
           genename: currentGene,
-        })
-        let tmparr = []
+        });
+        let arrwithEnhancers = [];
+        filteredlist.forEach((enhancer) => {
+          let loc = enhancer.chr + ": " + enhancer.start + "-" + enhancer.stop;
+          arrwithEnhancers.push(loc);
+        });
+
+        let enhancerObj = {
+          age: key,
+          enhancers: arrwithEnhancers,
+          enhancerCount: arrwithEnhancers.length,
+        };
+
+        tmplist.push(enhancerObj);
+        let tmparr = [];
         filteredlist.map((obj) => {
           tmparr.push(obj.tflist.split(","));
         });
-        let newtmparr = _.uniq(_.flatten(tmparr))
+        let newtmparr = _.uniq(_.flatten(tmparr));
         ageTFObj[key] = newtmparr;
-      })
+      });
+
+      this.enhancerList = tmplist;
+      console.log(this.enhancerList);
       this.disgenes = ageTFObj;
-      this.totalcolumns = _.keys(this.disgenes)
+      this.totalcolumns = _.keys(this.disgenes);
       this.drawChord(this.disgenes);
     },
     createData(rgdgenes, columns) {
@@ -204,22 +233,21 @@ export default {
       let genelistUrl = "./datasets/enhancers/footprints/allgeneslist.txt";
       let genelist = await d3.tsv(genelistUrl);
       this.allgenes = _.map(genelist, "genename");
-      //this.circosdata = this.createData(this.disgenes, this.totalcolumns);
       this.setupChart();
     },
     async loadData() {
       this.progressflag = true;
-      this.ageoptions.forEach((age)=>{
+      this.ageoptions.forEach((age) => {
         age.disabled = true;
-      })
+      });
       this.tfdata1 = await d3.tsv(this.url);
       if (!(this.currAge in this.mainObj)) {
-        this.mainObj[this.currAge] = this.tfdata1
+        this.mainObj[this.currAge] = this.tfdata1;
       }
       this.progressflag = false;
-      this.ageoptions.forEach((age)=>{
+      this.ageoptions.forEach((age) => {
         age.disabled = false;
-      })
+      });
     },
     setupChart() {
       d3.select("#vizdiv")
@@ -250,11 +278,14 @@ export default {
       //if (!updatecategory){
       this.vizactive = true;
       this.newgeneObject = this.createData(newdata, this.totalcolumns);
-      console.log(this.newgeneObject)
+      console.log(this.newgeneObject);
       //newdata = newgeneObject;
       // }
       let chart = this.getDefaultLayout();
-      this.mainGroup.data(this.newgeneObject).attr("class", "mainGroup").call(chart);
+      this.mainGroup
+        .data(this.newgeneObject)
+        .attr("class", "mainGroup")
+        .call(chart);
     },
   },
   created() {
@@ -264,28 +295,25 @@ export default {
     selections: function () {
       let removable = _.difference(this.oldselections, this.selections);
       if (removable.length > 0) {
-        this.mainObj = _.omit(this.mainObj, removable)
+        this.mainObj = _.omit(this.mainObj, removable);
         this.createMainObj();
-      }
-      else {
+      } else {
         let currselect = this.selections;
-        let lastelement = currselect[currselect.length - 1]
+        let lastelement = currselect[currselect.length - 1];
         this.currAge = lastelement;
-        this.url  = `./datasets/enhancers/footprints/${lastelement}-enhancers-ABC-TOBIAS-mega2.tsv`
+        this.url = `./datasets/enhancers/footprints/${lastelement}-enhancers-ABC-TOBIAS-mega2.tsv`;
         if (this.vizactive) {
           this.loadData();
-          d3.tsv(this.url).then((response)=>{
-          this.createMainObj() 
+          d3.tsv(this.url).then((response) => {
+            this.createMainObj();
           });
           //this.createMainObj();
           //this.drawChord(this.disgenes);
           this.oldselections = currselect;
-        }
-        else {
+        } else {
           this.loadData();
         }
       }
-
     },
   },
 };
@@ -295,5 +323,14 @@ export default {
 img {
   width: 80px;
   height: 80px;
+}
+.enhancerCards {
+  font-size: 12px;
+}
+#vizdiv {
+  margin-top: -80px;
+}
+#checkbox-group-1 {
+  margin-top: 20px;
 }
 </style>
