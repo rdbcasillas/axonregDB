@@ -30,16 +30,15 @@
 
 <style scoped>
 .footer {
-    margin-top:20px;
     position:fixed;
     bottom: 0;
     width: 100%;
-    height: 40px;
-    line-height: 20px;
+    height: 50px;
+    line-height: 10px;
     background-color: #f5f5f5;
 }
 p {
-    font-size: 12px;
+    font-size: 10px;
     margin-bottom: 0px;
 }
 </style>

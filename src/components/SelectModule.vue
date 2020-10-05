@@ -21,7 +21,6 @@
           </p>
         </b-col>
       </b-row>
-      <br />
       <b-row class="guide" style="margin-left:-5px">
         <h4>Quickstart Guide</h4>
       </b-row>
@@ -86,13 +85,6 @@
               </div>
           </b-link>
         </b-col>
-        <!-- <b-col>
-          <h5>Gene Network Analysis</h5>
-            <b-img thumbnail src="./images/network3d-2.png" fluid alt="Responsive image"></b-img>
-              <div class="middle">
-                <div class="text">Perform gene network analyses (UNDER CONSTRUCTION)</div>
-              </div>
-        </b-col> -->
       </b-row>
     </b-container>
   </div>
@@ -144,4 +136,5 @@ h5 {
   font-family: Georgia, 'Times New Roman', Times, serif;
   padding: 16px 32px;
 }
+
 </style>

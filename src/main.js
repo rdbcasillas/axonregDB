@@ -18,6 +18,7 @@ Vue.use(Vuetify)
 Vue.component('VueSlider', VueSlider);
 
 const router = new VueRouter({
+  mode:'history',
   routes
 });
 

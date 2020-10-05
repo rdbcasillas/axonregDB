@@ -424,13 +424,25 @@
                 })
             },
             loadBrowser(geneofinterest){
+                let parent = this.type;
                 console.log(this.loc);
-                this.options = {
-                    genome: "mm10",
-                    tracks: this.getTracks(),
-                    locus: this.loc
-                    //locus : [geneofinterest]
-                };
+                //if (parent == 'featurecount' || parent == 'expression') {
+                if (parent == 'enhancertf') {
+                    this.options = {
+                        genome: "mm10",
+                        tracks: this.getTracks(),
+                        locus: this.loc
+                        //locus : [geneofinterest]
+                    };
+                }
+                else {
+                    this.options = {
+                        genome: "mm10",
+                        tracks: this.getTracks(),
+                        //locus: this.loc
+                        locus : [geneofinterest]
+                    };
+                }
                 let currOptions = this.options
                 let currState = this;
                 if (this.counter == 0) {
