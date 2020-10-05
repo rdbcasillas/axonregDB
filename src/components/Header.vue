@@ -7,7 +7,8 @@
             <b-navbar-brand tag="h1"> <b-link href="/"><b>AxonRegDb</b></b-link> </b-navbar-brand>
             <b-navbar-nav class="mx-auto ml-auto">
                 <b-nav-item @click="checkroute" v-for="link in links" 
-                :href="link.route" 
+                :to="{name: link.route, 
+                params: {plotType: link.route}}"
                 :key="link.name"
                 :active="link.state">
                     {{ link.name }}
