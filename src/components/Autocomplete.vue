@@ -20,6 +20,7 @@
                         {{ result }}
                     </li>
                 </ul>
+                <button v-if="type=='multiple'" type="button" class="btn btn-link try" @click="callParentForTest">Try an example</button>
             </b-col>
             <b-col>
                 <b-button :disabled="buttonstate" @click="callParentForChart" variant="primary">
@@ -27,8 +28,6 @@
                 </b-button>
             </b-col>
         </b-row>
-
-        <br>
         </div>
 </template>
 
@@ -56,6 +55,7 @@
                 results: [],
                 arrowCounter: -1,
                 isOpen: false,
+                testGenes: "Dcx,Tubb2b,Gap43"
             };
         },
         methods: {
@@ -150,7 +150,11 @@
             },
             callParentForChart(){
                 let currGene = this.search;
+                console.log(currGene, typeof(currGene))
                 this.$emit("finished", currGene);
+            },
+            callParentForTest(){
+                this.$emit("finished", this.testGenes);
             },
             checkClickOutside(evt){
                 if (!this.$el.contains(evt.target)) {
@@ -189,5 +193,9 @@
   .autocomplete-result:hover, .is-active{
     background-color: #4AAE9B;
     color: white;
+  }
+  .try {
+      float: left;
+      font-size: 13px;
   }
 </style>

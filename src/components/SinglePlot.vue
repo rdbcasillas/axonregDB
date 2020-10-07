@@ -3,11 +3,12 @@
     <b-container>
       <b-row v-if="$route.name == 'expression'">
         <b class="expdesc">
-          Analyze temporal gene expression patterns across murine development
-          in forebrain datasets from
+          Query expression levels for gene(s) of interest across development in mouse forebrain.
+          <br>
+          Associated RNA-Seq datasets from ENCODE can be found
           <a
             href="https://www.encodeproject.org/search/?type=Experiment&status=released&assay_slims=Transcription&assay_title=polyA+plus+RNA-seq&award.project=ENCODE&assembly=mm10&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=forebrain"
-          >ENCODE consortia</a>
+          >here</a>.
         </b>
       </b-row>
       <b-row v-else-if="$route.name == 'featurecount'">
