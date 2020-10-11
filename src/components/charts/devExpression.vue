@@ -37,7 +37,8 @@
               scaleLabel: {
                 display: true,
                 labelString: this.ylabel,
-                fontSize: 12
+                fontSize: 14,
+                fontColor: 'black'
               }
             }],
             xAxes: [ {
@@ -47,7 +48,8 @@
               scaleLabel: {
                 display: true,
                 labelString: 'Developmental time-point',
-                fontSize: 12
+                fontSize: 14,
+                fontColor: 'black'
               }
             }]
           },

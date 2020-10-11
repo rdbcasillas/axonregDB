@@ -1,10 +1,10 @@
 <template>
     <div>
         <b-navbar class="mynavbar" variant="light" type="light" style="margin-top:-45px">
-            <b-navbar-brand href="#"> 
-                <b-img src="./logo.png" alt="axon image"></b-img>
+            <b-navbar-brand href="/"> 
+                <b-img class="icon" src="./mbd.png" alt="axon image"></b-img>
             </b-navbar-brand>
-            <b-navbar-brand tag="h1"> <b-link href="/"><b>AxonRegDb</b></b-link> </b-navbar-brand>
+            <!-- <b-navbar-brand tag="h1"> <b-link href="/"><b>AxonRegDb</b></b-link> </b-navbar-brand> -->
             <b-navbar-nav class="mx-auto ml-auto">
                 <b-nav-item class="current" @click="checkroute" v-for="link in links" 
                 :to="{name: link.route, 
@@ -13,7 +13,7 @@
                 :active="link.state">
                     {{ link.name }}
                 </b-nav-item>
-            <b-dropdown :variant="tfstate ? 'outline-success' : 'outline-secondary'" @click="dropdownClick" text="TF-Bind" left>
+            <b-dropdown :variant="tfstate ? 'outline-success' : 'outline-secondary'" @click="dropdownClick" text="TF-Binding" left>
                 <b-dropdown-item :to="{ name: 'selectenhanceranalysis'}">Enhancer</b-dropdown-item>
                 <b-dropdown-divider></b-dropdown-divider>
                 <b-dropdown-item :to="{ name: 'promotertf'}">Promoter</b-dropdown-item>

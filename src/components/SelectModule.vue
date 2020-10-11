@@ -1,20 +1,20 @@
 <template>
   <div>
-    <b-container class="bv-example-row">
+    <b-container fluid class="bv-example-row">
       <br />
       <b-row class="text-center">
-        <b-col class="mouseimage">
+        <!-- <b-col class="mouseimage">
           <b-img thumbnail src="./mousedev-small.png" fluid alt="Responsive image"></b-img>
-        </b-col>
-        <b-col cols="8">
+        </b-col> -->
+        <b-col >
           <p align="justify">
-            We have analyzed murine whole cortex time-series RNA-Seq and
-            ATAC-Seq datasets from ENCODE consortia spanning 9 time-points
+            We have analyzed murine whole cortex time-series RNA-Seq, ATAC-Seq and
+            Histone ChIP-Seq datasets from ENCODE consortia spanning 9 time-points
             between E11 and Adult. Using these data, we have performed
-            time-series RNA-Seq and ATAC-Seq analyses to capture temporal
-            patterns of gene expression and chromatin accessibility across
-            cortical development. We have also "footprinted" for transcription
-            factors to capture genome-wide patterns of binding across cortical
+            time-series analyses to capture temporal
+            patterns of gene expression, chromatin accessibility and histone enrichment across
+            forebrain development. We have also "footprinted" for transcription
+            factors to capture genome-wide patterns of binding across forebrain
             development. We have supplied these data in an interactive format
             allowing users to retrieve regulatory information for any genes/TFs
             of interest either genome-wide or within the context of axon growth.
@@ -62,10 +62,6 @@
               </div>
           </b-link>
         </b-col>
-
-      </b-row>
-      <br />
-      <b-row>
         <b-col>
           <h5>Functional Enhancers</h5>
           <b-link :to="{ name: 'enhancer', params: { plotType: 'enhancer' } }">
@@ -86,6 +82,28 @@
           </b-link>
         </b-col>
       </b-row>
+      <!-- <br />
+      <b-row>
+        <b-col>
+          <h5>Functional Enhancers</h5>
+          <b-link :to="{ name: 'enhancer', params: { plotType: 'enhancer' } }">
+            <b-img thumbnail src="./images/tfbind.png" fluid alt="Responsive image">
+            </b-img>
+              <div class="middle">
+                <div class="text">Identify relevant functional enhancers for genes of interest</div>
+              </div>
+          </b-link>
+        </b-col>
+        <b-col>
+          <h5>Histone Enrichment</h5>
+          <b-link :to="{ name: 'histone', params: { plotType: 'histone' } }">
+            <b-img thumbnail src="./images/histonemodule.png" fluid alt="Responsive image"></b-img>
+              <div class="middle">
+                <div class="text">Explore various histone codes around gene promoters</div>
+              </div>
+          </b-link>
+        </b-col>
+      </b-row> -->
     </b-container>
   </div>
 </template>
@@ -101,7 +119,7 @@ export default {
 
 <style scoped>
 .col .img-fluid {
-  width: 350px; /* You can set the dimensions to whatever you want */
+  width: 250px; /* You can set the dimensions to whatever you want */
   height: 150px;
   transition: .5s ease
 }

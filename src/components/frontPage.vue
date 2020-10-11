@@ -1,9 +1,6 @@
 <template>
-    <div class="carouseldiv">
-        <b-img src="./images/frontstaticfig.png">
 
-        </b-img>
-        <b-carousel
+        <!-- <b-carousel
         id="carousel-1"
         v-model="slide"
         :interval="2000"
@@ -11,58 +8,60 @@
         controls
         indicators
         background="#ababab"
-        img-width="800"
-        img-height="300"
+        img-width="800px"
+        img-height="600px"
         style="text-shadow: 1px 1px 2px #333;"
         @sliding-start="onSlideStart"
         @sliding-end="onSlideEnd"
         >
-        <!-- Text slides with image -->
-        <b-carousel-slide
-            img-src="./images/carousel1.png"
-        ></b-carousel-slide>
-
-        <!-- Slides with custom text -->
-        <b-carousel-slide img-src="./images/carousel2.png">
+        <b-carousel-slide class="myclass" v-for="img in images" :key=img.id
+        :img-src="img.path">
         </b-carousel-slide>
-
-        <!-- Slides with image only -->
-        <!-- <b-carousel-slide img-src="./images/carousel3.png"></b-carousel-slide> -->
-        <b-carousel-slide img-src="./images/carousel4.png"></b-carousel-slide>
-
-        <!-- Slides with img slot -->
-        <!-- Note the classes .d-block and .img-fluid to prevent browser default image alignment -->
-        <!-- <b-carousel-slide>
-            <template v-slot:img>
-            <img
-                class="d-block img-fluid"
-                width="400"
-                height="400"
-                src="https://www.bing.com/th?id=OHR.OkanaganSpots_EN-US8113040044_1920x1080.jpg&rf=LaDigue_1920x1080.jpg"
-                alt="image slot"
-            >
-            </template>
-        </b-carousel-slide> -->
-
-        <!-- Slide with blank fluid image to maintain slide aspect ratio -->
-        <!-- <b-carousel-slide caption="Blank Image" img-blank img-alt="Blank image">
-            <p>
-            Lorem ipsum dolor sit amet, consectetur adipiscing elit. Suspendisse eros felis, tincidunt
-            a tincidunt eget, convallis vel est. Ut pellentesque ut lacus vel interdum.
-            </p>
-        </b-carousel-slide> -->
-        </b-carousel>
-
-    </div>
+        </b-carousel> -->
+        <v-app>
+        <v-carousel 
+        dark
+        cycle
+        interval="4000" 
+         :show-arrows="true"
+         reverse-transition="fade-transition"
+         transition="fade-transition"
+         height="650"
+         width="600"
+         hide-delimiter-background
+         >
+            <v-carousel-item 
+            contain
+            class="myimage" v-for="img in images" :key="img.id"
+            :src="img.path">
+            </v-carousel-item>
+        </v-carousel>
+        </v-app>
 </template>
 
 <script>
     export default {
         name: 'frontPage',
-        date: function() {
+        data: function() {
             return {
                 slide: 0,
-                sliding: null
+                sliding: null,
+                images:[
+                    {'id': 1,
+                    'path': './images/FrontFig-1-mod.png'},
+                    {'id': 2,
+                    'path': './images/FrontFig-2-modified.png'},
+                    {'id': 3,
+                    'path': './images/FrontFig-3-mod.png'},
+                    {'id': 4,
+                    'path': './images/FrontFig-4-mod.png'},
+                    {'id': 5,
+                    'path': './images/FrontFig-5-mod.png'},
+                    {'id': 6,
+                    'path': './images/FrontFig-6-mod.png'},
+                    {'id': 7,
+                    'path': './images/FrontFig-7-mod.png'},
+                ]
             };
         },
         methods: {
@@ -78,8 +77,11 @@
 
 <style scoped>
 .carouseldiv {
-    width: 500px;
-    height: 400px;
+    height: 800px;
+}
+.v-carousel {
+    border: 1px solid;
+    width: 80%;
     margin-left: auto;
     margin-right: auto;
 }

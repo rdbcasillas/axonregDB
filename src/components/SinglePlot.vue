@@ -42,7 +42,7 @@
             <p>Fetching {{$route.name}} data..</p>
             <b-img class="dnagif" src="./dnagif.gif"></b-img>
         </b-col>
-        <b-col cols="3" v-if="flag">
+        <b-col class="download" cols="3" v-if="flag">
           <a v-if="$route.name== 'expression'"  href="https://129.114.16.59.xip.io/website-data/dev_fpkm.tsv" class="btn btn-primary" download>Download Raw Data</a>
           <a v-if="$route.name== 'featurecount'"  href="https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv" class="btn btn-primary" download target="_blank">Download Raw Data</a>
           <a v-if="$route.name== 'histone'"  href="https://129.114.16.59.xip.io/website-data/histone-prom-fc.zip" class="btn btn-primary" download>Download Raw Data</a>
@@ -402,5 +402,8 @@ export default {
 .dnagif {
     height: 60px;
     width: 140px
+}
+.download, #download {
+  margin-top: 12px;
 }
 </style>

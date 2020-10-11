@@ -21,14 +21,6 @@ export default {
     Header,
     Footer,
   },
-  // data: function() {
-  //   return {
-  //     loadData: [],
-  //     exprData: [],
-  //     fcdata:[],
-  //     labels:[]
-  //   };
-  // },
   mounted() {
     console.log("App loaded");
   },
@@ -44,6 +36,7 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 20px;
 }
 .float-left {
   position: absolute;
