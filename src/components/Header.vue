@@ -21,8 +21,6 @@
             </b-navbar-nav>
                 <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://mousebraindev.com/" data-hashtags="#mousebrain #spinalcordinjury" data-show-count="false">Tweet</a>
                 <a href="https://github.com/rdbcasillas/axonregDB"> <b-img class="githublogo" src="./Github-Mark.png"></b-img> </a>
-                <a href="ishvenkatesh.com"
-                style="font-size:12px;"> Venkatesh Lab </a>
         </b-navbar>
         <br>
     </div>
