@@ -288,12 +288,15 @@ export default {
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
       this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
       this.enhancerData[this.selected]["h3k4me3"] = await d3.tsv(url4);
-      this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
+      //this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
 
-      this.progressflag = false;
+      if (this.selected != 'Adult') {
+        this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
+      }
       if (this.selected != 'E11') {
         this.enhancerData[this.selected]["h3k9ac"] = await d3.tsv(url6);
       }
+      this.progressflag = false;
       this.plotdisable = false;
       this.datalink = url;
     },
