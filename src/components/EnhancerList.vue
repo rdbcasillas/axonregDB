@@ -272,7 +272,6 @@ export default {
       }
       if (!(this.selected == 'E11' || this.selected == 'Adult')) {
         this.chartoptions[4]['disabled'] = false
-        console.log("adult called!")
         url6 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`
       }
       if (this.selected == 'E11' || this.selected == 'Adult') {

@@ -129,7 +129,7 @@
                     },
                     {
                         "label": "Adult BAM",
-                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/CtrlUnInj_merged_1bp.bw",
+                        "url" : "https://129.114.16.59.xip.io/website-data/IGV/Adult_merged_1bp.bw",
                         "color": "#FFB733"
                     },
                 ],
