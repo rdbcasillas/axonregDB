@@ -2,7 +2,7 @@
     <div class="footer">
         <b-container>
             <b-row>
-                <b-col cols="10">
+                <b-col class="mb-1" cols="10">
                     <p class="ack">
                         <b>Acknowledgement</b>: This database and underlying analyses are powered by 
                         Extreme Science and Engineering Discovery Environment (XSEDE) supported <br> 
@@ -33,12 +33,11 @@
     position:fixed;
     bottom: 0;
     width: 100%;
-    height: 50px;
-    line-height: 10px;
+    height: 60px;
+    line-height: 13px;
     background-color: #f5f5f5;
 }
 p {
-    font-size: 10px;
-    margin-bottom: 0px;
+    font-size: 13px;
 }
 </style>

@@ -258,8 +258,11 @@ export default {
     async loadGenes() {
       this.progressflag = true;
       let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
+      //let url = `./datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
       let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+      //let url2 = `./datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
       let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
+      //let url3 = `./datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
       let url4 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
       let url5 = '' 
       let url6 = ''

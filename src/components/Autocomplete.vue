@@ -20,7 +20,10 @@
                         {{ result }}
                     </li>
                 </ul>
-                <button v-if="type=='multiple'" type="button" class="btn btn-link try" @click="callParentForTest">Try an example</button>
+                <button v-if="type=='multiple'" type="button" 
+                class="btn btn-link try" 
+                style="font-size:16px"
+                @click="callParentForTest">Try an example</button>
             </b-col>
             <b-col>
                 <b-button :disabled="buttonstate" @click="callParentForChart" variant="primary">

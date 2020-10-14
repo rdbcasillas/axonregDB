@@ -1,6 +1,6 @@
 <template>
     <div>
-        <b-navbar class="mynavbar" variant="light" type="light" style="margin-top:-45px">
+        <b-navbar class="mynavbar"  style="margin-top:-45px">
             <b-navbar-brand href="/"> 
                 <b-img class="icon" src="./mbd.png" alt="axon image"></b-img>
             </b-navbar-brand>
@@ -19,8 +19,10 @@
                 <b-dropdown-item :to="{ name: 'promotertf'}">Promoter</b-dropdown-item>
             </b-dropdown>
             </b-navbar-nav>
-                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://axonregdb.netlify.com/" data-hashtags="#axonregdb #spinalcordinjury" data-show-count="false">Tweet</a>
+                <a href="https://twitter.com/share?ref_src=twsrc%5Etfw" class="twitter-share-button" data-url="https://mousebraindev.com/" data-hashtags="#mousebrain #spinalcordinjury" data-show-count="false">Tweet</a>
                 <a href="https://github.com/rdbcasillas/axonregDB"> <b-img class="githublogo" src="./Github-Mark.png"></b-img> </a>
+                <a href="ishvenkatesh.com"
+                style="font-size:12px;"> Venkatesh Lab </a>
         </b-navbar>
         <br>
     </div>
@@ -44,22 +46,16 @@
                         route: 'featurecount',
                         state: false
                     },
-                    // {
-                    //     name: 'TF-Binding',
-                    //     route: 'tfbind',
-                    //     state: false
-
-                    // },
+                    {
+                        name: 'Histone Enrichment',
+                        route: 'histone',
+                        state: false
+                    },
                     {
                         name: 'Enhancers',
                         route: 'enhancer',
                         state: false
                     },
-                    {
-                        name: 'Histone',
-                        route: 'histone',
-                        state: false
-                    }
                 ],
                 tfstate: false
 

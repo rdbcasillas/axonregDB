@@ -142,6 +142,7 @@ export default {
 
 h5 {
   margin-bottom: 5px;
+  font-size: 1.1vw
 }
 .guide {
   margin-left: -5px;
@@ -154,5 +155,4 @@ h5 {
   font-family: Georgia, 'Times New Roman', Times, serif;
   padding: 16px 32px;
 }
-
 </style>
