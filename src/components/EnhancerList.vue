@@ -293,7 +293,7 @@ export default {
       if (this.selected != 'Adult') {
         this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
       }
-      if (this.selected != 'E11' || this.selected != 'Adult') {
+      if (this.selected != 'E11' && this.selected != 'Adult') {
         this.enhancerData[this.selected]["h3k9ac"] = await d3.tsv(url6);
       }
       this.progressflag = false;
