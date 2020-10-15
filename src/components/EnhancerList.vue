@@ -37,11 +37,21 @@
           </b-col>
 
         <b-col>
-         <b-button v-if="flag" v-b-toggle.sidebar-1>Plot gene-expression/promoter-accessibility</b-button>
+         <b-button v-if="flag" variant="primary" v-b-toggle.sidebar-1>Plot gene-expression/promoter-accessibility</b-button>
         </b-col>
         <b-col cols="3" v-if="flag">
-        <a v-if="$route.name== 'enhancer'"  :href="this.datalink" class="btn btn-primary" download target="_blank">Download Raw Data</a>
-
+          <b-dropdown id="dropdown-1" 
+            split
+            split-variant="outline-primary"
+            variant="primary"
+            text="Download Raw Data" class="m-md-2">
+              <b-dropdown-item v-for="item in this.datalinks"
+              :href="item.path"
+              :key="item.type"
+              target="_blank">
+                {{ item.type }}
+              </b-dropdown-item>
+          </b-dropdown>
         </b-col>
       </b-row>
       </b-col>
@@ -239,6 +249,7 @@ export default {
       rnaylabel: 'FPKM value',
       atactitle: 'Chromatin Accessibility Across Age',
       atacylabel: 'Accessibility at Promoter',
+      datalinks: []
     };
   },
   computed: {
@@ -256,12 +267,13 @@ export default {
       //console.log(this.$refs)
     },
     async loadGenes() {
+      this.datalinks = []
       this.progressflag = true;
-      let url = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
+      let url = `https://129.114.16.59.xip.io/website-data/enhancer-data/atac/${this.selected}_enhancers_genes_devFC.tsv`;
       //let url = `./datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
-      let url2 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+      let url2 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
       //let url2 = `./datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
-      let url3 = `https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
+      let url3 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
       //let url3 = `./datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
       let url4 = `https://129.114.16.59.xip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
       let url5 = '' 
@@ -288,17 +300,44 @@ export default {
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
       this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
       this.enhancerData[this.selected]["h3k4me3"] = await d3.tsv(url4);
+      this.datalinks = [{
+        'type': "Accessibility",
+        'path': url
+      },
+      {
+        'type': "H3k27ac",
+        'path': url2
+      },
+      {
+        'type': "H3k4me1",
+        'path': url3
+      },
+      {
+        'type': "H3k4me3",
+        'path': url4
+      },
+      ]
       //this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
 
       if (this.selected != 'Adult') {
         this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
+        this.datalinks.push({
+          'type': "H3k27me3",
+          'path': url5
+        })
       }
       if (this.selected != 'E11' && this.selected != 'Adult') {
         this.enhancerData[this.selected]["h3k9ac"] = await d3.tsv(url6);
+        this.datalinks.push({
+          'type': "H3k9ac",
+          'path': url6
+        })
       }
       this.progressflag = false;
       this.plotdisable = false;
       this.datalink = url;
+      this.datalink2 = url2;
+      this.datalink3 = url4;
     },
     getChart() {
       this.cleanSlate();
