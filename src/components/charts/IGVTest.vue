@@ -44,7 +44,7 @@
             </b-row>
             <b-row>
                 <b-col>
-                    <b-button @click="saveIGV()">Save IGV Browser Image</b-button>
+                    <a id="saveigv" @click="saveIGV()" class="btn btn-primary">Save IGV Browser Image</a>
                 </b-col>
             </b-row>
         </b-container>
@@ -58,6 +58,7 @@
     import igv from 'igv';
     import $ from 'jquery';
     import * as _ from "lodash";
+    import { saveAs } from 'file-saver';
     export default {
         name:  "IGVTest",
         props: ['gene', 'type','age','loc'],
@@ -373,11 +374,39 @@
         },
         methods: {
             saveIGV(){
+                let but = document.getElementById("saveigv");
                 let mysvg = this.igvbrowser.toSVG();
-                console.log(this.igvbrowser);
-                this.igvbrowser.renderSVG(mysvg);
-                //let mysvg = this.igvbrowser;
+                this.svgToPng(mysvg, (imgData)=>{
+                    $("img").remove();
+                })
+            },
+            svgToPng(svg, callback) {
+                const url = this.getSvgUrl(svg);
+                this.svgUrlToPng(url, (imgData) => {
+                    callback(imgData);
+                    URL.revokeObjectURL(url);
+                });
+            },
+            getSvgUrl(svg){
+                return  URL.createObjectURL(new Blob([svg], { type: 'image/svg+xml' }));
+            },
+            svgUrlToPng(svgUrl, callback) {
+                const svgImage = document.createElement('img');
+                document.body.appendChild(svgImage);
+                svgImage.onload = function () {
+                    const canvas = document.createElement('canvas');
+                    canvas.width = svgImage.clientWidth;
+                    canvas.height = svgImage.clientHeight;
+                    const canvasCtx = canvas.getContext('2d');
+                    canvasCtx.drawImage(svgImage, 0, 0);
+                    canvas.toBlob(function(blob) {
+                        saveAs(blob, "igv-visual.png");
+                    });
+                    const imgData = canvas.toDataURL('image/png');
+                    callback(imgData);
+                };
 
+                svgImage.src = svgUrl;
             },
             loadHistone(){
                 this.flag = true;
