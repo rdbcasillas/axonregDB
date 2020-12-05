@@ -344,7 +344,7 @@ export default {
         //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
         // );
         this.geneData = await d3.tsv(
-          "http://129.114.16.114.xip.io/website-data/dev_fpkm.tsv"
+          "https://129.114.16.114.xip.io/website-data/dev_fpkm.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
