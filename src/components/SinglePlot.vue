@@ -43,9 +43,9 @@
             <b-img class="dnagif" src="./dnagif.gif"></b-img>
         </b-col>
         <b-col class="download" cols="3" v-if="flag">
-          <a v-if="$route.name== 'expression'"  href="https://129.114.16.59.xip.io/website-data/dev_fpkm.tsv" class="btn btn-primary" download>Download Raw Data</a>
+          <a v-if="$route.name== 'expression'"  href="https://129.114.16.114.xip.io/website-data/dev_fpkm.tsv" class="btn btn-primary" download>Download Raw Data</a>
           <a v-if="$route.name== 'featurecount'"  href="https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv" class="btn btn-primary" download target="_blank">Download Raw Data</a>
-          <a v-if="$route.name== 'histone'"  href="https://129.114.16.59.xip.io/website-data/histone-prom-fc.zip" class="btn btn-primary" download>Download Raw Data</a>
+          <a v-if="$route.name== 'histone'"  href="https://129.114.16.114.xip.io/website-data/histone-prom-fc.zip" class="btn btn-primary" download>Download Raw Data</a>
         </b-col>
         <b-col cols="2" v-if="flag">
           <a id="download"
@@ -344,7 +344,7 @@ export default {
         //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
         // );
         this.geneData = await d3.tsv(
-          "https://129.114.16.59.xip.io/website-data/dev_fpkm.tsv"
+          "http://129.114.16.114.xip.io/website-data/dev_fpkm.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
@@ -373,10 +373,10 @@ export default {
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k27ac_prom.fc.tsv"
         );
         this.geneData4  = await d3.tsv(
-          "https://129.114.16.59.xip.io/website-data/dev-series-tsv/E11toP0_h3k27me3_prom.fc.tsv"
+          "https://129.114.16.114.xip.io/website-data/dev-series-tsv/E11toP0_h3k27me3_prom.fc.tsv"
         );
         this.geneData5  = await d3.tsv(
-          "https://129.114.16.59.xip.io/website-data/dev-series-tsv/E12toP0_h3k9ac_prom.fc.tsv"
+          "https://129.114.16.114.xip.io/website-data/dev-series-tsv/E12toP0_h3k9ac_prom.fc.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "Feature Count";
