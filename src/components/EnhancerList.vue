@@ -269,22 +269,22 @@ export default {
     async loadGenes() {
       this.datalinks = []
       this.progressflag = true;
-      let url = `https://129.114.104.79.xip.io/website-data/enhancer-data/atac/${this.selected}_enhancers_genes_devFC.tsv`;
+      let url = `https://129.114.104.79.nip.io/website-data/enhancer-data/atac/${this.selected}_enhancers_genes_devFC.tsv`;
       //let url = `./datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
-      let url2 = `https://129.114.104.79.xip.io/website-data/enhancer-data/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+      let url2 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
       //let url2 = `./datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
-      let url3 = `https://129.114.104.79.xip.io/website-data/enhancer-data/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
+      let url3 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
       //let url3 = `./datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
-      let url4 = `https://129.114.104.79.xip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
+      let url4 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
       let url5 = '' 
       let url6 = ''
       if (!(this.selected == 'Adult')) {
         this.chartoptions[5]['disabled'] = false
-        url5 = `https://129.114.104.79.xip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`
+        url5 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`
       }
       if (!(this.selected == 'E11' || this.selected == 'Adult')) {
         this.chartoptions[4]['disabled'] = false
-        url6 = `https://129.114.104.79.xip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`
+        url6 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`
       }
       if (this.selected == 'E11' || this.selected == 'Adult') {
         this.chartoptions[4]['disabled'] = true

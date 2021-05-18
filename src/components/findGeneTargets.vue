@@ -126,7 +126,7 @@
            },
            async loadRNAdata(){
             this.expdata = await d3.tsv(
-                "https://129.114.104.79.xip.io/website-data/dev_fpkm.tsv"
+                "https://129.114.104.79.nip.io/website-data/dev_fpkm.tsv"
 
             );
             //console.log(this.expdata);

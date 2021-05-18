@@ -267,14 +267,14 @@ export default {
       } else if (parent == "enhancertf") {
         let footprintTrack = {
           label: this.age + " Footprints",
-          url: `https://129.114.104.79.xip.io/website-data/IGV/enhancer-footprints/${this.age}_enhancer_footprints.bw`,
+          url: `https://129.114.104.79.nip.io/website-data/IGV/enhancer-footprints/${this.age}_enhancer_footprints.bw`,
           color: "#800000",
         };
 
         let conserveTrack = {
           label: "mm10 Cons60wayPlacental",
           url:
-            "https://129.114.104.79.xip.io/Enhancer-files/mm10.60way.phastCons60wayPlacental.bw",
+            "https://129.114.104.79.nip.io/Enhancer-files/mm10.60way.phastCons60wayPlacental.bw",
           color: "#9900FF",
         };
 
@@ -310,13 +310,13 @@ export default {
         this.enhancerIGV = true;
         let track1 = {
           label: this.age + " Prom Access",
-          url: `https://129.114.104.79.xip.io/website-data/IGV/${this.age}_merged_1bp.bw`,
+          url: `https://129.114.104.79.nip.io/website-data/IGV/${this.age}_merged_1bp.bw`,
           color: "#800000",
         };
 
         let track2 = {
           label: this.age + " enhancer-promoter loops",
-          url: `https://129.114.104.79.xip.io/website-data/IGV/${this.age}_enhancers.bedpe`,
+          url: `https://129.114.104.79.nip.io/website-data/IGV/${this.age}_enhancers.bedpe`,
           type: "interaction",
           format: "bedpe",
           color: "#9900FF",
@@ -346,19 +346,19 @@ export default {
       console.log(histoneselections);
       let rnatrack = {
         label: `${age} RNA`,
-        url: `https://129.114.104.79.xip.io/website-data/IGV/dev-rna-bam/${age}merged.bw`,
+        url: `https://129.114.104.79.nip.io/website-data/IGV/dev-rna-bam/${age}merged.bw`,
         color: "#4682B4",
       };
 
       let accesstrack = {
         label: `${age} Prom Access`,
-        url: `https://129.114.104.79.xip.io/website-data/IGV/${age}_merged_1bp.bw`,
+        url: `https://129.114.104.79.nip.io/website-data/IGV/${age}_merged_1bp.bw`,
         color: "#800000",
       };
 
       let bedpetrack = {
         label: `${age} enhancer-promoter loops`,
-        url: `https://129.114.104.79.xip.io/website-data/IGV/${age}_enhancers.bedpe`,
+        url: `https://129.114.104.79.nip.io/website-data/IGV/${age}_enhancers.bedpe`,
         type: "interaction",
         format: "bedpe",
         color: "#9900FF",
@@ -367,7 +367,7 @@ export default {
       histoneselections.forEach((mark) => {
         let markobj = {
           label: `${age} ${mark} bam`,
-          url: `https://129.114.104.79.xip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
+          url: `https://129.114.104.79.nip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
           color: "#00B300",
         };
         histonemarkarr.push(markobj);
