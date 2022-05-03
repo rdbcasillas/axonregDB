@@ -78,7 +78,7 @@ import { tracks } from "../../assets/scripts/igvpaths.js";
 export default {
   name: "IGVTest",
   props: ["gene", "type", "age", "loc"],
-  data: function () {
+  data: function() {
     return {
       selections: ["access", "bedpe"],
       ageselections: [this.age],
@@ -147,13 +147,13 @@ export default {
     svgUrlToPng(svgUrl, callback) {
       const svgImage = document.createElement("img");
       document.body.appendChild(svgImage);
-      svgImage.onload = function () {
+      svgImage.onload = function() {
         const canvas = document.createElement("canvas");
         canvas.width = svgImage.clientWidth;
         canvas.height = svgImage.clientHeight;
         const canvasCtx = canvas.getContext("2d");
         canvasCtx.drawImage(svgImage, 0, 0);
-        canvas.toBlob(function (blob) {
+        canvas.toBlob(function(blob) {
           saveAs(blob, "igv-visual.png");
         });
         const imgData = canvas.toDataURL("image/png");
@@ -169,27 +169,27 @@ export default {
       let mybrowser = this.igvbrowser;
       console.log(currentMark);
       //this.$set(this.configuration, id, {'value': 'default value'})
-      this[currentMark + "tracks"].forEach(function (track) {
+      this[currentMark + "tracks"].forEach(function(track) {
         mybrowser
           .loadTrack(track)
-          .then(function (loadedtrack) {
+          .then(function(loadedtrack) {
             console.log("new tracks loaded");
           })
           .catch((err) => {
             console.log(err + " happened");
           });
       });
-      this[previousMark + "tracks"].forEach(function (track) {
+      this[previousMark + "tracks"].forEach(function(track) {
         mybrowser.removeTrackByName(track.label);
       });
       this.histoneprevious = this.histoneselected;
     },
     loadH3k4me3() {
       let mybrowser = this.igvbrowser;
-      this.h3k4me3tracks.forEach(function (track) {
+      this.h3k4me3tracks.forEach(function(track) {
         mybrowser
           .loadTrack(track)
-          .then(function (loadedtrack) {
+          .then(function(loadedtrack) {
             console.log("new tracks loaded");
           })
           .catch((err) => {
@@ -199,10 +199,10 @@ export default {
     },
     loadH3k4me1() {
       let mybrowser = this.igvbrowser;
-      this.h3k4me1tracks.forEach(function (track) {
+      this.h3k4me1tracks.forEach(function(track) {
         mybrowser
           .loadTrack(track)
-          .then(function (loadedtrack) {
+          .then(function(loadedtrack) {
             console.log("new tracks loaded");
           })
           .catch((err) => {
@@ -234,7 +234,7 @@ export default {
       if (this.counter == 0) {
         igv
           .createBrowser($("#igvtest")[0], currOptions)
-          .then(function (browser) {
+          .then(function(browser) {
             //browser.loadGenome(currOptions.reference);
             currState.igvbrowser = browser;
             console.log("Browser Loaded");
@@ -244,7 +244,7 @@ export default {
             //     currState.doSomething(geneofinterest)
             // }, 1000);
           })
-          .catch(function (err) {
+          .catch(function(err) {
             console.log(err);
             alert("browser couldn't load. Please refresh");
           });
@@ -267,7 +267,7 @@ export default {
       } else if (parent == "enhancertf") {
         let footprintTrack = {
           label: this.age + " Footprints",
-          url: `https://129.114.104.79.nip.io/website-data/IGV/enhancer-footprints/${this.age}_enhancer_footprints.bw`,
+          url: `https://149.165.169.187.nip.io/website-data/IGV/enhancer-footprints/${this.age}_enhancer_footprints.bw`,
           color: "#800000",
         };
 
@@ -310,13 +310,13 @@ export default {
         this.enhancerIGV = true;
         let track1 = {
           label: this.age + " Prom Access",
-          url: `https://129.114.104.79.nip.io/website-data/IGV/${this.age}_merged_1bp.bw`,
+          url: `https://149.165.169.187.nip.io/website-data/IGV/${this.age}_merged_1bp.bw`,
           color: "#800000",
         };
 
         let track2 = {
           label: this.age + " enhancer-promoter loops",
-          url: `https://129.114.104.79.nip.io/website-data/IGV/${this.age}_enhancers.bedpe`,
+          url: `https://149.165.169.187.nip.io/website-data/IGV/${this.age}_enhancers.bedpe`,
           type: "interaction",
           format: "bedpe",
           color: "#9900FF",
@@ -346,19 +346,19 @@ export default {
       console.log(histoneselections);
       let rnatrack = {
         label: `${age} RNA`,
-        url: `https://129.114.104.79.nip.io/website-data/IGV/dev-rna-bam/${age}merged.bw`,
+        url: `https://149.165.169.187.nip.io/website-data/IGV/dev-rna-bam/${age}merged.bw`,
         color: "#4682B4",
       };
 
       let accesstrack = {
         label: `${age} Prom Access`,
-        url: `https://129.114.104.79.nip.io/website-data/IGV/${age}_merged_1bp.bw`,
+        url: `https://149.165.169.187.nip.io/website-data/IGV/${age}_merged_1bp.bw`,
         color: "#800000",
       };
 
       let bedpetrack = {
         label: `${age} enhancer-promoter loops`,
-        url: `https://129.114.104.79.nip.io/website-data/IGV/${age}_enhancers.bedpe`,
+        url: `https://149.165.169.187.nip.io/website-data/IGV/${age}_enhancers.bedpe`,
         type: "interaction",
         format: "bedpe",
         color: "#9900FF",
@@ -367,7 +367,7 @@ export default {
       histoneselections.forEach((mark) => {
         let markobj = {
           label: `${age} ${mark} bam`,
-          url: `https://129.114.104.79.nip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
+          url: `https://149.165.169.187.nip.io/website-data/IGV/dev-hist-${mark}/${age}_merged_${mark}.bw`,
           color: "#00B300",
         };
         histonemarkarr.push(markobj);
@@ -389,7 +389,7 @@ export default {
     this.oldageselections = this.ageselections;
   },
   watch: {
-    ageselections: function () {
+    ageselections: function() {
       let mybrowser = this.igvbrowser;
       let histoneselections = this.histselections;
       let generegmarks = this.selections;
@@ -437,7 +437,7 @@ export default {
 
       this.oldageselections = this.ageselections;
     },
-    histselections: function () {
+    histselections: function() {
       let mybrowser = this.igvbrowser;
       let ages = this.ageselections;
       let myfunction = this.giveBackTracks;
@@ -473,7 +473,7 @@ export default {
 
       this.oldhistselections = this.histselections;
     },
-    selections: function () {
+    selections: function() {
       let mybrowser = this.igvbrowser;
       let ages = this.ageselections;
       let myfunction = this.giveBackTracks;

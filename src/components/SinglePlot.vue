@@ -3,12 +3,14 @@
     <b-container>
       <b-row v-if="$route.name == 'expression'">
         <b class="expdesc">
-          Query expression levels for gene(s) of interest across development in mouse forebrain.
-          <br>
+          Query expression levels for gene(s) of interest across development in
+          mouse forebrain.
+          <br />
           Associated RNA-Seq datasets from ENCODE can be found
           <a
             href="https://www.encodeproject.org/search/?type=Experiment&status=released&assay_slims=Transcription&assay_title=polyA+plus+RNA-seq&award.project=ENCODE&assembly=mm10&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=forebrain"
-          >here</a>.
+            >here</a
+          >.
         </b>
       </b-row>
       <b-row v-else-if="$route.name == 'featurecount'">
@@ -17,7 +19,8 @@
           development in forebrain datasets from
           <a
             href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&biosample_ontology.term_name=forebrain"
-          >ENCODE consortia</a>
+            >ENCODE consortia</a
+          >
           . FASTQ files from ENCODE were analyzed, bam files were merged and
           reads in promoter regions (1000 upstream, 100 downstream of TSS) were
           quantified using the tool - FeatureCounts to quantify chromatin
@@ -26,33 +29,68 @@
       </b-row>
       <b-row v-else>
         <b>
-          Analyze temporal  patterns of histone mark enrichment on gene promoters across murine development in forebrain datasets from <a href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&biosample_ontology.term_name=forebrain" > ENCODE consortia </a> .  
-          We have chosen a combination of marks that are indicative of multiple chromatin states -  H3K4me3 (accessible promoter), H3K4me1 (accessible enhancer), 
-          h3k27ac (accessible and active enhancer), H3K9Ac and H3K36me3 (latter in the works), H3K27me3 (repressive chromatin) and H3K36me3 (in the works).  
-          BAM files from ENCODE were merged and reads in promoter regions (1000 upstream, 100 downstream of TSS) were quantified using the tool - 
-          FeatureCounts to quantify enrichment of specific marks in promoter regions.
+          Analyze temporal patterns of histone mark enrichment on gene promoters
+          across murine development in forebrain datasets from
+          <a
+            href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&biosample_ontology.term_name=forebrain"
+          >
+            ENCODE consortia
+          </a>
+          . We have chosen a combination of marks that are indicative of
+          multiple chromatin states - H3K4me3 (accessible promoter), H3K4me1
+          (accessible enhancer), h3k27ac (accessible and active enhancer),
+          H3K9Ac and H3K36me3 (latter in the works), H3K27me3 (repressive
+          chromatin) and H3K36me3 (in the works). BAM files from ENCODE were
+          merged and reads in promoter regions (1000 upstream, 100 downstream of
+          TSS) were quantified using the tool - FeatureCounts to quantify
+          enrichment of specific marks in promoter regions.
         </b>
       </b-row>
       <br />
       <b-row>
         <b-col>
-          <autocomplete :items="this.allgenes" @finished="finished" type="multiple"></autocomplete>
+          <autocomplete
+            :items="this.allgenes"
+            @finished="finished"
+            type="multiple"
+          ></autocomplete>
         </b-col>
         <b-col cols="2" v-if="progressflag">
-            <p>Fetching {{$route.name}} data..</p>
-            <b-img class="dnagif" src="./dnagif.gif"></b-img>
+          <p>Fetching {{ $route.name }} data..</p>
+          <b-img class="dnagif" src="./dnagif.gif"></b-img>
         </b-col>
         <b-col class="download" cols="3" v-if="flag">
-          <a v-if="$route.name== 'expression'"  href="https://129.114.104.79.nip.io/website-data/dev_fpkm.tsv" class="btn btn-primary" download>Download Raw Data</a>
-          <a v-if="$route.name== 'featurecount'"  href="https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv" class="btn btn-primary" download target="_blank">Download Raw Data</a>
-          <a v-if="$route.name== 'histone'"  href="https://129.114.104.79.nip.io/website-data/histone-prom-fc.zip" class="btn btn-primary" download>Download Raw Data</a>
+          <a
+            v-if="$route.name == 'expression'"
+            href="https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
+            class="btn btn-primary"
+            download
+            >Download Raw Data</a
+          >
+          <a
+            v-if="$route.name == 'featurecount'"
+            href="https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv"
+            class="btn btn-primary"
+            download
+            target="_blank"
+            >Download Raw Data</a
+          >
+          <a
+            v-if="$route.name == 'histone'"
+            href="https://149.165.169.187.nip.io/website-data/histone-prom-fc.zip"
+            class="btn btn-primary"
+            download
+            >Download Raw Data</a
+          >
         </b-col>
         <b-col cols="2" v-if="flag">
-          <a id="download"
-            download="ChartImage.jpg" 
+          <a
+            id="download"
+            download="ChartImage.jpg"
             href=""
             @click="downloadChart()"
-            class="btn btn-primary float-right bg-flat-color-1">
+            class="btn btn-primary float-right bg-flat-color-1"
+          >
             Download Chart
           </a>
         </b-col>
@@ -69,7 +107,7 @@
             :title="title"
             :datasets="datasets"
             :key="componentKey"
-          /> 
+          />
         </b-col>
       </b-row>
       <b-row v-if="flag">
@@ -133,10 +171,8 @@
             :key="componentKey"
           />
         </b-col>
-
       </b-row>
       <IGVTest :gene="this.genename" :type="this.$route.name" ref="igvComp" />
-
     </b-container>
     <br />
     <br />
@@ -154,7 +190,7 @@ export default {
   components: {
     LineChart,
     Autocomplete,
-    IGVTest
+    IGVTest,
   },
   props: ["plotType"],
   data: function() {
@@ -175,57 +211,57 @@ export default {
       dataobject: {},
       dataobject2: {},
       dataobject3: {},
-      datasets: [], 
+      datasets: [],
       datasets2: [],
-      datasets3: [], 
-      datasets4: [], 
-      datasets5: [] 
+      datasets3: [],
+      datasets4: [],
+      datasets5: [],
     };
   },
   methods: {
-    downloadChart(){
-      var url_base64jp = document.getElementById("line-chart").toDataURL("image/jpg");
+    downloadChart() {
+      var url_base64jp = document
+        .getElementById("line-chart")
+        .toDataURL("image/jpg");
       /*get download button (tag: <a></a>) */
-      var a =  document.getElementById("download");
+      var a = document.getElementById("download");
       /*insert chart image url to download button (tag: <a></a>) */
       a.href = url_base64jp;
     },
     capitalFirstLetter(genename) {
-        return genename.charAt(0).toUpperCase() + genename.slice(1);
-    },    
+      return genename.charAt(0).toUpperCase() + genename.slice(1);
+    },
     finished(value) {
-      this.datasets = []
-      this.datasets2 = []
-      this.datasets3 = []
-      this.datasets4 = []
-      this.datasets5 = []
-      if (value.includes(" ")){
+      this.datasets = [];
+      this.datasets2 = [];
+      this.datasets3 = [];
+      this.datasets4 = [];
+      this.datasets5 = [];
+      if (value.includes(" ")) {
         this.geneArray = _.uniq(value.split(", "));
-      }
-      else {
+      } else {
         this.geneArray = _.uniq(value.split(","));
       }
       console.log(this.geneArray);
-      this.geneArray = this.geneArray
-                      .map((gene)=>{
-                        return this.capitalFirstLetter(gene);
-                      });
+      this.geneArray = this.geneArray.map((gene) => {
+        return this.capitalFirstLetter(gene);
+      });
       console.log(this.geneArray);
       this.genename = value;
       this.getChart();
-     // this.$refs.igvComp.loadBrowser();
+      // this.$refs.igvComp.loadBrowser();
 
-      this.$nextTick(function () {
+      this.$nextTick(function() {
         this.$refs.igvComp.loadBrowser(this.geneArray[0]);
       });
       //this.$refs.igvComp.loadBrowser(this.geneArray[0]);
     },
     getLabels() {
       this.sampleLabels = _.keys(this.geneData[0]).slice(1);
-      
+
       if (this.$route.name == "histone") {
-        this.sampleLabels2 = _.keys(this.geneData4[0]).slice(1)
-        this.sampleLabels3 = _.keys(this.geneData5[0]).slice(1)
+        this.sampleLabels2 = _.keys(this.geneData4[0]).slice(1);
+        this.sampleLabels3 = _.keys(this.geneData5[0]).slice(1);
       }
       let colors = d3.scaleOrdinal(d3.schemeCategory10);
       this.geneArray = _.uniq(this.geneArray);
@@ -238,24 +274,24 @@ export default {
           _.find(this.geneData2, { external_gene_name: this.geneArray[item] }),
           "external_gene_name"
         );
-        this.geneObj3  = _.omit(
+        this.geneObj3 = _.omit(
           _.find(this.geneData3, { external_gene_name: this.geneArray[item] }),
           "external_gene_name"
         );
-        this.geneObj4  = _.omit(
+        this.geneObj4 = _.omit(
           _.find(this.geneData4, { external_gene_name: this.geneArray[item] }),
           "external_gene_name"
         );
-        this.geneObj5  = _.omit(
+        this.geneObj5 = _.omit(
           _.find(this.geneData5, { external_gene_name: this.geneArray[item] }),
           "external_gene_name"
         );
 
         this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
-        this.exprData2= _.map(_.values(this.geneObj2), _.ary(parseInt, 1));
-        this.exprData3= _.map(_.values(this.geneObj3), _.ary(parseInt, 1));
-        this.exprData4= _.map(_.values(this.geneObj4), _.ary(parseInt, 1));
-        this.exprData5= _.map(_.values(this.geneObj5), _.ary(parseInt, 1));
+        this.exprData2 = _.map(_.values(this.geneObj2), _.ary(parseInt, 1));
+        this.exprData3 = _.map(_.values(this.geneObj3), _.ary(parseInt, 1));
+        this.exprData4 = _.map(_.values(this.geneObj4), _.ary(parseInt, 1));
+        this.exprData5 = _.map(_.values(this.geneObj5), _.ary(parseInt, 1));
 
         this.dataobject = {
           label: this.geneArray[item],
@@ -264,7 +300,7 @@ export default {
           fill: false,
           pointBorderColor: colors(item),
           borderColor: colors(item),
-          data: this.exprData
+          data: this.exprData,
         };
 
         this.dataobject2 = {
@@ -274,7 +310,7 @@ export default {
           fill: false,
           pointBorderColor: colors(item),
           borderColor: colors(item),
-          data: this.exprData2
+          data: this.exprData2,
         };
 
         this.dataobject3 = {
@@ -284,7 +320,7 @@ export default {
           fill: false,
           pointBorderColor: colors(item),
           borderColor: colors(item),
-          data: this.exprData3
+          data: this.exprData3,
         };
 
         this.dataobject4 = {
@@ -294,7 +330,7 @@ export default {
           fill: false,
           pointBorderColor: colors(item),
           borderColor: colors(item),
-          data: this.exprData4
+          data: this.exprData4,
         };
 
         this.dataobject5 = {
@@ -304,7 +340,7 @@ export default {
           fill: false,
           pointBorderColor: colors(item),
           borderColor: colors(item),
-          data: this.exprData5
+          data: this.exprData5,
         };
 
         this.datasets.push(this.dataobject);
@@ -313,19 +349,19 @@ export default {
         this.datasets4.push(this.dataobject4);
         this.datasets5.push(this.dataobject5);
 
-        this.datasets = _.uniqBy(this.datasets, o => {
+        this.datasets = _.uniqBy(this.datasets, (o) => {
           return o.label;
         });
-        this.datasets2 = _.uniqBy(this.datasets2, o => {
+        this.datasets2 = _.uniqBy(this.datasets2, (o) => {
           return o.label;
         });
-        this.datasets3 = _.uniqBy(this.datasets3, o => {
+        this.datasets3 = _.uniqBy(this.datasets3, (o) => {
           return o.label;
         });
-        this.datasets4 = _.uniqBy(this.datasets4, o => {
+        this.datasets4 = _.uniqBy(this.datasets4, (o) => {
           return o.label;
         });
-        this.datasets5 = _.uniqBy(this.datasets5, o => {
+        this.datasets5 = _.uniqBy(this.datasets5, (o) => {
           return o.label;
         });
       }
@@ -344,7 +380,7 @@ export default {
         //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
         // );
         this.geneData = await d3.tsv(
-          "https://129.114.104.79.nip.io/website-data/dev_fpkm.tsv"
+          "https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
@@ -359,24 +395,23 @@ export default {
         this.ylabel = "Feature Count";
         this.title = "Accessibility Across Development";
         this.progressflag = false;
-      }
-      else {
+      } else {
         this.histoneflag = true;
         this.progressflag = true;
         this.geneData = await d3.tsv(
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k4me1_prom.fc.tsv"
         );
-        this.geneData2  = await d3.tsv(
+        this.geneData2 = await d3.tsv(
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k4me3_prom.fc.tsv"
         );
-        this.geneData3  = await d3.tsv(
+        this.geneData3 = await d3.tsv(
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k27ac_prom.fc.tsv"
         );
-        this.geneData4  = await d3.tsv(
-          "https://129.114.104.79.nip.io/website-data/dev-series-tsv/E11toP0_h3k27me3_prom.fc.tsv"
+        this.geneData4 = await d3.tsv(
+          "https://149.165.169.187.nip.io/website-data/dev-series-tsv/E11toP0_h3k27me3_prom.fc.tsv"
         );
-        this.geneData5  = await d3.tsv(
-          "https://129.114.104.79.nip.io/website-data/dev-series-tsv/E12toP0_h3k9ac_prom.fc.tsv"
+        this.geneData5 = await d3.tsv(
+          "https://149.165.169.187.nip.io/website-data/dev-series-tsv/E12toP0_h3k9ac_prom.fc.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "Feature Count";
@@ -387,11 +422,11 @@ export default {
         this.title5 = "H3K9ac Enrichment Across Development";
         this.progressflag = false;
       }
-    }
+    },
   },
   created() {
     this.fetchData();
-  }
+  },
 };
 </script>
 
@@ -400,10 +435,11 @@ export default {
   margin-left: 65px;
 }
 .dnagif {
-    height: 60px;
-    width: 140px
+  height: 60px;
+  width: 140px;
 }
-.download, #download {
+.download,
+#download {
   margin-top: 12px;
 }
 </style>

@@ -1,134 +1,176 @@
 <template>
   <div>
     <b-container>
-
       <b-row>
         <p>
-        <b>To define functional enhancers across murine development, we ran the package <a href="https://github.com/broadinstitute/ABC-Enhancer-Gene-Prediction"> Activity By Contact model (ABC) </a> developed 
-            by the Broad Institute on forebrain and frontal cortex (for Adult) 
-            <a href="https://www.encodeproject.org/search/?type=Experiment&assay_term_name=RNA-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&status=released&assembly=mm10&assay_title=polyA+plus+RNA-seq&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=frontal+cortex"> RNA-Seq </a>, 
-            <a href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&assembly=mm10&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=frontal+cortex"> ATAC-Seq </a> and 
-            <a href="https://www.encodeproject.org/search/?type=Experiment&assay_title=Histone+ChIP-seq&assembly=mm10&target.label=H3K27ac&biosample_ontology.term_name=forebrain&target.label=H3K4me1"> ChIP-Seq </a> datasets from ENCODE consortia. For annotated functional enhancers, 
-            chromatin accessibility and histone mark enrichment was quantified by counting reads present in enhancer regions using the tool <a href="http://bioinf.wehi.edu.au/featureCounts/"> FeatureCounts </a></b>
+          <b
+            >To define functional enhancers across murine development, we ran
+            the package
+            <a
+              href="https://github.com/broadinstitute/ABC-Enhancer-Gene-Prediction"
+            >
+              Activity By Contact model (ABC)
+            </a>
+            developed by the Broad Institute on forebrain and frontal cortex
+            (for Adult)
+            <a
+              href="https://www.encodeproject.org/search/?type=Experiment&assay_term_name=RNA-seq&replicates.library.biosample.donor.organism.scientific_name=Mus+musculus&status=released&assembly=mm10&assay_title=polyA+plus+RNA-seq&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=frontal+cortex"
+            >
+              RNA-Seq </a
+            >,
+            <a
+              href="https://www.encodeproject.org/search/?type=Experiment&assay_slims=DNA+accessibility&assay_title=ATAC-seq&assembly=mm10&biosample_ontology.term_name=forebrain&biosample_ontology.term_name=frontal+cortex"
+            >
+              ATAC-Seq
+            </a>
+            and
+            <a
+              href="https://www.encodeproject.org/search/?type=Experiment&assay_title=Histone+ChIP-seq&assembly=mm10&target.label=H3K27ac&biosample_ontology.term_name=forebrain&target.label=H3K4me1"
+            >
+              ChIP-Seq
+            </a>
+            datasets from ENCODE consortia. For annotated functional enhancers,
+            chromatin accessibility and histone mark enrichment was quantified
+            by counting reads present in enhancer regions using the tool
+            <a href="http://bioinf.wehi.edu.au/featureCounts/">
+              FeatureCounts
+            </a></b
+          >
         </p>
       </b-row>
       <br />
       <b-col cols="12">
-      <b-row>
-        <b-col cols="2">
-          <b-form-select v-model="selected" :options="options" @change="loadGenes(selected)"></b-form-select>
-        </b-col>
-        <b-col cols="3">
-          <b-form-group 
-            id="checkbox-group-1" 
-           >
-           <!-- <b-form-checkbox v-model="selections" v-for="option in chartoptions" :value="option.value" :key="option.value" :class="option.value" switch>
+        <b-row>
+          <b-col cols="2">
+            <b-form-select
+              v-model="selected"
+              :options="options"
+              @change="loadGenes(selected)"
+            ></b-form-select>
+          </b-col>
+          <b-col cols="3">
+            <b-form-group id="checkbox-group-1">
+              <!-- <b-form-checkbox v-model="selections" v-for="option in chartoptions" :value="option.value" :key="option.value" :class="option.value" switch>
              {{ option.text }}
            </b-form-checkbox> -->
-           <b-form-checkbox-group
-             v-model="selections"
-             :options="chartoptions" switches>
-           </b-form-checkbox-group>
-           </b-form-group>
-
+              <b-form-checkbox-group
+                v-model="selections"
+                :options="chartoptions"
+                switches
+              >
+              </b-form-checkbox-group>
+            </b-form-group>
           </b-col>
           <b-col cols="6">
-            <autocomplete :items="this.allgenes" :buttonstate="this.plotdisable" @finished="finished" />
+            <autocomplete
+              :items="this.allgenes"
+              :buttonstate="this.plotdisable"
+              @finished="finished"
+            />
           </b-col>
 
-        <b-col>
-         <b-button v-if="flag" variant="primary" v-b-toggle.sidebar-1>Plot gene-expression/promoter-accessibility</b-button>
-        </b-col>
-        <b-col cols="3" v-if="flag">
-          <b-dropdown id="dropdown-1" 
-            split
-            split-variant="outline-primary"
-            variant="primary"
-            text="Download Raw Data" class="m-md-2">
-              <b-dropdown-item v-for="item in this.datalinks"
-              :href="item.path"
-              :key="item.type"
-              target="_blank">
+          <b-col>
+            <b-button v-if="flag" variant="primary" v-b-toggle.sidebar-1
+              >Plot gene-expression/promoter-accessibility</b-button
+            >
+          </b-col>
+          <b-col cols="3" v-if="flag">
+            <b-dropdown
+              id="dropdown-1"
+              split
+              split-variant="outline-primary"
+              variant="primary"
+              text="Download Raw Data"
+              class="m-md-2"
+            >
+              <b-dropdown-item
+                v-for="item in this.datalinks"
+                :href="item.path"
+                :key="item.type"
+                target="_blank"
+              >
                 {{ item.type }}
               </b-dropdown-item>
-          </b-dropdown>
-        </b-col>
-      </b-row>
+            </b-dropdown>
+          </b-col>
+        </b-row>
       </b-col>
       <b-row>
-        <b-col  v-if="progressflag">
-            <p>Fetching enhancer data for {{ selected }}...</p>
-            <b-img class="dnagif" src="./dnagif.gif"></b-img>
+        <b-col v-if="progressflag">
+          <p>Fetching enhancer data for {{ selected }}...</p>
+          <b-img class="dnagif" src="./dnagif.gif"></b-img>
         </b-col>
       </b-row>
       <br />
-        <b-row>
-
-          <b-col class="enhancerplot" cols="4" v-for="(item,index) in this.chartSets" :key="index">
-            <h5 class="title">{{ titleArray[index] }}</h5>
-            <LineChart
-              v-if="flag"
-              :labeldata="sampleLabels"
-              :expressData="item"
-              :genename="genename"
-              :ylabel="ylabel"
-              :title="titleArray[index]"
-              :datasets="item"
-              :key="compKey"
-              :color="chartColor"
-              :state="stateLabel"
-            />
-          </b-col>
-          <b-col>
-        </b-col>
-        </b-row>
-          <b-sidebar v-if="flag" 
-          id="sidebar-1" 
-          title="" right shadow>
-           <b-form-group 
-          v-if="flag"
-          > 
-            <b>Plot:</b>
-            <b-form-checkbox
-              v-for="option in chartoptions2"
-              v-model="selections2"
-              :value="option.value"
-              :key=option.value
-              :class=option.value
-              switch
-            >
-            {{ option.text }} 
-            </b-form-checkbox>
-          </b-form-group>      
-          <LineChart2
-            v-if="rnaflag"
-            :labeldata="altsampleLabels"
-            :expressData="exprData"
-            :genename="genename"
-            :ylabel="rnaylabel"
-            :title="rnatitle"
-            :datasets="rnadataset"
-            :key="compKey"
-          />
-          <LineChart2
-            v-if="atacflag"
-            :labeldata="altsampleLabels"
-            :expressData="atacData"
-            :genename="genename"
-            :ylabel="atacylabel"
-            :title="atactitle"
-            :datasets="atacdataset"
-            :key="compKey"
-          />
-          </b-sidebar> 
       <b-row>
-            
+        <b-col
+          class="enhancerplot"
+          cols="4"
+          v-for="(item, index) in this.chartSets"
+          :key="index"
+        >
+          <h5 class="title">{{ titleArray[index] }}</h5>
+          <LineChart
+            v-if="flag"
+            :labeldata="sampleLabels"
+            :expressData="item"
+            :genename="genename"
+            :ylabel="ylabel"
+            :title="titleArray[index]"
+            :datasets="item"
+            :key="compKey"
+            :color="chartColor"
+            :state="stateLabel"
+          />
+        </b-col>
+        <b-col> </b-col>
       </b-row>
-      <hr>
+      <b-sidebar v-if="flag" id="sidebar-1" title="" right shadow>
+        <b-form-group v-if="flag">
+          <b>Plot:</b>
+          <b-form-checkbox
+            v-for="option in chartoptions2"
+            v-model="selections2"
+            :value="option.value"
+            :key="option.value"
+            :class="option.value"
+            switch
+          >
+            {{ option.text }}
+          </b-form-checkbox>
+        </b-form-group>
+        <LineChart2
+          v-if="rnaflag"
+          :labeldata="altsampleLabels"
+          :expressData="exprData"
+          :genename="genename"
+          :ylabel="rnaylabel"
+          :title="rnatitle"
+          :datasets="rnadataset"
+          :key="compKey"
+        />
+        <LineChart2
+          v-if="atacflag"
+          :labeldata="altsampleLabels"
+          :expressData="atacData"
+          :genename="genename"
+          :ylabel="atacylabel"
+          :title="atactitle"
+          :datasets="atacdataset"
+          :key="compKey"
+        />
+      </b-sidebar>
+      <b-row> </b-row>
+      <hr />
       <b-row v-if="flag">
         <b-col>
           <!-- <EnhancerIGV :age="selected"/> -->
-          <IGVTest :gene="this.genename" :type="this.$route.name" :age="this.selected" ref="igvComp"/>
+          <IGVTest
+            :gene="this.genename"
+            :type="this.$route.name"
+            :age="this.selected"
+            ref="igvComp"
+          />
         </b-col>
       </b-row>
     </b-container>
@@ -150,26 +192,26 @@ export default {
     LineChart2,
     Autocomplete,
     //EnhancerIGV,
-    IGVTest
+    IGVTest,
   },
   data: function() {
     return {
-        datalink: '',
-        plotdisable: true,
-        selections: [], // Must be an array reference!
-        selections2: [],
-        chartoptions2: [
-          { text: 'Gene Expression', value: 'expr' },
-          { text: 'Promoter Accessibility', value: 'access' },
-        ],
-        chartoptions: [
-          { text: 'Enhancer Accessibility', value: 'atac' },
-          { text: 'H3K27ac Enrichment', value: 'h3k27ac' },
-          { text: 'H3K4me1 Enrichment', value: 'h3k4me1' },
-          { text: 'H3K4me3 Enrichment', value: 'h3k4me3' },
-          { text: 'H3K9ac Enrichment', value: 'h3k9ac', disabled: false },
-          { text: 'H3K27me3 Enrichment', value: 'h3k27me3', disabled: false}
-        ],
+      datalink: "",
+      plotdisable: true,
+      selections: [], // Must be an array reference!
+      selections2: [],
+      chartoptions2: [
+        { text: "Gene Expression", value: "expr" },
+        { text: "Promoter Accessibility", value: "access" },
+      ],
+      chartoptions: [
+        { text: "Enhancer Accessibility", value: "atac" },
+        { text: "H3K27ac Enrichment", value: "h3k27ac" },
+        { text: "H3K4me1 Enrichment", value: "h3k4me1" },
+        { text: "H3K4me3 Enrichment", value: "h3k4me3" },
+        { text: "H3K9ac Enrichment", value: "h3k9ac", disabled: false },
+        { text: "H3K27me3 Enrichment", value: "h3k27me3", disabled: false },
+      ],
       selected: null,
       allgenes: [],
       options: [
@@ -180,45 +222,45 @@ export default {
         { value: "E14", text: "E14" },
         { value: "E16", text: "E16" },
         { value: "P0", text: "P0" },
-        { value: "Adult", text: "Adult" }
+        { value: "Adult", text: "Adult" },
       ],
       genename: "",
       enhancerData: {
         E11: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
+          h3k4me1: [],
         },
         E12: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
+          h3k4me1: [],
         },
         E13: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
+          h3k4me1: [],
         },
         E14: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
+          h3k4me1: [],
         },
         E16: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
+          h3k4me1: [],
         },
         P0: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
+          h3k4me1: [],
         },
         Adult: {
           atac: [],
           h3k27ac: [],
-          h3k4me1: []
-        }
+          h3k4me1: [],
+        },
       },
       filteredData: [],
       devArray: [],
@@ -242,14 +284,14 @@ export default {
       chartColor: "steelblue",
       chartGroup: [],
       filteredChartGroup: [],
-      chartSets : [],
+      chartSets: [],
       rnadataset: [],
       atacdataset: [],
-      rnatitle: 'Expression Across Age',
-      rnaylabel: 'FPKM value',
-      atactitle: 'Chromatin Accessibility Across Age',
-      atacylabel: 'Accessibility at Promoter',
-      datalinks: []
+      rnatitle: "Expression Across Age",
+      rnaylabel: "FPKM value",
+      atactitle: "Chromatin Accessibility Across Age",
+      atacylabel: "Accessibility at Promoter",
+      datalinks: [],
     };
   },
   computed: {
@@ -258,7 +300,7 @@ export default {
     },
     itemsTail() {
       return this.devArray ? this.devArray.slice(3) : [];
-    }
+    },
   },
   methods: {
     finished(value) {
@@ -267,30 +309,30 @@ export default {
       //console.log(this.$refs)
     },
     async loadGenes() {
-      this.datalinks = []
+      this.datalinks = [];
       this.progressflag = true;
-      let url = `https://129.114.104.79.nip.io/website-data/enhancer-data/atac/${this.selected}_enhancers_genes_devFC.tsv`;
+      let url = `https://149.165.169.187.nip.io/website-data/enhancer-data/atac/${this.selected}_enhancers_genes_devFC.tsv`;
       //let url = `./datasets/enhancers/atac/${this.selected}_enhancers_genes_devFC.tsv`;
-      let url2 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
+      let url2 = `https://149.165.169.187.nip.io/website-data/enhancer-data/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
       //let url2 = `./datasets/enhancers/h3k27ac/${this.selected}_enhancers_chip_genes_devFC.tsv`;
-      let url3 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
+      let url3 = `https://149.165.169.187.nip.io/website-data/enhancer-data/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
       //let url3 = `./datasets/enhancers/h3k4me1/${this.selected}_enhancers_h3k4me1_genes_devFC.tsv`;
-      let url4 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`
-      let url5 = '' 
-      let url6 = ''
-      if (!(this.selected == 'Adult')) {
-        this.chartoptions[5]['disabled'] = false
-        url5 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`
+      let url4 = `https://149.165.169.187.nip.io/website-data/enhancer-data/h3k4me3/${this.selected}_enhancers_h3k4me3_genes_devFC.tsv`;
+      let url5 = "";
+      let url6 = "";
+      if (!(this.selected == "Adult")) {
+        this.chartoptions[5]["disabled"] = false;
+        url5 = `https://149.165.169.187.nip.io/website-data/enhancer-data/h3k27me3/${this.selected}_enhancers_h3k27me3_genes_devFC.tsv`;
       }
-      if (!(this.selected == 'E11' || this.selected == 'Adult')) {
-        this.chartoptions[4]['disabled'] = false
-        url6 = `https://129.114.104.79.nip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`
+      if (!(this.selected == "E11" || this.selected == "Adult")) {
+        this.chartoptions[4]["disabled"] = false;
+        url6 = `https://149.165.169.187.nip.io/website-data/enhancer-data/h3k9ac/${this.selected}_enhancers_h3k9ac_genes_devFC.tsv`;
       }
-      if (this.selected == 'E11' || this.selected == 'Adult') {
-        this.chartoptions[4]['disabled'] = true
+      if (this.selected == "E11" || this.selected == "Adult") {
+        this.chartoptions[4]["disabled"] = true;
       }
-      if (this.selected == 'Adult') {
-        this.chartoptions[5]['disabled'] = true
+      if (this.selected == "Adult") {
+        this.chartoptions[5]["disabled"] = true;
       }
 
       this.enhancerData[this.selected]["atac"] = await d3.tsv(url);
@@ -300,38 +342,39 @@ export default {
       this.enhancerData[this.selected]["h3k27ac"] = await d3.tsv(url2);
       this.enhancerData[this.selected]["h3k4me1"] = await d3.tsv(url3);
       this.enhancerData[this.selected]["h3k4me3"] = await d3.tsv(url4);
-      this.datalinks = [{
-        'type': "Accessibility",
-        'path': url
-      },
-      {
-        'type': "H3k27ac",
-        'path': url2
-      },
-      {
-        'type': "H3k4me1",
-        'path': url3
-      },
-      {
-        'type': "H3k4me3",
-        'path': url4
-      },
-      ]
+      this.datalinks = [
+        {
+          type: "Accessibility",
+          path: url,
+        },
+        {
+          type: "H3k27ac",
+          path: url2,
+        },
+        {
+          type: "H3k4me1",
+          path: url3,
+        },
+        {
+          type: "H3k4me3",
+          path: url4,
+        },
+      ];
       //this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
 
-      if (this.selected != 'Adult') {
+      if (this.selected != "Adult") {
         this.enhancerData[this.selected]["h3k27me3"] = await d3.tsv(url5);
         this.datalinks.push({
-          'type': "H3k27me3",
-          'path': url5
-        })
+          type: "H3k27me3",
+          path: url5,
+        });
       }
-      if (this.selected != 'E11' && this.selected != 'Adult') {
+      if (this.selected != "E11" && this.selected != "Adult") {
         this.enhancerData[this.selected]["h3k9ac"] = await d3.tsv(url6);
         this.datalinks.push({
-          'type': "H3k9ac",
-          'path': url6
-        })
+          type: "H3k9ac",
+          path: url6,
+        });
       }
       this.progressflag = false;
       this.plotdisable = false;
@@ -359,100 +402,98 @@ export default {
         this.chartColor = "steelblue";
       }
 
-
       this.geneObj = _.omit(
-          _.find(this.rnaData, { external_gene_name: this.genename }),
-          "external_gene_name"
-        );
+        _.find(this.rnaData, { external_gene_name: this.genename }),
+        "external_gene_name"
+      );
       this.geneObj2 = _.omit(
-          _.find(this.accessData, { external_gene_name: this.genename }),
-          "external_gene_name"
-        );
+        _.find(this.accessData, { external_gene_name: this.genename }),
+        "external_gene_name"
+      );
       this.exprData = _.map(_.values(this.geneObj), _.ary(parseInt, 1));
       this.atacData = _.map(_.values(this.geneObj2), _.ary(parseInt, 1));
 
-      console.log(this.exprData)
-
+      console.log(this.exprData);
 
       let rnaobject = {
-          label: this.genename,
-          pointBackgroundColor: "white",
-          borderWidth: 2,
-          fill: false,
-          pointBorderColor: 'maroon',
-          borderColor: 'maroon',
-          data: this.exprData
-        };
+        label: this.genename,
+        pointBackgroundColor: "white",
+        borderWidth: 2,
+        fill: false,
+        pointBorderColor: "maroon",
+        borderColor: "maroon",
+        data: this.exprData,
+      };
 
       let atacobject = {
-          label: this.genename,
-          pointBackgroundColor: "white",
-          borderWidth: 2,
-          fill: false,
-          pointBorderColor: 'turquoise',
-          borderColor: 'turquoise',
-          data: this.atacData
-        };
-      
+        label: this.genename,
+        pointBackgroundColor: "white",
+        borderWidth: 2,
+        fill: false,
+        pointBorderColor: "turquoise",
+        borderColor: "turquoise",
+        data: this.atacData,
+      };
+
       this.rnadataset.push(rnaobject);
       this.atacdataset.push(atacobject);
 
-      this.selections.forEach(obj=>{
-          this.chartGroup.push(this.enhancerData[this.selected][obj])
-      })
+      this.selections.forEach((obj) => {
+        this.chartGroup.push(this.enhancerData[this.selected][obj]);
+      });
 
-      this.chartGroup.forEach(obj=>{
-          let filtdata = _.filter(obj,function(o){
-              return o["TargetGene"] == currName;
-          })
-          this.filteredChartGroup.push(filtdata);
-      })
+      this.chartGroup.forEach((obj) => {
+        let filtdata = _.filter(obj, function(o) {
+          return o["TargetGene"] == currName;
+        });
+        this.filteredChartGroup.push(filtdata);
+      });
       //console.log(this.filteredChartGroup);
-    let myobj = {};
-    let encount = [];  
-    this.filteredChartGroup.forEach((item,index)=>{
-        let currarray = []
-        item.forEach(o=>{
-            let tmpval = _.values(o).slice(4);
-            currarray.push(_.map(tmpval, _.ary(parseInt, 1)));
-        })
-        myobj[this.selections[index]]  = currarray;
-        encount = currarray.length
-    })
-    let colorObj = {
-        'atac':'steelblue',
-        'h3k27ac':'orange',
-        'h3k4me1': 'green',
-        'h3k4me3': 'skyblue',
-        'h3k9ac': 'darkgreen',
-        'h3k27me3': 'violet'
-    }
-    console.log(myobj)
-    let tmpselections = this.selections;
-    console.log(tmpselections);
-    for (let index=0; index < encount; index++) {
-        let datasets = []
+      let myobj = {};
+      let encount = [];
+      this.filteredChartGroup.forEach((item, index) => {
+        let currarray = [];
+        item.forEach((o) => {
+          let tmpval = _.values(o).slice(4);
+          currarray.push(_.map(tmpval, _.ary(parseInt, 1)));
+        });
+        myobj[this.selections[index]] = currarray;
+        encount = currarray.length;
+      });
+      let colorObj = {
+        atac: "steelblue",
+        h3k27ac: "orange",
+        h3k4me1: "green",
+        h3k4me3: "skyblue",
+        h3k9ac: "darkgreen",
+        h3k27me3: "violet",
+      };
+      console.log(myobj);
+      let tmpselections = this.selections;
+      console.log(tmpselections);
+      for (let index = 0; index < encount; index++) {
+        let datasets = [];
         for (let i in tmpselections) {
-            let dataobject = {
-                label: tmpselections[i],
-                pointBackgroundColor: "white",
-                borderWidth: 2,
-                fill: false,
-                pointBorderColor: colorObj[tmpselections[i]],
-                borderColor: colorObj[tmpselections[i]],
-                data: myobj[tmpselections[i]][index]
-            }; 
-            datasets.push(dataobject)
+          let dataobject = {
+            label: tmpselections[i],
+            pointBackgroundColor: "white",
+            borderWidth: 2,
+            fill: false,
+            pointBorderColor: colorObj[tmpselections[i]],
+            borderColor: colorObj[tmpselections[i]],
+            data: myobj[tmpselections[i]][index],
+          };
+          datasets.push(dataobject);
         }
-        this.chartSets.push(datasets); 
-    }
+        this.chartSets.push(datasets);
+      }
 
       this.filteredData = _.filter(currData, function(o) {
         return o["TargetGene"] == currName;
       });
       this.sampleLabels = _.keys(this.filteredData[0]).slice(4);
       //console.log(currData, currName);
-      this.filteredData.forEach(obj => {
+      this.filteredData.forEach((obj) => {
         titlearr.push(obj.chr + ":" + obj.start + "-" + obj.stop);
       });
       this.count = titlearr.length;
@@ -466,64 +507,59 @@ export default {
       //console.log(this.titleArray);
       this.ylabel = "Normalized Feature Count";
 
-//      this.$refs.igvComp.loadBrowser();
+      //      this.$refs.igvComp.loadBrowser();
       this.callIGV();
     },
-    callIGV(){
-      this.$nextTick(function () {
+    callIGV() {
+      this.$nextTick(function() {
         this.$refs.igvComp.loadBrowser(this.genename);
         //this.$refs.igvComp.loadBrowser();
-      })
+      });
     },
     cleanSlate() {
-        this.chartSets = [];
-        this.chartGroup = [];
-        this.filteredChartGroup = [];
-        this.rnadataset = [];
-        this.atacdataset = [];
+      this.chartSets = [];
+      this.chartGroup = [];
+      this.filteredChartGroup = [];
+      this.rnadataset = [];
+      this.atacdataset = [];
     },
     async fetchData() {
-        this.rnaData = await d3.tsv(
-          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
-        );
+      this.rnaData = await d3.tsv(
+        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
+      );
 
-        this.accessData = await d3.tsv(
-          "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv"
-        );
+      this.accessData = await d3.tsv(
+        "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/atac/E11toAdult-fc-homer-proms.tsv"
+      );
 
-        this.altsampleLabels = _.keys(this.rnaData[0]).slice(1);
-    }
-
+      this.altsampleLabels = _.keys(this.rnaData[0]).slice(1);
+    },
   },
   created() {
     this.fetchData();
   },
-  mounted() {
-
-  },
+  mounted() {},
   watch: {
-      'selections': function(){
-          console.log(this.selections);
-          if (this.genename != ''){
-              this.getChart();
-          }
-      },
-      'selections2': function(){
-          if (_.includes(this.selections2, 'expr')) {
-            this.rnaflag = true;
-          }
-          else {
-            this.rnaflag = false;
-          }
-          if (_.includes(this.selections2, 'access')) {
-            this.atacflag = true;
-          }
-          else {
-            this.atacflag = false;
-          }
-          console.log(this.selections2);
+    selections: function() {
+      console.log(this.selections);
+      if (this.genename != "") {
+        this.getChart();
       }
-  }
+    },
+    selections2: function() {
+      if (_.includes(this.selections2, "expr")) {
+        this.rnaflag = true;
+      } else {
+        this.rnaflag = false;
+      }
+      if (_.includes(this.selections2, "access")) {
+        this.atacflag = true;
+      } else {
+        this.atacflag = false;
+      }
+      console.log(this.selections2);
+    },
+  },
 };
 </script>
 
@@ -544,13 +580,13 @@ b-form-group {
 .enhancerplot {
   border: 0.5px solid darkcyan;
   padding: 5px;
-  margin: 0 0px 0 0px
+  margin: 0 0px 0 0px;
 }
 .title {
-  color: darkcyan
+  color: darkcyan;
 }
 .dnagif {
-    height: 80px;
-    width: 140px
+  height: 80px;
+  width: 140px;
 }
 </style>
