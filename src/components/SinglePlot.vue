@@ -379,11 +379,8 @@ export default {
         // this.geneData = await d3.tsv(
         //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
         // );
-        // this.geneData = await d3.tsv(
-        //   "https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
-        // );
         this.geneData = await d3.tsv(
-          "https://cors-anywhere.com/https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
+          "https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
