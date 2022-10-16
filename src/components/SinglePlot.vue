@@ -62,7 +62,7 @@
         <b-col class="download" cols="3" v-if="flag">
           <a
             v-if="$route.name == 'expression'"
-            href="https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
+            href="https://149-165-155-101.traefik.me/website-data/dev_fpkm.tsv"
             class="btn btn-primary"
             download
             >Download Raw Data</a
@@ -77,7 +77,7 @@
           >
           <a
             v-if="$route.name == 'histone'"
-            href="https://149.165.169.187.nip.io/website-data/histone-prom-fc.zip"
+            href="https://149-165-155-101.traefik.me/website-data/histone-prom-fc.zip"
             class="btn btn-primary"
             download
             >Download Raw Data</a
@@ -380,7 +380,7 @@ export default {
         //   "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/rna/dev_fpkm.tsv"
         // );
         this.geneData = await d3.tsv(
-          "https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
+          "https://149-165-155-101.traefik.me/website-data/dev_fpkm.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "FPKM";
@@ -408,10 +408,10 @@ export default {
           "https://raw.githubusercontent.com/rdbcasillas/axonregDB/master/public/datasets/histone/E11toAdult_h3k27ac_prom.fc.tsv"
         );
         this.geneData4 = await d3.tsv(
-          "https://149.165.169.187.nip.io/website-data/dev-series-tsv/E11toP0_h3k27me3_prom.fc.tsv"
+          "https://149-165-155-101.traefik.me/website-data/dev-series-tsv/E11toP0_h3k27me3_prom.fc.tsv"
         );
         this.geneData5 = await d3.tsv(
-          "https://149.165.169.187.nip.io/website-data/dev-series-tsv/E12toP0_h3k9ac_prom.fc.tsv"
+          "https://149-165-155-101.traefik.me/website-data/dev-series-tsv/E12toP0_h3k9ac_prom.fc.tsv"
         );
         this.allgenes = _.map(this.geneData, "external_gene_name");
         this.ylabel = "Feature Count";

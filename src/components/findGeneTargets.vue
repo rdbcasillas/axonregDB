@@ -149,7 +149,7 @@ export default {
     },
     async loadRNAdata() {
       this.expdata = await d3.tsv(
-        "https://149.165.169.187.nip.io/website-data/dev_fpkm.tsv"
+        "https://149-165-155-101.traefik.me/website-data/dev_fpkm.tsv"
       );
       //console.log(this.expdata);
     },
